@@ -25,6 +25,11 @@ SECTIONS
 
     .data : {
         *(.data .data.*)
+
+        *(.limine_requests_start_marker)
+        *(.limine_requests)
+        *(.limine_requests_end_marker)
+
         *(.sdata .sdata.*)
     } :data
 

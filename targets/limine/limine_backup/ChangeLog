@@ -1,3 +1,125 @@
+2024-05-08  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.5.1 ***
+
+    Noteworthy changes compared to the previous release, 7.5.0:
+
+    Bug fixes:
+        - Workarounds for issues related to drive iteration on BIOS. Discovered
+          on an HP Pavilion dv6-3152er.
+
+2024-05-03  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.5.0 ***
+
+    Noteworthy changes compared to the previous release, 7.4.1:
+
+    New features:
+        - Limine boot protocol: Add support for requests start marker, to
+          complement the previously called delimiter, now renamed to "end
+          marker".
+        - Limine boot protocol: Add base revision 2. The sole difference
+          compared to base revision 1 being that it mandates bootloaders to
+          support request delimiters.
+
+    Bug fixes:
+        - Fix an issue regarding commit date parsing in the bootstrap script.
+
+    Miscellaneous:
+        - General documentation updates and improvements; split USAGE.md from
+          README.md and install the former only.
+
+2024-04-29  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.4.1 ***
+
+    Noteworthy changes compared to the previous release, 7.4.0:
+
+    Miscellaneous:
+        - Bump max volume limit for UEFI from 64 to 256.
+        - Improve how ISA name and firmware type is reported as part of the
+          default branding.
+
+2024-04-20  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.4.0 ***
+
+    Noteworthy changes compared to the previous release, 7.3.1:
+
+    New features:
+        - ISA name and firmware type is now printed as part of the default
+          bootloader branding.
+        - Add 'B' key shortcut to menu to open up a blank entry.
+
+    Bug fixes:
+        - Fix missing NULL pointer check in configuration related function.
+
+    Miscellaneous:
+        - Console has been removed.
+
+2024-04-11  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.3.1 ***
+
+    Noteworthy changes compared to the previous release, 7.3.0:
+
+    Bug fixes:
+        - Fix a minor issue with scrolling when using the EFI console fallback.
+
+    Miscellaneous:
+        - Bump the Flanterm revision to current latest.
+        - Some dead code removal.
+
+2024-03-31  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.3.0 ***
+
+    Noteworthy changes compared to the previous release, 7.2.1:
+
+    New features:
+        - Limine boot protocol: Add a `MAX_PAGING_MODE` configuration option
+          to override kernel/bootloader selected paging mode.
+
+    Bug fixes:
+        - Fix a couple of minor bugs with the 4GiB workaround introduced in
+          version 7.2.1.
+
+    Miscellaneous:
+        - No longer produce xz compressed release tarballs. Add bzip2, lzip,
+          and zstd as alternatives in its place.
+
+2024-03-28  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.2.1 ***
+
+    Noteworthy changes compared to the previous release, 7.2.0:
+
+    Bug fixes:
+        - Implement workaround to allow Limine loaded above 4GiB by UEFI on
+          x86-64 to work in some configurations, instead of panicking.
+
+2024-03-24  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.2.0 ***
+
+    Noteworthy changes compared to the previous release, 7.1.0:
+
+    New features:
+        - Add support for remembering the last booted entry on UEFI by means
+          of the `REMEMBER_LAST_ENTRY` config option.
+
+2024-03-19  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.1.0 ***
+
+    Noteworthy changes compared to the previous release, 7.0.5:
+
+    New features:
+        - Limine boot protocol: Add support for requests delimiter.
+
+    Bug fixes:
+        - Fixed a potential security vulnerability in the ISO9660 driver.
+
 2024-02-15  mintsuki  <mintsuki@protonmail.com>
 
     *** Release 7.0.5 ***
@@ -28,7 +150,7 @@
 
     Bug fixes:
         - multiboot2 protocol: Do not panic if there is a ENTRY_ADDRESS_EFI64
-          tag, but there is a valid alternatve entry point. This further aligns
+          tag, but there is a valid alternative entry point. This further aligns
           our behaviour with GRUB2.
 
     Miscellaneous:
@@ -78,7 +200,7 @@
     Bug fixes:
         - Minor fix of newline handling when reading user input lines.
 
-    Miscellanous:
+    Miscellaneous:
         - Bump major version to 7. Note: There is no breaking change in 7.x
           compared to 6.x; the major version bump is done due to a change in
           the versioning scheme used by Limine (move to proper Semantic

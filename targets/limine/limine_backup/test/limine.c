@@ -6,38 +6,48 @@
 #include <flanterm/flanterm.h>
 #include <flanterm/backends/fb.h>
 
-LIMINE_BASE_REVISION(1)
+__attribute__((section(".limine_requests")))
+static volatile LIMINE_BASE_REVISION(2);
 
 static void limine_main(void);
 
-struct limine_entry_point_request entry_point_request = {
+__attribute__((used, section(".limine_requests_start_marker")))
+static volatile LIMINE_REQUESTS_START_MARKER;
+
+__attribute__((used, section(".limine_requests")))
+static volatile struct limine_entry_point_request entry_point_request = {
     .id = LIMINE_ENTRY_POINT_REQUEST,
     .revision = 0, .response = NULL,
 
     .entry = limine_main
 };
 
-struct limine_framebuffer_request framebuffer_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_framebuffer_request framebuffer_request = {
     .id = LIMINE_FRAMEBUFFER_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_bootloader_info_request bootloader_info_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_bootloader_info_request bootloader_info_request = {
     .id = LIMINE_BOOTLOADER_INFO_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_hhdm_request hhdm_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_hhdm_request hhdm_request = {
     .id = LIMINE_HHDM_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_memmap_request memmap_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_memmap_request memmap_request = {
     .id = LIMINE_MEMMAP_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_kernel_file_request kf_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_kernel_file_request kf_request = {
     .id = LIMINE_KERNEL_FILE_REQUEST,
     .revision = 0, .response = NULL
 };
@@ -63,7 +73,8 @@ struct limine_internal_module *internal_modules[] = {
     &internal_module3
 };
 
-struct limine_module_request module_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_module_request module_request = {
     .id = LIMINE_MODULE_REQUEST,
     .revision = 1, .response = NULL,
 
@@ -71,52 +82,66 @@ struct limine_module_request module_request = {
     .internal_modules = internal_modules
 };
 
-struct limine_rsdp_request rsdp_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_rsdp_request rsdp_request = {
     .id = LIMINE_RSDP_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_smbios_request smbios_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_smbios_request smbios_request = {
     .id = LIMINE_SMBIOS_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_efi_system_table_request est_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_efi_system_table_request est_request = {
     .id = LIMINE_EFI_SYSTEM_TABLE_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_efi_memmap_request efi_memmap_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_efi_memmap_request efi_memmap_request = {
     .id = LIMINE_EFI_MEMMAP_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_boot_time_request boot_time_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_boot_time_request boot_time_request = {
     .id = LIMINE_BOOT_TIME_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_kernel_address_request kernel_address_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_kernel_address_request kernel_address_request = {
     .id = LIMINE_KERNEL_ADDRESS_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_smp_request _smp_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_smp_request _smp_request = {
     .id = LIMINE_SMP_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_dtb_request _dtb_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_dtb_request _dtb_request = {
     .id = LIMINE_DTB_REQUEST,
     .revision = 0, .response = NULL
 };
 
-struct limine_paging_mode_request _pm_request = {
+__attribute__((section(".limine_requests")))
+static volatile struct limine_paging_mode_request _pm_request = {
     .id = LIMINE_PAGING_MODE_REQUEST,
     .revision = 0, .response = NULL,
-    .mode = LIMINE_PAGING_MODE_DEFAULT,
+#if defined (__x86_64__)
+    .mode = LIMINE_PAGING_MODE_X86_64_5LVL,
+#endif
     .flags = 0,
 };
+
+__attribute__((used, section(".limine_requests_end_marker")))
+static volatile LIMINE_REQUESTS_END_MARKER;
 
 static char *get_memmap_type(uint64_t type) {
     switch (type) {
@@ -209,17 +234,20 @@ static void limine_main(void) {
 
     struct limine_framebuffer *fb = framebuffer_request.response->framebuffers[0];
 
-    ft_ctx = flanterm_fb_simple_init(
-        fb->address,
-        fb->width,
-        fb->height,
-        fb->pitch,
-        fb->red_mask_size,
-        fb->red_mask_shift,
-        fb->green_mask_size,
-        fb->green_mask_shift,
-        fb->blue_mask_size,
-        fb->blue_mask_shift
+    ft_ctx = flanterm_fb_init(
+        NULL,
+        NULL,
+        fb->address, fb->width, fb->height, fb->pitch,
+        fb->red_mask_size, fb->red_mask_shift,
+        fb->green_mask_size, fb->green_mask_shift,
+        fb->blue_mask_size, fb->blue_mask_shift,
+        NULL,
+        NULL, NULL,
+        NULL, NULL,
+        NULL, NULL,
+        NULL, 0, 0, 1,
+        0, 0,
+        0
     );
 
     uint64_t kernel_slide = (uint64_t)kernel_start - 0xffffffff80000000;

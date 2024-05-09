@@ -1,5 +1,5 @@
-#ifndef __LIB__MISC_H__
-#define __LIB__MISC_H__
+#ifndef LIB__MISC_H__
+#define LIB__MISC_H__
 
 #include <stddef.h>
 #include <stdint.h>
@@ -27,8 +27,6 @@ extern UINT32 efi_desc_ver;
 extern bool efi_boot_services_exited;
 bool efi_exit_boot_services(void);
 #endif
-
-extern const char bsd_2_clause[];
 
 extern struct volume *boot_volume;
 

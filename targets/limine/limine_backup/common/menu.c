@@ -10,18 +10,23 @@
 #include <lib/config.h>
 #include <lib/term.h>
 #include <lib/gterm.h>
-#include <lib/readline.h>
+#include <lib/getchar.h>
 #include <lib/uri.h>
 #include <mm/pmm.h>
 #include <drivers/vbe.h>
 #include <drivers/vga_textmode.h>
-#include <console.h>
 #include <protos/linux.h>
 #include <protos/chainload.h>
 #include <protos/chainload_next.h>
 #include <protos/multiboot1.h>
 #include <protos/multiboot2.h>
 #include <protos/limine.h>
+#include <sys/cpu.h>
+
+#if defined (UEFI)
+EFI_GUID limine_efi_vendor_guid =
+    { 0x513ee0d0, 0x6e43, 0xcb05, { 0xb2, 0x72, 0xf1, 0x46, 0xa2, 0xfc, 0xb8, 0x8a } };
+#endif
 
 static char *menu_branding = NULL;
 static char *menu_branding_colour = NULL;
@@ -96,6 +101,7 @@ static const char *VALID_KEYS[] = {
     "RESOLUTION",
     "TEXTMODE",
     "KASLR",
+    "MAX_PAGING_MODE",
     "DRIVE",
     "PARTITION",
     "MBR_ID",
@@ -743,8 +749,39 @@ noreturn void _menu(bool first_run) {
     }
 
     menu_branding = config_get_value(NULL, 0, "INTERFACE_BRANDING");
-    if (menu_branding == NULL)
-        menu_branding = "Limine " LIMINE_VERSION;
+    if (menu_branding == NULL) {
+#if defined (BIOS)
+        {
+            uint32_t eax, ebx, ecx, edx;
+            if (!cpuid(0x80000001, 0, &eax, &ebx, &ecx, &edx) || !(edx & (1 << 29))) {
+                menu_branding = "Limine " LIMINE_VERSION " (ia-32, BIOS)";
+            } else {
+                menu_branding = "Limine " LIMINE_VERSION " (x86-64, BIOS)";
+            }
+        }
+#elif defined (UEFI)
+#if defined (__i386__)
+        {
+            uint32_t eax, ebx, ecx, edx;
+            if (!cpuid(0x80000001, 0, &eax, &ebx, &ecx, &edx) || !(edx & (1 << 29))) {
+                menu_branding = "Limine " LIMINE_VERSION " (ia-32, UEFI32)";
+            } else {
+                menu_branding = "Limine " LIMINE_VERSION " (x86-64, UEFI32)";
+            }
+        }
+#else
+        menu_branding = "Limine " LIMINE_VERSION " ("
+#if defined (__x86_64__)
+            "x86-64"
+#elif defined (__riscv64)
+            "riscv64"
+#elif defined (__aarch64__)
+            "aarch64"
+#endif
+            ", UEFI)";
+#endif
+#endif
+    }
 
     menu_branding_colour = config_get_value(NULL, 0, "INTERFACE_BRANDING_COLOUR");
     if (menu_branding_colour == NULL)
@@ -756,12 +793,28 @@ noreturn void _menu(bool first_run) {
     struct menu_entry *selected_menu_entry = NULL;
 
     size_t selected_entry = 0;
+
     char *default_entry = config_get_value(NULL, 0, "DEFAULT_ENTRY");
     if (default_entry != NULL) {
         selected_entry = strtoui(default_entry, NULL, 10);
         if (selected_entry)
             selected_entry--;
     }
+
+#if defined (UEFI)
+    char *remember_last = config_get_value(NULL, 0, "REMEMBER_LAST_ENTRY");
+    if (remember_last != NULL && strcasecmp(remember_last, "yes") == 0) {
+        UINTN getvar_size = sizeof(size_t);
+        size_t last;
+        if (gRT->GetVariable(L"LimineLastBootedEntry",
+                             &limine_efi_vendor_guid,
+                             NULL,
+                             &getvar_size,
+                             &last) == 0 && getvar_size == sizeof(size_t)) {
+            selected_entry = last;
+        }
+    }
+#endif
 
     size_t timeout = 5;
     char *timeout_config = config_get_value(NULL, 0, "TIMEOUT");
@@ -819,21 +872,9 @@ refresh:
         print("\n\n\n\n");
     }
 
-    while (menu_tree == NULL) {
-        if (quiet) {
-            quiet = false;
-            menu_init_term();
-            FOR_TERM(TERM->autoflush = false);
-            FOR_TERM(TERM->cursor_enabled = false);
-        }
-        print("Config file %s.\n\n", config_ready ? "contains no valid entries" : "not found");
-        print("For information on the format of Limine config entries, consult CONFIG.md in\n");
-        print("the root of the Limine source repository.\n\n");
-        print("Press a key to enter the Limine console...");
-        FOR_TERM(TERM->double_buffer_flush(TERM));
-        getchar();
-        reset_term();
-        console();
+    if (menu_tree == NULL && quiet) {
+        quiet = false;
+        menu_init_term();
     }
 
     size_t max_tree_len, max_tree_height;
@@ -862,26 +903,30 @@ refresh:
 
         if (!help_hidden) {
             set_cursor_pos_helper(0, 3);
-            if (selected_menu_entry->sub == NULL) {
-                print("    \e[32mARROWS\e[0m Select    \e[32mENTER\e[0m Boot    %s",
-                      editor_enabled ? "\e[32mE\e[0m Edit" : "");
-            } else {
-                print("    \e[32mARROWS\e[0m Select    \e[32mENTER\e[0m %s",
-                      selected_menu_entry->expanded ? "Collapse" : "Expand");
+            if (selected_menu_entry != NULL) {
+                if (selected_menu_entry->sub == NULL) {
+                    print("    \e[32mARROWS\e[0m Select    \e[32mENTER\e[0m Boot    %s",
+                          editor_enabled ? "\e[32mE\e[0m Edit" : "");
+                } else {
+                    print("    \e[32mARROWS\e[0m Select    \e[32mENTER\e[0m %s",
+                          selected_menu_entry->expanded ? "Collapse" : "Expand");
+                }
             }
 #if defined(UEFI)
             if (reboot_to_firmware_supported) {
-                set_cursor_pos_helper(terms[0]->cols - 33, 3);
+                set_cursor_pos_helper(terms[0]->cols - (editor_enabled ? 37 : 20), 3);
                 print("\e[32mS\e[0m Firmware Setup");
             }
 #endif
-            set_cursor_pos_helper(terms[0]->cols - 13, 3);
-            print("\e[32mC\e[0m Console");
+            if (editor_enabled) {
+                set_cursor_pos_helper(terms[0]->cols - 17, 3);
+                print("\e[32mB\e[0m Blank Entry");
+            }
         }
         set_cursor_pos_helper(x, y);
     }
 
-    if (selected_menu_entry->sub != NULL)
+    if (selected_menu_entry == NULL || selected_menu_entry->sub != NULL)
         skip_timeout = true;
 
     int c;
@@ -910,7 +955,7 @@ refresh:
     }
 
     set_cursor_pos_helper(0, terms[0]->rows - 1);
-    if (selected_menu_entry->comment != NULL) {
+    if (selected_menu_entry != NULL && selected_menu_entry->comment != NULL) {
         FOR_TERM(TERM->scroll_enabled = false);
         print("\e[36m%s\e[0m", selected_menu_entry->comment);
         FOR_TERM(TERM->scroll_enabled = true);
@@ -953,6 +998,9 @@ timeout_aborted:
             case '\n':
             case ' ':
             autoboot:
+                if (selected_menu_entry == NULL) {
+                    break;
+                }
                 if (selected_menu_entry->sub != NULL) {
                     selected_menu_entry->expanded = !selected_menu_entry->expanded;
                     goto refresh;
@@ -970,12 +1018,22 @@ timeout_aborted:
                         reset_term();
                     }
                 }
+
+#if defined (UEFI)
+                gRT->SetVariable(L"LimineLastBootedEntry",
+                                 &limine_efi_vendor_guid,
+                                 EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS,
+                                 sizeof(size_t),
+                                 &selected_entry);
+#endif
+
                 boot(selected_menu_entry->body);
             case 'e':
             case 'E': {
                 if (editor_enabled) {
-                    if (selected_menu_entry->sub != NULL)
-                        goto refresh;
+                    if (selected_menu_entry == NULL || selected_menu_entry->sub != NULL) {
+                        break;
+                    }
                     editor_no_term_reset = true;
                     char *new_body = config_entry_editor(selected_menu_entry->name, selected_menu_entry->body);
                     if (new_body == NULL)
@@ -994,11 +1052,17 @@ timeout_aborted:
                 break;
             }
 #endif
-            case 'c':
-            case 'C': {
-                reset_term();
-                console();
-                goto refresh;
+            case 'b':
+            case 'B': {
+                if (editor_enabled) {
+                    char *new_entry = config_entry_editor("Blank Entry", "");
+                    if (new_entry != NULL) {
+                        config_ready = true;
+                        boot(new_entry);
+                    }
+                    goto refresh;
+                }
+                break;
             }
         }
     }

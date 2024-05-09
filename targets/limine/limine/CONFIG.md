@@ -61,6 +61,7 @@ Miscellaneous:
 * `SERIAL` - If set to `yes`, enable serial I/O for the bootloader.
 * `SERIAL_BAUDRATE` - If `SERIAL` is set to `yes`, this specifies the baudrate to use for serial I/O. Defaults to `9600`. BIOS only, ignored with Limine UEFI.
 * `DEFAULT_ENTRY` - 1-based entry index of the entry which will be automatically selected at startup. If unspecified, it is `1`.
+* `REMEMBER_LAST_ENTRY` - If set to `yes`, remember last booted entry. (UEFI only)
 * `GRAPHICS` - If set to `no`, force CGA text mode for the boot menu, else use a video mode. Ignored with Limine UEFI.
 * `VERBOSE` - If set to `yes`, print additional information during boot. Defaults to not verbose.
 * `RANDOMISE_MEMORY` - If set to `yes`, randomise the contents of RAM at bootup in order to find bugs related to non zeroed memory or for security reasons. This option will slow down boot time significantly. For the BIOS port of Limine, this will only randomise memory below 4GiB.
@@ -122,6 +123,9 @@ Editor control options:
   * `MODULE_CMDLINE` - A command line to be passed to a module. This key can also be specified multiple times. It applies to the module described by the last module key assigned.
   * `RESOLUTION` - The resolution to be used. This setting takes the form of `<width>x<height>x<bpp>`. If the resolution is not available, Limine will pick another one automatically. Omitting `<bpp>` will default to 32.
   * `KASLR` - For relocatable kernels, if set to `no`, disable kernel address space layout randomisation. KASLR is enabled by default.
+  * `MAX_PAGING_MODE` - Limit the maximum paging mode to one of the following:
+    - x86-64 and aarch64: `4level`, `5level`.
+    - riscv64: `sv39`, `sv48`, `sv57`.
 
 * multiboot1 and multiboot2 protocols:
   * `KERNEL_PATH` - The URI path of the kernel.

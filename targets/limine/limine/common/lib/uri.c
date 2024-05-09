@@ -10,11 +10,11 @@
 #include <pxe/tftp.h>
 #include <compress/gzip.h>
 #include <menu.h>
-#include <lib/readline.h>
+#include <lib/getchar.h>
 #include <crypt/blake2b.h>
 
 // A URI takes the form of: resource://root/path#hash
-// The following function splits up a URI into its componenets
+// The following function splits up a URI into its components
 bool uri_resolve(char *uri, char **resource, char **root, char **path, char **hash) {
     size_t length = strlen(uri) + 1;
     char *buf = ext_mem_alloc(length);

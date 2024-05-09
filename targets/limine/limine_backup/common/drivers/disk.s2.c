@@ -19,9 +19,24 @@
 #define DEFAULT_FASTEST_XFER_SIZE 64
 #define MAX_FASTEST_XFER_SIZE 512
 
+#if defined (BIOS)
+
 #define MAX_VOLUMES 64
 
-#if defined (BIOS)
+struct dpte {
+    uint16_t io_port;
+    uint16_t control_port;
+    uint8_t head_reg_upper;
+    uint8_t bios_vendor_specific;
+    uint8_t irq_info;
+    uint8_t block_count_multiple;
+    uint8_t dma_info;
+    uint8_t pio_info;
+    uint16_t flags;
+    uint16_t reserved;
+    uint8_t revision;
+    uint8_t checksum;
+} __attribute__((packed));
 
 struct bios_drive_params {
     uint16_t buf_size;
@@ -31,7 +46,8 @@ struct bios_drive_params {
     uint32_t sects;
     uint64_t lba_count;
     uint16_t bytes_per_sect;
-    uint32_t edd;
+    uint16_t dpte_off;
+    uint16_t dpte_seg;
 } __attribute__((packed));
 
 struct dap {
@@ -228,9 +244,12 @@ static bool detect_sector_size(struct volume *volume) {
 void disk_create_index(void) {
     volume_index = ext_mem_alloc(sizeof(struct volume) * MAX_VOLUMES);
 
-    int optical_indices = 1, hdd_indices = 1;
+    // Disk count (only non-removable) at 0040:0075
+    uint8_t bda_disk_count = mminb(rm_desegment(0x0040, 0x0075));
 
-    for (uint8_t drive = 0x80; drive < 0xf0; drive++) {
+    int optical_indices = 1, hdd_indices = 1, consumed_bda_disks = 0;
+
+    for (uint8_t drive = 0x80; drive != 0 /* overflow */; drive++) {
         struct rm_regs r = {0};
         struct bios_drive_params drive_params;
 
@@ -245,6 +264,19 @@ void disk_create_index(void) {
 
         if (r.eflags & EFLAGS_CF) {
             continue;
+        }
+
+        bool is_removable = drive_params.info_flags & (1 << 2);
+
+        struct dpte *dpte = NULL;
+        if (drive_params.buf_size >= 0x1e
+         && (drive_params.dpte_seg != 0x0000 || drive_params.dpte_off != 0x0000)
+         && (drive_params.dpte_seg != 0xffff || drive_params.dpte_off != 0xffff)) {
+            dpte = (void *)rm_desegment(drive_params.dpte_seg, drive_params.dpte_off);
+            if ((dpte->control_port & 0xff00) != 0xa000) {
+                // Check for removable (5) or ATAPI (6)
+                is_removable = is_removable || ((dpte->flags & (1 << 5)) || (dpte->flags & (1 << 6)));
+            }
         }
 
         struct volume *block = ext_mem_alloc(sizeof(struct volume));
@@ -263,7 +295,15 @@ void disk_create_index(void) {
             continue;
         }
 
-        block->is_optical = disk_write_sectors(block, xfer_buf, 0, 1) != DISK_SUCCESS;
+        block->is_optical = (disk_write_sectors(block, xfer_buf, 0, 1) != DISK_SUCCESS) && block->sector_size == 2048;
+
+        if (!is_removable && !block->is_optical) {
+            if (consumed_bda_disks == bda_disk_count) {
+                pmm_free(block, sizeof(struct volume));
+                continue;
+            }
+            consumed_bda_disks++;
+        }
 
         if (block->is_optical) {
             block->index = optical_indices++;
@@ -306,6 +346,8 @@ void disk_create_index(void) {
 #endif
 
 #if defined (UEFI)
+
+#define MAX_VOLUMES 256
 
 int disk_read_sectors(struct volume *volume, void *buf, uint64_t block, size_t count) {
     EFI_STATUS status;
@@ -605,7 +647,7 @@ fail:
 
         struct volume *block = ext_mem_alloc(sizeof(struct volume));
 
-        if (status || drive->Media->ReadOnly) {
+        if ((status || drive->Media->ReadOnly) && drive->Media->BlockSize == 2048) {
             block->index = optical_indices++;
             block->is_optical = true;
         } else {

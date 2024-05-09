@@ -81,7 +81,6 @@ enum {
 
 noreturn void entry(uint8_t boot_drive, int boot_from) {
     // XXX DO NOT MOVE A20 ENABLE CALL
-    
     if (!a20_enable()) {
         panic(false, "Could not enable A20 line");
     }

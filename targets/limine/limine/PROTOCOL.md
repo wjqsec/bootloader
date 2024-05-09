@@ -22,14 +22,14 @@ The calling convention matches the C ABI for the specific architecture
 
 ## Base protocol revisions
 
-The Limine boot protocol comes in several base revisions; so far only 2
-base revisions are specified: 0 and 1.
+The Limine boot protocol comes in several base revisions; so far, 3
+base revisions are specified: 0, 1, and 2.
 
 Base protocol revisions change certain behaviours of the Limine boot protocol
 outside any specific feature. The specifics are going to be described as
 needed throughout this specification.
 
-Base revision 0 is considered deprecated, and it is the default base revision
+Base revision 0 and 1 are considered deprecated. Base revision 0 is the default base revision
 a kernel is assumed to be requesting and complying to if no base revision tag
 is provided by the kernel, for backwards compatibility.
 
@@ -79,7 +79,9 @@ struct limine_example_request {
 bootloader will scan for inside the executable file to find requests. Requests
 may be located anywhere inside the executable as long as they are 8-byte
 aligned. There may only be 1 of the same request. The bootloader will refuse
-to boot an executable with multiple of the same request IDs. Alternatively, it is possible to provide a list of requests explicitly via an executable file section. See "Limine Requests Section".
+to boot an executable with multiple of the same request IDs. Alternatively,
+it is possible to provide a list of requests explicitly via an executable file section.
+See "Limine Requests Section". (Note: this is deprecated and removed in base revision 1)
 * `revision` - The revision of the request that the kernel provides. This starts at 0 and is
 bumped whenever new members or functionality are added to the request structure.
 Bootloaders process requests in a backwards compatible manner, *always*. This
@@ -109,9 +111,34 @@ revisions do.
 This is all there is to features. For a list of official Limine features, read
 the "Feature List" section below.
 
+## Requests Delimiters
+
+The bootloader can be told to start and/or stop searching for requests (including base
+revision tags) in an executable's loaded image by placing start and/or end markers,
+on an 8-byte aligned boundary.
+
+The bootloader will only accept requests placed between the last start marker found (if
+there happen to be more than 1, which there should not, ideally) and the first end
+marker found.
+```c
+#define LIMINE_REQUESTS_START_MARKER \
+    uint64_t limine_requests_start_marker[4] = { 0xf6b8f4b39de7d1ae, 0xfab91a6940fcb9cf, \
+                                                 0x785c6ed015d3e316, 0x181e920a7852b9d9 };
+
+#define LIMINE_REQUESTS_END_MARKER \
+    uint64_t limine_requests_end_marker[2] = { 0xadc0e0531bb10d03, 0x9572709f31764c62 };
+```
+
+For base revisions 0 and 1, the requests delimiters are *hints*. The bootloader can still search for
+requests and base revision tags outside the delimited area if it doesn't support the hints.
+
+Base revision 2's sole difference compared to base revision 1 is that support for
+request delimiters has to be provided and the delimiters must be honoured, if present,
+rather than them just being a hint.
+
 ## Limine Requests Section
 
-Note: *This behaviour is deprecated as of base protocol revision 1*
+Note: *This behaviour is deprecated and removed as of base protocol revision 1*
 
 For kernels requesting deprecated base revision 0,
 if the executable kernel file contains a `.limine_reqs` section, the bootloader
@@ -152,7 +179,7 @@ These mappings are supervisor, read, write, execute (-rwx).
 For base revision 0, the above-4GiB identity and HHDM mappings cover any memory
 map region.
 
-For base revision 1, the above-4GiB HHDM mappings do not comprise memory map regions
+For base revisions 1 and 2, the above-4GiB HHDM mappings do not comprise memory map regions
 of types:
  - Reserved
  - Bad memory

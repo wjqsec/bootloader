@@ -14,4 +14,5 @@ make
 # sudo umount ../../../images/mount/
 # sudo losetup -d  /dev/loop40
 
+# ./bootstrap
 # ./configure --enable-bios

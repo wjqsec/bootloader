@@ -1,5 +1,5 @@
-#ifndef __LIB__PART_H__
-#define __LIB__PART_H__
+#ifndef LIB__PART_H__
+#define LIB__PART_H__
 
 #include <stdint.h>
 #include <stddef.h>
@@ -60,7 +60,6 @@ struct volume {
     char *fslabel;
 };
 
-void list_volumes(void);
 bool is_valid_mbr(struct volume *volume);
 
 extern struct volume **volume_index;

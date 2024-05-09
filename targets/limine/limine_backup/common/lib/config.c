@@ -3,7 +3,7 @@
 #include <lib/config.h>
 #include <lib/libc.h>
 #include <lib/misc.h>
-#include <lib/readline.h>
+#include <lib/getchar.h>
 #include <mm/pmm.h>
 #include <fs/file.h>
 #include <lib/print.h>
@@ -344,11 +344,13 @@ overflow:
 
     size_t s;
     char *c = config_get_entry(&s, 0);
-    while (*c != ':') {
-        c--;
-    }
-    if (c > config_addr) {
-        c[-1] = 0;
+    if (c != NULL) {
+        while (*c != ':') {
+            c--;
+        }
+        if (c > config_addr) {
+            c[-1] = 0;
+        }
     }
 
     return 0;

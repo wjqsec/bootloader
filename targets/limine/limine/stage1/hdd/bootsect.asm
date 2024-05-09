@@ -74,7 +74,7 @@ start:
     xor ecx, ecx
     mov cx, word [di-4]
     call read_sectors
-    jc err.4 ;0x7c8b
+    jc err.4
     mov eax, dword [di+8]
     mov ebp, dword [di+12]
     add bx, cx
