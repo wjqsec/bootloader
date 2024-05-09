@@ -1,0 +1,200 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menuconfig VIDEO
+	bool "Video drivers"
+	help
+	  Add support for framebuffer and splash screens
+
+if VIDEO
+
+config FRAMEBUFFER_CONSOLE
+	bool
+	depends on !CONSOLE_NONE
+	select IMAGE_RENDERER
+	select FONTS
+	prompt "framebuffer console support"
+
+config DRIVER_VIDEO_FB_SSD1307
+	bool "Solomon SSD1307 framebuffer support"
+	depends on (I2C || SPI) && GPIOLIB
+
+config VIDEO_VPL
+	depends on OFTREE
+	bool
+
+config DRIVER_VIDEO_ATMEL
+	bool "Atmel LCDC framebuffer driver"
+	depends on ARCH_AT91
+
+config DRIVER_VIDEO_ATMEL_HLCD
+	bool "Atmel HLCDC framebuffer driver"
+	depends on ARCH_AT91
+
+config DRIVER_VIDEO_EFI_GOP
+	bool "EFI Graphics Output Protocol (GOP)"
+	depends on EFI_BOOTUP
+
+config DRIVER_VIDEO_IMX
+	bool "i.MX framebuffer driver"
+	depends on ARCH_IMX1 || ARCH_IMX21 || ARCH_IMX25 || ARCH_IMX27
+
+config IMXFB_DRIVER_VIDEO_IMX_OVERLAY
+	bool "i.MX framebuffer overlay support"
+	depends on DRIVER_VIDEO_IMX && (ARCH_IMX27 || ARCH_IMX25 || ARCH_IMX21)
+
+config DRIVER_VIDEO_IMX_IPU
+	bool "i.MX31/35 framebuffer driver"
+	depends on ARCH_IMX35 || ARCH_IMX31
+	help
+	  Add support for the IPU framebuffer device found on
+	  i.MX31 and i.MX35 CPUs.
+
+config DRIVER_VIDEO_IMX_IPU_OVERLAY
+	bool "i.MX31/35 framebuffer overlay support"
+	depends on DRIVER_VIDEO_IMX_IPU && (ARCH_IMX35 || ARCH_IMX31)
+
+config DRIVER_VIDEO_STM
+	bool "i.MX23/28 framebuffer driver"
+	depends on ARCH_MXS
+	help
+	  Say 'Y' here to enable framebuffer and splash screen support for
+	  i.MX23 and i.MX28 based systems.
+
+config DRIVER_VIDEO_STM32_LTDC
+	bool "STM32 LTDC framebuffer driver"
+	select VIDEO_VPL
+	depends on ARCH_STM32 || COMPILE_TEST
+	help
+	  Say 'Y' here to enable framebuffer and splash screen support for
+	  STM32 and STM32MP1.
+
+config DRIVER_VIDEO_OMAP
+	bool "OMAP framebuffer driver"
+	depends on ARCH_OMAP4 || COMPILE_TEST
+	help
+	  Add support for OMAP Display Controller. Currently this
+	  driver only supports OMAP4 SoCs in DISPC parallel mode on
+	  LCD2 (MIPI DPI).
+
+config DRIVER_VIDEO_SDL
+	bool "SDL framebuffer driver"
+	depends on SANDBOX
+	select SDL
+
+config DRIVER_VIDEO_PXA
+	bool "PXA27x framebuffer driver"
+	depends on ARCH_PXA27X
+	help
+	  Add support for the frame buffer device found on the PXA270
+	  CPU.
+
+config DRIVER_VIDEO_BCM283X
+	bool "BCM283X framebuffer driver"
+	depends on ARCH_BCM283X
+	help
+	  Add support for the BCM283X/VideoCore frame buffer device.
+
+source "drivers/video/imx-ipu-v3/Kconfig"
+
+source "drivers/video/bochs/Kconfig"
+
+config DRIVER_VIDEO_SIMPLEFB_CLIENT
+	bool "Simple framebuffer client support"
+	depends on OFTREE
+	help
+	  Add support for reusing a previously set up simple framebuffer.
+
+config DRIVER_VIDEO_SIMPLEFB
+	bool "Simple framebuffer fixup support"
+	depends on OFTREE
+	help
+	  Add support for setting up the kernel's simple framebuffer driver
+	  based on the active barebox framebuffer.
+
+config DRIVER_VIDEO_RAMFB
+	bool "QEMU RamFB support"
+	select QEMU_FW_CFG
+	help
+	  Add support for setting up a QEMU RamFB driver.
+
+config DRIVER_VIDEO_EDID
+	bool "Add EDID support"
+	help
+	  This enabled support for reading and parsing EDID data from an attached
+	  monitor.
+
+config DRIVER_VIDEO_MIPI_DBI
+	bool
+
+config DRIVER_VIDEO_BACKLIGHT
+	bool "Add backlight support"
+	help
+	  Enable this for backlight support.
+
+config DRIVER_VIDEO_BACKLIGHT_PWM
+	bool "PWM backlight support"
+	depends on PWM && GPIOLIB
+	depends on DRIVER_VIDEO_BACKLIGHT
+	help
+	  Enable this to get support for backlight devices driven by a PWM.
+
+config BACKLIGHT_RAVE_SP
+	tristate "RAVE SP Backlight driver"
+	depends on RAVE_SP_CORE
+	depends on DRIVER_VIDEO_BACKLIGHT
+	help
+	  Support for backlight control on RAVE SP device.
+
+comment "Video encoder chips"
+
+config DRIVER_VIDEO_MTL017
+	bool "MTL017 LVDS encoder"
+	select VIDEO_VPL
+	depends on I2C
+	depends on OFTREE
+	help
+	  The MTL017 is a parallel to lvds video encoder chip found on the
+	  Efika MX Smartbook.
+
+config DRIVER_VIDEO_TC358767
+	bool "TC358767A Display Port encoder"
+	select VIDEO_VPL
+	depends on DRIVER_VIDEO_EDID
+	depends on I2C
+	depends on OFTREE
+	help
+	  The TC358767A is a DSI/DPI to eDP video encoder chip
+
+config DRIVER_VIDEO_SIMPLE_PANEL
+	bool "Simple panel support"
+	select VIDEO_VPL
+	depends on OFTREE && OFDEVICE
+	help
+	  This enabled support for simple panels, i.e. panels which consist of
+	  a mode definition and enable gpios in the devicetree. Unlike the
+	  Linux Kernel implementation this one is able to understand display-timings
+	  nodes so that it's not necessary to keep a list of all known displays
+	  with their corresponding timings in barebox.
+
+config DRIVER_VIDEO_PANEL_ILITEK_ILI9341
+	tristate "Ilitek ILI9341 240x320 QVGA panels"
+	depends on OFTREE && SPI
+	select DRIVER_VIDEO_MIPI_DBI
+	select VIDEO_VPL
+	help
+	  Say Y here if you want to enable support for Ilitek IL9341
+	  QVGA (240x320) RGB panels. support serial & parallel rgb
+	  interface.
+
+config DRIVER_VIDEO_PANEL_MIPI_DBI
+	tristate "DRM support for MIPI DBI compatible panels"
+	depends on OFTREE && SPI
+	select DRIVER_VIDEO_MIPI_DBI
+	select FIRMWARE
+	select VIDEO_VPL
+	help
+          Say Y here if you want to enable support for MIPI DBI compatible
+          panels. The controller command setup can be provided using a
+          firmware file. For more information see
+          https://github.com/notro/panel-mipi-dbi/wiki.
+
+endif

@@ -1,0 +1,122 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+
+/dts-v1/;
+
+#include <arm64/freescale/fsl-ls1046a-rdb.dts>
+
+/ {
+	aliases {
+		eeprom = &{i2c0/eeprom@52};
+		mmc0 = &esdhc;
+	};
+
+	chosen {
+		stdout-path = &duart0;
+
+		environment {
+			compatible = "barebox,environment";
+			device-path = &environment_sd;
+		};
+	};
+};
+
+&esdhc {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@1000 {
+		label = "barebox";
+		reg = <0x1000 0xdf000>;
+	};
+
+	environment_sd: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
+
+&enet0 {
+	status = "disabled";
+};
+
+&enet1 {
+	status = "disabled";
+};
+
+&enet2 {
+	phy-mode = "rgmii-id";
+};
+
+&enet3 {
+	phy-mode = "rgmii-id";
+};
+
+&{fman0/mdio@e1000} {
+	status = "disabled";
+};
+
+&{fman0/mdio@e3000} {
+	status = "disabled";
+};
+
+&{fman0/mdio@e5000} {
+	status = "disabled";
+};
+
+&{fman0/mdio@e7000} {
+	status = "disabled";
+};
+
+&{fman0/mdio@e9000} {
+	status = "disabled";
+};
+
+&{fman0/mdio@eb000} {
+	status = "disabled";
+};
+
+&{fman0/mdio@f1000} {
+	status = "disabled";
+};
+
+&{fman0/mdio@f3000} {
+	status = "disabled";
+};
+
+&usb0 {
+	dr_mode = "host";
+};
+
+&usb1 {
+	maximum-speed = "high-speed";
+	dr_mode = "peripheral";
+	status = "okay";
+};
+
+&usb2 {
+	dr_mode = "host";
+};
+
+&pcie1 {
+	status = "okay";
+};
+
+&pcie2 {
+	status = "okay";
+};
+
+&pcie3 {
+	status = "okay";
+};

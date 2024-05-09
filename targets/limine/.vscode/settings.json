@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "locale": "c",
+        "array": "c",
+        "vector": "c",
+        "stdint.h": "c",
+        "stdbool.h": "c",
+        "stddef.h": "c"
+    },
+    "files.eol": "\n"
+}

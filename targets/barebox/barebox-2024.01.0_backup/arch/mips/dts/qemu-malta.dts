@@ -1,0 +1,111 @@
+/dts-v1/;
+
+/ {
+	model = "qemu malta";
+	compatible = "qemu,malta";
+
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	chosen {
+		environment {
+			compatible = "barebox,environment";
+			device-path = &env_nor;
+		};
+	};
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x00000000 0x10000000>;
+	};
+
+	clocks {
+		ref_clk: ref_clk {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <320000000>;
+		};
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "mips,mips24Kf";
+			clocks = <&ref_clk>;
+			reg = <0>;
+		};
+	};
+
+	uart0: serial@180003f8 {
+		compatible = "ns16550a";
+		reg = <0x180003f8 0x08>;
+		reg-shift = <0>;
+		/* no matter for emulated port */
+		clock-frequency = <1843200>;
+	};
+
+	fpga_regs: system-controller@1f000000 {
+		compatible = "mti,malta-fpga", "syscon", "simple-mfd";
+		reg = <0x1f000000 0x600>;
+		native-endian;
+
+		reboot {
+			compatible = "syscon-reboot";
+			regmap = <&fpga_regs>;
+			offset = <0x500>;
+			mask = <0x42>;
+		};
+	};
+
+	gpio: gpio@1f000b00 {
+		compatible = "mti,malta-fpga-i2c-gpio";
+		gpio-controller;
+		reg = <0x1f000b00 0x20>;
+		#gpio-cells = <2>;
+	};
+
+	i2c0: i2c0 {
+		compatible = "i2c-gpio";
+		gpios = <&gpio 0 0 /* sda */
+			&gpio 1 0 /* scl */
+			>;
+		i2c-gpio,sda-open-drain;
+		i2c-gpio,scl-open-drain;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "disabled";
+	};
+
+	uart2: serial@1f000900 {
+		compatible = "ns16550a";
+		reg = <0x1f000900 0x40>;
+		reg-shift = <3>;
+		/* no matter for emulated port */
+		clock-frequency = <1843200>;
+	};
+
+	nor0: flash@1e000000 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "cfi-flash";
+		reg = <0x1e000000 0x00400000>;
+
+		partition@0 {
+			label = "barebox";
+			reg = <0 0x80000>;
+			read-only;
+		};
+
+		env_nor: partition@80000 {
+			label = "barebox-environment";
+			reg = <0x80000 0x10000>;
+		};
+	};
+};
+
+&i2c0 {
+	status = "okay";
+};

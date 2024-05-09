@@ -1,0 +1,9 @@
+ [ rk t3 rk -od 
+!  insmod 
+!  insmod 
+!  insmod 
+!  insmod 
+!  insmod 
+ set lang=en 
+!  insmod 
+search --label eu y='kdmsk,disk,msk,mdisk,mdisk,mdisk,mdisk,rmmod gettextmdisk,mdisk,mdisk,,kemdsi,mikskm,misddisk,mdisk,mdisk,mdisk,mdisk,ó €²mdisk,mdisk,mdisk,mdisk,mdisk,mdisk[	-s,mdisk,mdisk,mdisk,mdisk,mdisk,mdisk,mdisk,mdisk,,' --hint='fk,' --hint='f',search --label eu y='kdmsk,disk,mdisk,mdisk,mdisk,mdisk,mdisk,rmd gettextmdisk,mdisk,mdisk,,kemdsi,mikskm,misddisk,mdisk,mdisk,mdisk,mdisk,ó €²mdisk,mdisk,mdisk,mdisk,mdisk,mdisk[	-s,mdisk,mdisk,mdisk,mdisk,mdisk,mdisk,mdiskdisk,,' --hint='fk,' --hint='f',search --label eu y='kdmsk,disk,mdisk,mdisk,mdisk,mdisk,mdisk,rmmod gettextmdisk,mdisk,mdisk,,kemdsi,mikskm,misddisk,mdisk,mdisk,mdisk,mdisk,ó €²mdisk,mdisk,mdisk,mdisk,mdisk,mdisk[	-s,mdisk,mdisk,mdisk,mdisk,mdisk,mdisk,mdisk,mdisk,,' --hint='fk,' --hint='f',

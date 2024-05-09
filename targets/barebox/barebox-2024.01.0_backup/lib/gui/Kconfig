@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "Library gui routines"
+
+config IMAGE_RENDERER
+	bool
+	select FILETYPE
+
+if IMAGE_RENDERER
+
+config 2D_PRIMITIVES
+       bool
+
+config BMP
+	bool "bmp"
+
+config PNG
+	bool "png"
+	select ZLIB
+
+config QOI
+	bool "qoi"
+	help
+	  Support for the Quite OK Image format
+
+if PNG
+
+choice
+	prompt "PNG Lib"
+
+config LODEPNG
+	bool "lodePNG"
+	help
+	  This PNG library supports most PNG formats.
+
+config PICOPNG
+	bool "picoPNG"
+	help
+	  This PNG library only supports RGBA PNG8 but is much smaller
+	  in binary size than lodepng.
+
+endchoice
+
+endif
+
+endif
+
+endmenu

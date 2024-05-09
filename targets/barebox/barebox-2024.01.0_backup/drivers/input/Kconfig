@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Input device configuration
+#
+
+menu "Input device support"
+	depends on !CONSOLE_NONE
+
+config INPUT
+	bool
+
+config INPUT_MATRIXKMAP
+	bool
+
+config KEYBOARD_GPIO
+	bool "GPIO Buttons"
+	depends on GENERIC_GPIO
+	select POLLER
+	select INPUT
+	help
+	  This driver implements support for buttons connected
+	  to GPIO pins of various CPUs (and some other chips).
+
+	  Say Y here if your device has buttons connected
+	  directly to such GPIO pins. Your board-specific
+	  setup logic must also provide a platform device,
+	  with configuration data saying which GPIOs are used.
+
+config KEYBOARD_IMX_KEYPAD
+	bool "IMX Keypad"
+	depends on ARCH_IMX || COMPILE_TEST
+	select INPUT_MATRIXKMAP
+	select POLLER
+	select INPUT
+	help
+	  This driver implements support for buttons connected
+	  to the IMX keypad matrix.
+
+	  Say Y here if your device has buttons connected
+	  to the IMX keypad matrix. Your board-specific
+	  setup logic must also provide a 'matrix_keymap_data' structure,
+	  defining the used keys.
+
+config KEYBOARD_QT1070
+	tristate "Atmel AT42QT1070 Touch Sensor Chip"
+	depends on I2C && GENERIC_GPIO
+	select POLLER
+	help
+	  Say Y here if you want to use Atmel AT42QT1070 QTouch
+	  Sensor chip as input device.
+
+config KEYBOARD_TWL6030
+	tristate "TWL6030 power button"
+	depends on MFD_TWL6030
+	select POLLER
+	help
+	  Say Y here if you want to use TWL6030 power button as a key.
+
+config KEYBOARD_USB
+	bool "USB keyboard"
+	depends on USB_HOST
+	depends on CONSOLE_FULL
+	select POLLER
+	select INPUT
+	help
+	  This driver implements support for usb keyboard.
+
+config INPUT_SPECIALKEYS
+	bool "Special keys handler"
+	select POLLER
+	select INPUT
+	help
+	  Say Y here to handle key events like KEY_RESTART and KEY_POWER.
+
+config VIRTIO_INPUT
+	bool "Virtio input driver"
+	depends on VIRTIO
+	select POLLER
+	select INPUT
+	help
+	 This driver supports virtio keyboard input devices.
+
+endmenu

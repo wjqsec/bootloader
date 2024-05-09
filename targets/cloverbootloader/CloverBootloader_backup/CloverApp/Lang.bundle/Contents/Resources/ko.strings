@@ -1,0 +1,347 @@
+/*
+Clover.app
+language code: ko
+
+Copyright © 2019-2020 CloverHackyColor. All rights reserved.
+*/
+// Globals
+"Unsupported" = "Unsupported";
+"N/A" = "알수없음"; // not available (please be short)
+
+// Mount / unmount
+"Clover wants to mount %@" = "클로버는 다음 디스크를 마운트: %@";
+"Clover wants to umount %@" = "클로버는 다음 디스크를 언마운트: %@";
+"Mount" = "마운트";
+"umount" = "언마운트";
+"mount point" = "마운트 포인트";
+"*auto mount" = "*자동 마운트";
+
+// Info
+"System Serial Number:" = "시스템 시리얼 번호:";
+"Model:" = "모델:";
+"board-id:" = "보드-ID:";
+"OEM Vendor:" = "OEM 제조사:";
+"OEM Product:" = "OEM 제품:";
+"OEM Board:" = "OEM 보드:";
+"NVRAM is native:" = "네이티브 NVRAM:";
+"unknown" = "알수없음";
+"Yes" = "예"; // first char upper case
+"No" = "아니오"; // first char upper case
+
+// Sound
+"Startup Sound" = "시작음";
+"Device:" = "장치:";
+"Volume level:" = "볼륨 크기:";
+"LineOut" = "라인아웃";
+"Speaker" = "스피커";
+"Headphones" = "해드폰";
+"Garniture" = "포장";
+"Other" = "추가";
+
+"true" = "예";
+"false" = "아니오";
+
+// Theme
+"Theme:" = "테마:";
+"Themes" = "Themes"; // window title
+"No themes found" = "No themes found";
+"Manager" = "Manager";
+"Can't remove the theme" = "Can't remove the theme";
+"Show installed" = "Show installed";
+"Optimize" = "Optimize";
+"Sound:" = "사운드:";
+// Main view (pop over)
+"*Make filesystem read-write" = "*파일시스템을 읽기-쓰기로 변경";
+"*Disable Sleep Proxy Client" = "*잠자기 프록시 클라이언트 비활성화";
+"*Require CloverDaemon" = "*클로버데몬 필요";
+"Read daemon log" = "데몬 로그 읽기";
+"Read bdmesg" = "부트 로그 읽기";
+
+"Install CloverDaemonNew" = "새로운 클로버데몬 설치";
+"Uninstall CloverDaemonNew" = "새로운 클로버데몬 제거";
+
+"Update" = "업데이트";
+"Download" = "다운로드";
+"Update to r%d" = "r%d로 업데이트"; // Update to r5101
+"Check update:" = "업데이트 확인:";
+"Check now" = "지금 확인";
+
+"never" = "사용 안 함";
+"daily" = "매일";
+"weekly" = "매주";
+"monthly" = "매달";
+"last checked:" = "마지막 검사:"; // last date update was checked
+
+"Run at login" = "로그인 시 실행";
+"Close" = "닫기";
+
+// Installer
+"Install Clover" = "클로버 설치";
+"Current Clover revision" = "현재 클로버 리비전";
+"Boot Device:" = "부트 디스크:";
+"config path:" = "config 경로:";
+"Installation succeded" = "설치 성공";
+"Installation failed" = "설치 실패";
+"Clover Installer" = "클로버 설치";
+"Select a disk.." = "디스크 선택하기..";
+"Install" = "설치";
+"Uninstall" = "제거";
+"AltBoot" = "대체 부팅";
+
+// Clover Bootloader and drivers
+"UEFI only" = "UEFI 메인보드 전용 Clover를 설치합니다.";
+
+"Install alternative booting PBR" = "키를 누름으로써 대체 PBR로 부팅합니다.
+부팅 할 파일 = boot{누른키}";
+
+"Don't install any bootloader (boot0X, boot1X)" = "어느 부트로더도 설치하지 않습니다(boot0X, boot1X).
+어떠한 부트로더 파일도 필요하지 않은 UEFI 메인보드에 유용합니다.
+만약 MBR 또는 PBR섹터를 업그레이드하고 싶지 않은 경우에도 사용 가능합니다.";
+
+"Clover legacy BIOS boot sectors" = "간단히 설명하자면, Clover EFI는 3개의 필수 파일이 필요합니다.
+boot0(드라이브의 MBR에 위치)은 boot1을 읽어 들입니다.
+boot1(파티션의 boot-sector에 위치)은 boot2를 찾습니다.
+boot2(파티션의 root directory에 위치)는 /EFI/CLOVER/CLOVERIA32.efi 또는 CLOVERX64.efi, 그리고 kernel 등을 읽어 들입니다.";
+
+"boot0af" = "BIOS 메인보드에서 BIOS 부팅을 위해 사용됩니다.
+boot0af (boot0 첫번째 활성) 부트로더는 MBR의 활성화된 파티션으로 부트 시도합니다. 만약 활성 파티션이 없는 경우에는 첫번째 EFI/FAT32/HFS 파티션으로 유효한 PBR 시그니쳐로 부트 시도합니다. (먼저 MBR 그리고 GPT에 정의된 파티션)
+이 설정은 선택한 HFS/Fat32 파티션이 활성화 되게 설정합니다.";
+
+"boot0ss" = "BIOS 메인보드에서 BIOS 부팅을 위해 사용됩니다.
+boot0ss (boot0 시그내쳐 스캐닝) 부트로더는 EFI/FAT32/HFS의 첫번째 파티션으로 유효 PBR 시그니쳐를 통해 부트 시도합니다(먼저 MBR, 다음에 GPT에 정의된 파티션). 만약 활성 파티션이 없는 경우에는 MBR의 활성화된 파티션으로 부트시도 합니다.
+이 설정은 Windows가 대체로 자신의 파티션이 활성화 되어야 하므로, Windows와 같은 디스크에 설치될 경우에 좋은 선택입니다.
+이 선택은 MBR의 어떤 파티션도 활성 상태로 바꾸지 않습니다.";
+
+"boot6" = "CloverEFI 64비트 (드라이브 액세스에 SATA 사용)";
+"boot7" = "CloverEFI 64비트 (드라이브 액세스에 Bios Block I/O 사용)";
+
+"UEFI mandatory" = "UEFI, 필수 드라이버";
+"BIOS mandatory" = "BIOS, 필수 드라이버";
+
+"UEFI/Other" = "UEFI, 추가 드라이버";
+"BIOS/Other" = "BIOS, 추가 드라이버";
+
+"UEFI, but not from this installer" = "UEFI, 현재 사용자가 가지고 있는 드라이버";
+"BIOS, but not from this installer" = "BIOS, 현재 사용자가 가지고 있는 드라이버";
+
+"UEFI/FileSystem" = "UEFI, 파일시스템 드라이버";
+"BIOS/FileSystem" = "BIOS, 파일시스템 드라이버";
+
+"UEFI/HID" = "UEFI, 휴먼 인터페이스 장치";
+"BIOS/HID" = "BIOS, 휴먼 인터페이스 장치";
+
+"UEFI/FileVault2" = "UEFI, FileVault 2 드라이버";
+"BIOS/FileVault2" = "BIOS, FileVault 2 드라이버";
+
+"UEFI/MemoryFix" = "UEFI, 메모리 오류 수정 드라이버";
+
+"ApfsDriverLoader.efi" = "10.13 이상의 macOS에서 컨테이너으로부터 APFS 파일 시스템을 로드하기 위한 드라이버";
+
+"AppleImageCodec.efi" = "FileVault 2 용 PNG 및 BMP 디코딩 지원";
+
+"AppleImageLoader.efi" = "EfiBinary 서명 확인을 사용하여 AppleLoadImage 프로토콜을 구현한 보안 AppleEfiFat 바이너리 드라이버";
+
+"AppleKeyAggregator.efi" = "FileVault 2 용 부팅 UI 대화 상자 지원";
+
+"AppleKeyFeeder.efi" = "FileVault 2 용 PS/2 키보드 사용을 지원";
+
+"AppleUISupport.efi" = "FileVault 용 EfiLoginUi 지원을 위한 프로토콜 설정";
+
+"AppleUITheme.efi" = "FileVault 2 용 부팅 UI 테마를 지원";
+
+"AptioInputFix.efi" = "AMI Aptio와 같은 UEFI 펌웨어의 입력 문제를 해결하는 드라이버";
+
+"AptioMemoryFix.efi" = "AMI Aptio와 같은 UEFI 펌웨어에서 메모리 문제를 해결하기 위해 선호되는 64비트 드라이버";
+
+"OcQuirks.efi" = "A drop in replacement EFI driver for Clover that replaces AptioMemoryFix and all OsxAptioFix variants.";
+
+"OpenRuntime.efi" = "Runtime dependency for OcQuirks.efi.";
+
+"AudioDxe.efi" = "시동시 시동 음을 재생하는 HDA 드라이버.
+옵션 메뉴에서 시동 음의 출력 설정:
+볼륨 및 오디오 장치 (IOAudio를 지원하는 장치만 해당).";
+
+"FirmwareVolume.efi" = "FileVault 2 용 커서 이미지와 함께 FirmwareVolume을 만듭니다.";
+
+"FSInject.efi" = "Clover 폴더로부터 kexts의 인젝션을 제공";
+
+"GrubEXFAT.efi" = "GRUB의 ExFAT 파일 시스템 드라이버";
+
+"GrubISO9660.efi" = "GRUB의 ISO 9600 파일 시스템 드라이버";
+
+"GrubNTFS.efi" = "GRUB의 NTFS 파일 시스템 드라이버";
+
+"GrubUDF.efi" = "GRUB의 UDF 파일 시스템 드라이버";
+
+"SMCHelper.efi" = "FakeSMC가 NVRAM에 남긴 SMC 키를 복원";
+
+"XhciDxe.efi" = "USB 3.0 드라이버";
+
+"AppleEvent.uefi" = "FileVault 2 용 AppleEvent 프로토콜을 만듭니다.";
+
+"AppleGraphicsConfig.uefi" = "선택적 AppleGraphicsConfig 프로토콜을 만듭니다.";
+
+"CsmVideoDxe.efi" = "Clover GUI를 위한 비디오 드라이버는 더 다양한 해상도 설정을 가능하게 합니다. UEFI BIOS의 CSM모듈에 기반해있으므로 CSM이 활성화 되어야 합니다.
+Clover는 깨어나기에 문제가 있는 시스템에서는 정상적으로 시작하지 않을 수 있습니다. 주의해서 사용해주시기 바랍니다.";
+
+"DataHubDxe.efi" = "macOS에 필수적인 DataHub 프로토콜 지원합니다.
+대개 이미 존재하지만 간혹 없는 경우가 있습니다. 그러한 경우에는 화면에서 경고를 발견하실 수 있습니다.";
+
+"EmuVariableUefi.efi" = "UEFI 하드웨어가 없는 시스템의 NVRAM 변수 저장에 대한 해결 방법.
+대체로 UEFI 부트는 하드웨어 NVRAM을 이용하지만 간혹 이 드라이버가 필요할 수 있습니다. 본 드라이버 없이는 문제가 있는 경우에 한해서 사용하십시오.";
+
+"EnglishDxe.efi" = "EFI 셸이 UEFI에서 누락 된 경우 사용되는 유니코드 조합 프로토콜 지원";
+
+"Fat.efi" = "FAT 파일 시스템 드라이버";
+
+"HashServiceFix.efi" = "기본 UEFI BIOS에 해시가 없으면 지원되도록 고칩니다.";
+
+"HFSPlus.efi" = "순정 HFS+ 파일 시스템 드라이버";
+
+"NvmExpressDxe.efi" = "NVM Express 장치 지원용 드라이버";
+
+"OsxAptioFix3Drv.efi" = "대체 드라이버 (v3)를 사용하여 UEFI 펌웨어의 메모리 문제를 해결하십시오. 다른 AptioFix와 함께 사용하지 마십시오.";
+
+"OsxAptioFixDrv.efi" = "이전 64 비트 드라이버로 AMI Aptio와 같은 UEFI 펌웨어의 메모리 문제를 해결할 수 있습니다. 다른 AptioFix와 함께 사용하지 마십시오.";
+
+"OsxFatBinaryDrv.efi" = "10.9 이하의 OS X를 위한 FAT 바이너리 실행 드라이버";
+
+"OsxLowMemFixDrv.efi" = "OsxAptioFixDrv의 간소화 형태. 간소화되지 않는 버전과 함께 사용하지 마십시오.";
+
+"PartitionDxe.efi" = "GPT/MBR 또는 Apple 파티션 맵과 같은 희귀 파티션맵을 지원하기 위한 드라이버";
+
+"Ps2MouseDxe.efi" = "PS/2 마우스 드라이버";
+
+"UsbKbDxe.efi" = "부팅 UI 지원을 위한 키보드 드라이버";
+
+"UsbMouseDxe.efi" = "USB 마우스 드라이버";
+
+"VBoxExt2.efi" = "Virtualbox 용 Ext2/3 파일 시스템 드라이버";
+
+"VBoxExt4.efi" = "Virtualbox 용 Ext4 파일 시스템 드라이버";
+
+"VBoxHfs.efi" = "오픈소스 HFS+ 파일 시스템 드라이버";
+
+"VBoxIso9600.efi" = "ISO 9600 파일 시스템 드라이버";
+
+// Plist Editor Menu
+// Clover.app Menu
+"About Clover" = "Clover에 관하여";
+"Preferences…" = "환경설정...";
+"Services" = "서비스";
+"Hide Clover" = "Clover 가리기";
+"Hide Others" = "기타 가리기";
+"Show All" = "모두 보기";
+"Quit Clover" = "Clover 종료";
+// File
+"New" = "New";
+"Open…" = "열기...";
+"Open Recent" = "Open Recent";
+"Close" = "닫기";
+"Page Setup…" = "Page Setup…";
+"Print…" = "Print…";
+// Edit
+"Undo" = "실행 취소";
+"Redo" = "실행 복귀";
+"Cut" = "오려두기";
+"Copy" = "복사하기";
+"Paste" = "붙이기";
+"Paste and Match Style" = "붙여넣고 스타일 일치시킴";
+"Delete" = "삭제";
+"Select All" = "전체 선택";
+// Edit->Find
+"Edit" = "편집";
+"File" = "파일";
+"Find" = "찾기";
+"Find…" = "찾기...";
+"Find and Replace…" = "찾기 및 대치...";
+"Find Next" = "다음 찾기";
+"Find Previous" = "이전 찾기";
+"Use Selection for Find" = "선택 부분으로 찾기";
+"Use Selection for Replace" = "선택 부분으로 대치";
+"Jump to Selection" = "선택 부분으로 이동";
+// Edit->Spelling and Grammar
+"Spelling" = "맞춤법";
+"Spelling and Grammar" = "맞춤법 및 문법";
+"Show Spelling and Grammar" = "맞춤법 및 문법 보기";
+"Check Document Now" = "지금 도큐멘트 검사";
+"Check Spelling While Typing" = "입력하는 동안 맞춤법 검사";
+"Check Grammar With Spelling" = "맞춤법 및 문법 검사";
+"Correct Spelling Automatically" = "맞춤법 자동 수정";
+// Edit->Substitutions
+"Substitutions" = "대체";
+"Show Substitutions" = "대체 보기";
+"Smart Copy/Paste" = "스마트 복사하기/붙이기";
+"Smart Quotes" = "스마트 인용";
+"Smart Dashes" = "스마트 대시";
+"Smart Links" = "스마트 링크";
+"Text Replacement" = "텍스트 대치";
+// Edit->Transformations
+"Transformations" = "변형";
+"Make Upper Case" = "대문자로 만들기";
+"Make Lower Case" = "소문자로 만들기";
+"Capitalize" = "대문자로 시작";
+// Edit->Speech
+"Speech" = "말하기";
+"Start Speaking" = "말하기 시작";
+"Stop Speaking" = "말하기 중단";
+// View
+"View" = "View";
+"Show Toolbar" = "Show Toolbar";
+"Customize Toolbar…" = "Customize Toolbar…";
+"Show Sidebar" = "Show Sidebar";
+// Window
+"Window" = "윈도우";
+"Minimize" = "최소화";
+"Zoom" = "확대/축소";
+"Bring Clover Window to Front" = "<null>";
+"Bring All to Front" = "모두 앞으로 가져오기";
+// Help
+"Clover Help" = "Clover Help";
+
+// Plist Editor document
+"Search" = "Search";
+"Replace" = "Replace";
+"All" = "All";
+"Item" = "Item";
+"Items" = "Items";
+"Untiteled" = "Untiteled";
+"New Item" = "New Item";
+"bytes" = "bytes";
+"typing" = "typing";
+"change type" = "change type";
+"change bool value" = "change bool value";
+"replace duplicate key" = "replace duplicate key";
+"move item" = "move item";
+"paste Item" = "paste Item";
+"remove Item" = "remove Item";
+"cut Item" = "cut Item";
+"add new Item" = "add new Item";
+"No data" = "No data";
+"missing '<' at the beginning" = "missing '<' at the beginning";
+"missing '>' at the end" = "missing '>' at the end";
+"Your data contains illegal characters" = "Your data contains illegal characters";
+"bytes count is odd, must be even" = "bytes count is odd, must be even";
+"Keep editing" = "Keep editing";
+"Duplicate key in the Dictionary!" = "Duplicate key in the Dictionary!";
+"'%@' is already present in the Dictionary. Do you want to undo the editing or replace the existing key?" = "'%@' is already present in the Dictionary. Do you want to undo the editing or replace the existing key?";
+"Replace existing key" = "Replace existing key";
+"Invalid value detected!" = "Invalid value detected!";
+"Your edit is not valid. Do you want to restore last valid value or keep editing?" = "Your edit is not valid. Do you want to restore last valid value or keep editing?";
+
+// Plist Editor header
+"Key" = "Key";
+"Type" = "Type";
+"Value" = "Value";
+// Plist Editor tags
+"Dictionary" = "Dictionary";
+"Array" = "Array";
+"String" = "String";
+"Number" = "Number";
+"Bool" = "Bool";
+"Date" = "Date";
+"Data" = "Data";
+
+// Plist Editor Boolean values
+"YES" = "YES";
+"NO" = "NO";

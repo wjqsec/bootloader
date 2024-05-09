@@ -1,0 +1,5 @@
+debug=dT i
+if [ -f ${cy}nv; then l ${cy}
+elif [ ; then load_env
+fi
+i

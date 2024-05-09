@@ -1,0 +1,134 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (c) 2015 Pengutronix, Steffen Trumtrar <kernel@pengutronix.de>
+ * Copyright (c) 2017 Pengutronix, Oleksij Rempel <kernel@pengutronix.de>
+ */
+#include <common.h>
+#include <driver.h>
+#include <init.h>
+#include <io.h>
+#include <of.h>
+#include <of_device.h>
+#include <malloc.h>
+#include <linux/regmap.h>
+#include <mfd/syscon.h>
+#include <linux/nvmem-provider.h>
+
+#define IMX6Q_SNVS_HPLR		0x00
+#define IMX6Q_GPR_SL		BIT(5)
+#define IMX6Q_SNVS_LPLR		0x34
+#define IMX6Q_GPR_HL		BIT(5)
+#define IMX6Q_SNVS_LPGPR	0x68
+
+struct snvs_lpgpr_cfg {
+	int offset;
+	int offset_hplr;
+	int offset_lplr;
+};
+
+struct snvs_lpgpr_priv {
+	struct device			*dev;
+	struct regmap			*regmap;
+	struct nvmem_config		cfg;
+	const struct snvs_lpgpr_cfg	*dcfg;
+};
+
+static const struct snvs_lpgpr_cfg snvs_lpgpr_cfg_imx6q = {
+	.offset		= IMX6Q_SNVS_LPGPR,
+	.offset_hplr	= IMX6Q_SNVS_HPLR,
+	.offset_lplr	= IMX6Q_SNVS_LPLR,
+};
+
+static int snvs_lpgpr_write(void *ctx, unsigned offset, const void *val, size_t bytes)
+{
+	struct snvs_lpgpr_priv *priv = ctx;
+	const struct snvs_lpgpr_cfg *dcfg = priv->dcfg;
+	unsigned int lock_reg;
+	int ret;
+
+	ret = regmap_read(priv->regmap, dcfg->offset_hplr, &lock_reg);
+	if (ret < 0)
+		return ret;
+
+	if (lock_reg & IMX6Q_GPR_SL)
+		return -EPERM;
+
+	ret = regmap_read(priv->regmap, dcfg->offset_lplr, &lock_reg);
+	if (ret < 0)
+		return ret;
+
+	if (lock_reg & IMX6Q_GPR_HL)
+		return -EPERM;
+
+	return regmap_bulk_write(priv->regmap, dcfg->offset + offset, val,
+				 bytes / 4);
+}
+
+static int snvs_lpgpr_read(void *ctx, unsigned offset, void *val, size_t bytes)
+{
+	struct snvs_lpgpr_priv *priv = ctx;
+	const struct snvs_lpgpr_cfg *dcfg = priv->dcfg;
+
+	return regmap_bulk_read(priv->regmap, dcfg->offset + offset,
+				val, bytes / 4);
+}
+
+static int snvs_lpgpr_probe(struct device *dev)
+{
+	struct device_node *node = dev->of_node;
+	struct device_node *syscon_node;
+	struct snvs_lpgpr_priv *priv;
+	struct nvmem_config *cfg;
+	struct nvmem_device *nvmem;
+
+	if (!node)
+		return -ENOENT;
+
+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+	if (!priv)
+		return -ENOMEM;
+
+	priv->dcfg = of_device_get_match_data(dev);
+	if (!priv->dcfg)
+		return -EINVAL;
+
+	syscon_node = of_get_parent(node);
+	if (!syscon_node)
+		return -ENODEV;
+
+	priv->regmap = syscon_node_to_regmap(syscon_node);
+	if (IS_ERR(priv->regmap))
+		return PTR_ERR(priv->regmap);
+
+	cfg = &priv->cfg;
+	cfg->name = dev_name(dev);
+	cfg->dev = dev;
+	cfg->priv = priv;
+	cfg->stride = 4;
+	cfg->word_size = 4;
+	cfg->size = 4;
+	cfg->reg_write = snvs_lpgpr_write;
+	cfg->reg_read  = snvs_lpgpr_read;
+
+	nvmem = nvmem_register(cfg);
+	if (IS_ERR(nvmem)) {
+		free(priv);
+		return PTR_ERR(nvmem);
+	}
+
+	return 0;
+}
+
+static __maybe_unused struct of_device_id snvs_lpgpr_dt_ids[] = {
+	{ .compatible = "fsl,imx6q-snvs-lpgpr", .data = &snvs_lpgpr_cfg_imx6q },
+	{ .compatible = "fsl,imx6ul-snvs-lpgpr", .data = &snvs_lpgpr_cfg_imx6q },
+	{ },
+};
+MODULE_DEVICE_TABLE(of, snvs_lpgpr_dt_ids);
+
+static struct driver snvs_lpgpr_driver = {
+	.name	= "snvs_lpgpr",
+	.probe	= snvs_lpgpr_probe,
+	.of_compatible = DRV_OF_COMPAT(snvs_lpgpr_dt_ids),
+};
+device_platform_driver(snvs_lpgpr_driver);

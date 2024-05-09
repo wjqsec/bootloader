@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menu "Self contained MTD devices"
+	depends on MTD!=n
+
+config MTD_DATAFLASH
+	tristate "Support for AT45xxx DataFlash"
+	depends on SPI
+	help
+	  This enables access to AT45xxx DataFlash chips, using SPI.
+	  Sometimes DataFlash chips are packaged inside MMC-format
+	  cards; at this writing, the MMC stack won't handle those.
+
+config MTD_DATAFLASH_WRITE_VERIFY
+	bool "Verify DataFlash page writes"
+	depends on MTD_DATAFLASH
+	help
+	  This adds an extra check when data is written to the flash.
+	  It may help if you are verifying chip setup (timings etc) on
+	  your board. There is a rare possibility that even though the
+	  device thinks the write was successful, a bit could have been
+	  flipped accidentally due to device wear or something else.
+
+config MTD_M25P80
+	tristate "Support most SPI Flash chips (AT26DF, M25P, W25X, ...)"
+	depends on SPI
+	select MTD_SPI_NOR
+	select SPI_MEM
+	help
+	  This enables access to most modern SPI flash chips, used for
+	  program and data storage. Series supported include Atmel AT26DF,
+	  Spansion S25SL, SST 25VF, ST M25P, and Winbond W25X. Other chips
+	  are supported as well. See the driver source for the current list,
+	  or to add other chips.
+
+	  Note that the original DataFlash chips (AT45 series, not AT26DF),
+	  need an entirely different driver.
+
+	  Set up your spi devices with the right board-specific platform data,
+	  if you want to specify device partitioning or to use a device which
+	  doesn't support the JEDEC ID instruction.
+
+config MTD_SST25L
+	tristate "Support SST25L (non JEDEC) SPI Flash chips"
+	depends on MTD_M25P80
+	help
+	  This enables access to the non JEDEC SST25L SPI flash chips, used
+	  for program and data storage.
+
+	  Set up your spi devices with the right board-specific platform data,
+	  if you want to specify device partitioning.
+
+config MTD_DOCG3
+	bool "M-Systems Disk-On-Chip G3"
+	select BCH
+	select BITREV
+	help
+	  This provides an MTD device driver for the M-Systems DiskOnChip
+	  G3 devices.
+
+	  The driver provides access to G3 DiskOnChip, distributed by
+	  M-Systems and now Sandisk. The support is very experimental,
+	  and doesn't give access to any write operations.
+
+config MTD_MTDRAM
+	tristate "Support for NVRAM devices (FRAM, MRAM, ...)"
+	help
+	  This enables non volatile RAM to used as MTD devices.
+
+endmenu

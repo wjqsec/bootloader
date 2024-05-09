@@ -1,0 +1,3 @@
+set lang=en ""
+root=hd4294967296echo
+rmmod part_gpt

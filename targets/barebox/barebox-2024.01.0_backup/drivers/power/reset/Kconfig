@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+
+config REBOOT_MODE
+	bool
+
+config SYSCON_REBOOT_MODE
+	bool "Generic SYSCON regmap reboot mode driver"
+	depends on OFDEVICE
+	depends on MFD_SYSCON
+	select REBOOT_MODE
+	help
+	  Say y here will enable reboot mode driver. This will
+	  get reboot mode arguments and store it in SYSCON mapped
+	  register, then the bootloader can read it and take different
+	  action according to the mode.
+
+config NVMEM_REBOOT_MODE
+	bool "Generic NVMEM reboot mode driver"
+	depends on OFDEVICE
+	depends on NVMEM
+	select REBOOT_MODE
+	help
+	  Say y here will enable reboot mode driver. This will
+	  get reboot mode arguments and store it in a NVMEM cell,
+	  then the bootloader can read it and take different
+	  action according to the mode.
+
+config POWER_RESET_SYSCON
+	bool "Generic SYSCON regmap reset driver"
+	depends on OFDEVICE
+	select MFD_SYSCON
+	help
+	  Reboot support for generic SYSCON mapped register reset.
+
+config POWER_RESET_SYSCON_POWEROFF
+	bool "Generic SYSCON regmap poweroff driver"
+	depends on OFDEVICE
+	select MFD_SYSCON
+	help
+	  Poweroff support for generic SYSCON mapped register poweroff.
+
+config POWER_RESET_GPIO
+	bool "GPIO power-off driver"
+	depends on OF_GPIO
+	help
+	  This driver supports turning off your board via a GPIO line.
+	  If your board needs a GPIO high/low to power down, say Y and
+	  create a binding in your devicetree.
+
+config POWER_RESET_GPIO_RESTART
+	bool "GPIO restart driver"
+	depends on OF_GPIO
+	help
+	  This driver supports restarting your board via a GPIO line.
+	  If your board needs a GPIO high/low to restart, say Y and
+	  create a binding in your devicetree.
+
+config POWER_RESET_HTIF_POWEROFF
+	bool "HTIF poweroff driver"
+	depends on RISCV
+	help
+	  Adds poweroff support via the syscall device on systems
+	  supporting the UC Berkely Host/Target Interface (HTIF).
+
+config RESET_STM32
+	bool "STM32 restart Driver"
+	depends on ARCH_STM32MP || COMPILE_TEST
+	help
+	  This enables support for restarting and reset source
+	  computation on the STM32MP1.

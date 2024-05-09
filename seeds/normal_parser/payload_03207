@@ -1,0 +1,3 @@
+set lang=en $ermmod gfxterm
+rmmod font
+rmmod ext2

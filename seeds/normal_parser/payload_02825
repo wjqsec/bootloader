@@ -1,0 +1,3 @@
+set lang=en 
+$n load_env - ${c}v
+e

@@ -1,0 +1,171 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# barebox image generation Makefile for AT91 images
+#
+
+pblb-$(CONFIG_MACH_AT91SAM9X5EK) += start_at91sam9x5ek
+FILE_barebox-at91sam9x5ek.img = start_at91sam9x5ek.pblb
+image-$(CONFIG_MACH_AT91SAM9X5EK) += barebox-at91sam9x5ek.img
+
+pblb-$(CONFIG_MACH_AT91SAM9263EK) += start_at91sam9263ek
+FILE_barebox-at91sam9263ek.img = start_at91sam9263ek.pblb
+image-$(CONFIG_MACH_AT91SAM9263EK) += barebox-at91sam9263ek.img
+
+pblb-$(CONFIG_MACH_MICROCHIP_KSZ9477_EVB) += start_sama5d3_xplained_ung8071
+FILE_barebox-microchip-ksz9477-evb.img = start_sama5d3_xplained_ung8071.pblb
+image-$(CONFIG_MACH_MICROCHIP_KSZ9477_EVB) += barebox-microchip-ksz9477-evb.img
+
+pblb-$(CONFIG_MACH_MICROCHIP_KSZ9477_EVB) += start_sama5d3_xplained_ung8071_xload_mmc
+MAX_PBL_IMAGE_SIZE_start_sama5d3_xplained_ung8071_xload_mmc = 0xffff
+FILE_barebox-microchip-ksz9477-evb-xload-mmc.img = start_sama5d3_xplained_ung8071_xload_mmc.pblb
+image-$(CONFIG_MACH_MICROCHIP_KSZ9477_EVB) += barebox-microchip-ksz9477-evb-xload-mmc.img
+
+pblb-$(CONFIG_MACH_MICROCHIP_SAMA5D3_EDS) += start_microchip_sama5d3_eds
+FILE_barebox-microchip-sama5d3-eds.img = start_microchip_sama5d3_eds.pblb
+image-$(CONFIG_MACH_MICROCHIP_SAMA5D3_EDS) += barebox-microchip-sama5d3-eds.img
+
+pblb-$(CONFIG_MACH_MICROCHIP_SAMA5D3_EDS) += start_microchip_sama5d3_eds_xload_mmc
+MAX_PBL_IMAGE_SIZE_start_microchip_sama5d3_eds_xload_mmc = 0xffff
+FILE_barebox-microchip-sama5d3-eds-xload-mmc.img = start_microchip_sama5d3_eds_xload_mmc.pblb
+image-$(CONFIG_MACH_MICROCHIP_SAMA5D3_EDS) += barebox-microchip-sama5d3-eds-xload-mmc.img
+
+pblb-$(CONFIG_MACH_SAMA5D3_XPLAINED) += start_sama5d3_xplained
+FILE_barebox-sama5d3-xplained.img = start_sama5d3_xplained.pblb
+image-$(CONFIG_MACH_SAMA5D3_XPLAINED) += barebox-sama5d3-xplained.img
+
+pblb-$(CONFIG_MACH_SAMA5D3_XPLAINED) += start_sama5d3_xplained_xload_mmc
+MAX_PBL_IMAGE_SIZE_start_sama5d3_xplained_xload_mmc = 0xffff
+FILE_barebox-sama5d3-xplained-xload-mmc.img = start_sama5d3_xplained_xload_mmc.pblb
+image-$(CONFIG_MACH_SAMA5D3_XPLAINED) += barebox-sama5d3-xplained-xload-mmc.img
+
+pblb-$(CONFIG_MACH_SAMA5D27_SOM1) += start_sama5d27_som1_ek
+FILE_barebox-sama5d27-som1-ek.img = start_sama5d27_som1_ek.pblb
+image-$(CONFIG_MACH_SAMA5D27_SOM1) += barebox-sama5d27-som1-ek.img
+
+pblb-$(CONFIG_MACH_SAMA5D27_SOM1) += start_sama5d27_som1_ek_xload_mmc
+MAX_PBL_IMAGE_SIZE_start_sama5d27_som1_ek_xload_mmc = 0xffff
+FILE_barebox-sama5d27-som1-ek-xload-mmc.img = start_sama5d27_som1_ek_xload_mmc.pblb
+image-$(CONFIG_MACH_SAMA5D27_SOM1) += barebox-sama5d27-som1-ek-xload-mmc.img
+
+pblb-$(CONFIG_MACH_SAMA5D27_GIANTBOARD) += start_sama5d27_giantboard
+FILE_barebox-groboards-sama5d27-giantboard.img = start_sama5d27_giantboard.pblb
+image-$(CONFIG_MACH_SAMA5D27_GIANTBOARD) += barebox-groboards-sama5d27-giantboard.img
+
+pblb-$(CONFIG_MACH_SAMA5D27_GIANTBOARD) += start_sama5d27_giantboard_xload_mmc
+FILE_barebox-groboards-sama5d27-giantboard-xload-mmc.img = start_sama5d27_giantboard_xload_mmc.pblb
+MAX_PBL_IMAGE_SIZE_start_sama5d27_giantboard_xload_mmc = 0xffff
+image-$(CONFIG_MACH_SAMA5D27_GIANTBOARD) += barebox-groboards-sama5d27-giantboard-xload-mmc.img
+
+pblb-$(CONFIG_MACH_SKOV_ARM9CPU) += start_skov_arm9cpu
+FILE_barebox-skov-arm9cpu.img = start_skov_arm9cpu.pblb
+MAX_PBL_MEMORY_SIZE_start_skov_arm9cpu = 0x12000
+image-$(CONFIG_MACH_SKOV_ARM9CPU) += barebox-skov-arm9cpu.img
+
+pblb-$(CONFIG_MACH_SAMA5D4_WIFX) += start_sama5d4_wifx_l1
+FILE_barebox-wifx-l1.img = start_sama5d4_wifx_l1.pblb
+image-$(CONFIG_MACH_SAMA5D4_WIFX) += barebox-wifx-l1.img
+
+pblb-$(CONFIG_MACH_AT91SAM9261EK) += start_at91sam9261ek
+FILE_barebox-at91sam9261ek.img = start_at91sam9261ek.pblb
+image-$(CONFIG_MACH_AT91SAM9261EK) += barebox-at91sam9261ek.img
+
+pblb-$(CONFIG_MACH_AT91SAM9G10EK) += start_at91sam9g10ek
+FILE_barebox-at91sam9g10ek.img = start_at91sam9g10ek.pblb
+image-$(CONFIG_MACH_AT91SAM9G10EK) += barebox-at91sam9g10ek.img
+
+pblb-$(CONFIG_MACH_ANIMEO_IP) += start_animeo_ip
+FILE_barebox-animeo-ip.img = start_animeo_ip.pblb
+image-$(CONFIG_MACH_ANIMEO_IP) += barebox-animeo-ip.img
+
+pblb-$(CONFIG_MACH_AT91RM9200EK) += start_at91rm9200ek
+FILE_barebox-at91rm9200ek.img = start_at91rm9200ek.pblb
+image-$(CONFIG_MACH_AT91RM9200EK) += barebox-at91rm9200ek.img
+
+pblb-$(CONFIG_MACH_AT91SAM9260EK) += start_at91sam9260ek
+FILE_barebox-at91sam9260ek.img = start_at91sam9260ek.pblb
+image-$(CONFIG_MACH_AT91SAM9260EK) += barebox-at91sam9260ek.img
+
+pblb-$(CONFIG_MACH_AT91SAM9G20EK) += start_at91sam9g20ek
+FILE_barebox-at91sam9g20ek.img = start_at91sam9g20ek.pblb
+image-$(CONFIG_MACH_AT91SAM9G20EK) += barebox-at91sam9g20ek.img
+
+pblb-$(CONFIG_MACH_AT91SAM9M10G45EK) += start_at91sam9m10g45ek
+FILE_barebox-at91sam9m10g45ek.img = start_at91sam9m10g45ek.pblb
+image-$(CONFIG_MACH_AT91SAM9M10G45EK) += barebox-at91sam9m10g45ek.img
+
+pblb-$(CONFIG_MACH_AT91SAM9M10IHD) += start_at91sam9m10ihd
+FILE_barebox-at91sam9m10ihd.img = start_at91sam9m10ihd.pblb
+image-$(CONFIG_MACH_AT91SAM9M10IHD) += barebox-at91sam9m10ihd.img
+
+pblb-$(CONFIG_MACH_AT91SAM9N12EK) += start_at91sam9n12ek
+FILE_barebox-at91sam9n12ek.img = start_at91sam9n12ek.pblb
+image-$(CONFIG_MACH_AT91SAM9N12EK) += barebox-at91sam9n12ek.img
+
+pblb-$(CONFIG_MACH_DSS11) += start_dss11
+FILE_barebox-dss11.img = start_dss11.pblb
+image-$(CONFIG_MACH_DSS11) += barebox-dss11.img
+
+pblb-$(CONFIG_MACH_HABA_KNX_LITE) += start_haba_knx_lite
+FILE_barebox-haba-knx-lite.img = start_haba_knx_lite.pblb
+image-$(CONFIG_MACH_HABA_KNX_LITE) += barebox-haba-knx-lite.img
+
+pblb-$(CONFIG_MACH_PM9261) += start_pm9261
+FILE_barebox-pm9261.img = start_pm9261.pblb
+image-$(CONFIG_MACH_PM9261) += barebox-pm9261.img
+
+pblb-$(CONFIG_MACH_PM9263) += start_pm9263
+FILE_barebox-pm9263.img = start_pm9263.pblb
+image-$(CONFIG_MACH_PM9263) += barebox-pm9263.img
+
+pblb-$(CONFIG_MACH_PM9G45) += start_pm9g45
+FILE_barebox-pm9g45.img = start_pm9g45.pblb
+image-$(CONFIG_MACH_PM9G45) += barebox-pm9g45.img
+
+pblb-$(CONFIG_MACH_QIL_A9260) += start_qil_a926x
+FILE_barebox-qil-a926x.img = start_qil_a926x.pblb
+image-$(CONFIG_MACH_QIL_A9260) += barebox-qil-a926x.img
+
+pblb-$(CONFIG_MACH_QIL_A9G20) += start_qil_a9g20
+FILE_barebox-qil-a9g20.img = start_qil_a9g20.pblb
+image-$(CONFIG_MACH_QIL_A9G20) += barebox-qil-a9g20.img
+
+pblb-$(CONFIG_MACH_GE863) += start_telit_evk_pro3
+FILE_barebox-telit-evk-pro3.img = start_telit_evk_pro3.pblb
+image-$(CONFIG_MACH_GE863) += barebox-telit-evk-pro3.img
+
+pblb-$(CONFIG_MACH_TNY_A9260) += start_tny_a9260
+FILE_barebox-tny-a9260.img = start_tny_a9260.pblb
+image-$(CONFIG_MACH_TNY_A9260) += barebox-tny-a9260.img
+
+pblb-$(CONFIG_MACH_TNY_A9263) += start_tny_a9263
+FILE_barebox-tny-a9263.img = start_tny_a9263.pblb
+image-$(CONFIG_MACH_TNY_A9263) += barebox-tny-a9263.img
+
+pblb-$(CONFIG_MACH_TNY_A9G20) += start_tny_a9g20
+FILE_barebox-tny-a9g20.img = start_tny_a9g20.pblb
+image-$(CONFIG_MACH_TNY_A9G20) += barebox-tny-a9g20.img
+
+pblb-$(CONFIG_MACH_USB_A9260) += start_usb_a9260
+FILE_barebox-usb-a9260.img = start_usb_a9260.pblb
+image-$(CONFIG_MACH_USB_A9260) += barebox-usb-a9260.img
+
+pblb-$(CONFIG_MACH_USB_A9263) += start_usb_a9263
+FILE_barebox-usb-a9263.img = start_usb_a9263.pblb
+image-$(CONFIG_MACH_USB_A9263) += barebox-usb-a9263.img
+
+pblb-$(CONFIG_MACH_USB_A9263) += start_usb_a9263_128m
+FILE_barebox-usb-a9263-128m.img = start_usb_a9263_128m.pblb
+image-$(CONFIG_MACH_USB_A9263) += barebox-usb-a9263-128m.img
+
+pblb-$(CONFIG_MACH_USB_A9G20) += start_usb_a9g20
+FILE_barebox-usb-a9g20.img = start_usb_a9g20.pblb
+image-$(CONFIG_MACH_USB_A9G20) += barebox-usb-a9g20.img
+
+pblb-$(CONFIG_MACH_CALAO) += start_tny_a9260 start_tny_a9g20 \
+			     start_usb_a9260 start_usb_a9g20
+FILE_barebox-tny-a9260.img = start_tny_a9260.pblb
+FILE_barebox-tny-a9g20.img = start_tny_a9g20.pblb
+FILE_barebox-usb-a9260.img = start_usb_a9260.pblb
+FILE_barebox-usb-a9g20.img = start_usb_a9g20.pblb
+image-$(CONFIG_MACH_CALAO) += barebox-tny-a9260.img barebox-tny-a9g20.img \
+			      barebox-usb-a9260.img barebox-usb-a9g20.img

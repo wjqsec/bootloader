@@ -1,0 +1,349 @@
+/*
+Clover.app
+language code: it
+
+Copyright © 2019-2020 CloverHackyColor. All rights reserved.
+*/
+// Globals
+"Unsupported" = "Non supportato";
+"N/A" = "N/D"; // not available (please be short)
+
+// Mount / unmount
+"Clover wants to mount %@" = "Clover vuole montare %@";
+"Clover wants to umount %@" = "Clover vuole smontare %@";
+"Mount" = "Monta";
+"umount" = "smonta";
+"mount point" = "punto di montaggio";
+"*auto mount" = "*auto monta";
+
+// Info
+"System Serial Number:" = "Numero Seriale di Sistema:";
+"Model:" = "Modello:";
+"board-id:" = "Identificativo Scheda:";
+"OEM Vendor:" = "Venditore OEM:";
+"OEM Product:" = "Prodotto OEM:";
+"OEM Board:" = "Scheda OEM:";
+"NVRAM is native:" = "NVRAM è nativa:";
+"unknown" = "sconosciuto";
+"Yes" = "Si"; // first char upper case
+"No" = "No"; // first char upper case
+
+// Sound
+"Startup Sound" = "Suono all'avvio";
+"Device:" = "Dispositivo:";
+"Volume level:" = "Volume:";
+"LineOut" = "Line Out";
+"Speaker" = "Altoparlanti";
+"Headphones" = "Cuffie";
+"Garniture" = "Accessori";
+"Other" = "Altro";
+
+"true" = "vero";
+"false" = "falso";
+
+// Theme
+"Theme:" = "Tema:";
+"Themes" = "Temi"; // window title
+"No themes found" = "Nessun tema trovato";
+"Manager" = "Gestore";
+"Can't remove the theme" = "Non posso rimuovere il tema";
+"Show installed" = "Mostra installati";
+"Optimize" = "Ottimizza";
+"Sound:" = "Suono:";
+// Main view (pop over)
+"*Make filesystem read-write" = "*Rendi il filesystem scrivibile";
+"*Disable Sleep Proxy Client" = "*Disabilita Sleep Proxy Client";
+"*Require CloverDaemon" = "*Richiede CloverDaemon";
+"Read daemon log" = "Leggi il daemon log";
+"Read bdmesg" = "Leggi il boot log";
+
+"Install CloverDaemonNew" = "Installa il demone CloverDaemonNew";
+"Uninstall CloverDaemonNew" = "Disinstalla il demone CloverDaemonNew";
+
+"Update" = "Aggiorna";
+"Download" = "Scarica";
+"Update to r%d" = "Aggiorna a r%d"; // Update to r5101
+"Check update:" = "Controlla:";
+"Check now" = "Controlla adesso";
+
+"never" = "mai";
+"daily" = "giornalmente";
+"weekly" = "settimanalmente";
+"monthly" = "mensilmente";
+"last checked:" = "ultimo controllo:"; // last date update was checked
+
+"Run at login" = "Avvia al login";
+"Close" = "Chiudi";
+
+// Installer
+"Install Clover" = "Installa Clover";
+"Current Clover revision" = "Revisione corrente";
+"Boot Device:" = "Disco di avvio:";
+"config path:" = "percorso config:";
+"Installation succeded" = "Installazione riuscita";
+"Installation failed" = "Installazione fallita";
+"Clover Installer" = "Clover Installer";
+"Select a disk.." = "Seleziona un disco..";
+"Install" = "Installa";
+"Uninstall" = "Disinstalla";
+"AltBoot" = "boot alternativo";
+
+// Clover Bootloader and drivers
+"UEFI only" = "Installazione specifica di Clover solo per schede madri con UEFI.";
+
+"Install alternative booting PBR" = "Consente di selezionare il file di avvio premendo un tasto.
+File di avvio = boot{tasto premuto}";
+
+"Don't install any bootloader (boot0X, boot1X)" = "Non installare nessun bootloader (boot0X, boot1X).
+Utile per schede madri con bios UEFI che non hanno bisogno dei file per il bootloader.
+Può essere usato anche se non si desidera aggiornare i settori MBR o PBR.";
+
+"Clover legacy BIOS boot sectors" = "Clover EFI richiede tre file essenziali. (in semplici termini)
+boot0 (Sul disco MBR) responsabile del caricamento del boot1.
+boot1 (Settore di avvio della partizione) per trovare il boot2.
+boot2 (Nella cartella principale della partizione) per caricare CLOVERX64.efi, e il kernel etc.";
+
+"boot0af" = "Necessario per l'avvio da schede madri con BIOS.
+boot0af (boot0 active first) bootloader cerca di avviare la partizione attiva definita nella MBR. Se non vi è alcuna partizione attiva, tenterà di avviare la prima partizione EFI/FAT32/HFS (definita nella MBR e poi nella GPT) con una signature PBR valida.
+Se questo è selezionato la partizione HFS e Fat32 saranno attivate.";
+
+"boot0ss" = "Necessario per l'avvio da schede madri con BIOS.
+boot0ss (boot0 signature scanning) bootloader cerca di avviare la prima partizione EFI/FAT32/HFS (definita nella MBR e poi nella GPT) con una signature PBR valida. Se nessuna partizione è stata trovata, cercherà di avviare la partizione attiva definita nella MBR.
+Questa è una buona scelta quando si ha Windows installato sullo stesso disco perché Windows richiede che la partizione sia attiva.
+Questa scelta non attiverà alcuna partizione nella MBR.";
+
+"boot6" = "CloverEFI 64-bit che utilizza interfaccia SATA per accedere alle unità";
+"boot7" = "CloverEFI 64-bit che utilizza Bios Block I/O per accedere alle unità.
+Necessario anche per accedere ad unità che utilizzano controller RAID, JMicron, NForce ed altri controller SATA/ATA/SCSI di terze parti.";
+
+"UEFI mandatory" = "UEFI, drivers raccomandati";
+"BIOS mandatory" = "BIOS, drivers raccomandati";
+
+"UEFI/Other" = "UEFI, drivers addizionali";
+"BIOS/Other" = "UEFI, drivers addizionali";
+
+"UEFI, but not from this installer" = "UEFI, ma non inclusi in questo installer";
+"BIOS, but not from this installer" = "BIOS, ma non inclusi in questo installer";
+
+"UEFI/FileSystem" = "UEFI, drivers per i file system";
+"BIOS/FileSystem" = "BIOS, drivers per i file system";
+
+"UEFI/HID" = "UEFI, Dispositivi di puntamento";
+"BIOS/HID" = "BIOS, Dispositivi di puntamento";
+
+"UEFI/FileVault2" = "UEFI, drivers per FileVault 2";
+"BIOS/FileVault2" = "BIOS, drivers per FileVault 2";
+
+"UEFI/MemoryFix" = "UEFI, drivers per correzioni della memoria";
+
+"ApfsDriverLoader.efi" = "Supporto per il driver del filesystem APFS incluso nel contenitore di macOS 10.14.";
+
+"AppleImageCodec.efi" = "Decodifica PNG e BMP per FileVault2.";
+
+"AppleImageLoader.efi" = "Assicura il driver binario AppleEfiFat con l’implementazione del protocollo AppleLoadImage e con la verifica della firma EfiBinary.";
+
+"AppleKeyAggregator.efi" = "Supporto per il boot UI dialog di FileVault2.";
+
+"AppleKeyFeeder.efi" = "Supporto per tastiere PS/2 da usare con FileVault2";
+
+"AppleUISupport.efi" = "Set di protocolli per supportare EfiLoginUi di FileVault.";
+
+"AppleUITheme.efi" = "Crea il supporto boot UI Themes perFileVault2.";
+
+"AptioInputFix.efi" = "Driver che risolve i problemi di input nei firmware UEFI come AMI Aptio.";
+
+"AptioMemoryFix.efi" = "Driver preferito che risolve i problemi di memoria sul firmware UEFI come AMI Aptio bios.";
+
+"OcQuirks.efi" = "A drop in replacement EFI driver for Clover that replaces AptioMemoryFix and all OsxAptioFix variants.";
+
+"OpenRuntime.efi" = "Runtime dependency for OcQuirks.efi.";
+
+"AudioDxe.efi" = "Driver HDA per il suono al boot.";
+
+"FirmwareVolume.efi" = "Crea il FirmwareVolume con ‘cursor images’ per FileVault2.";
+
+"FSInject.efi" = "Abilita l’iniezione di estensioni del kernel dalle cartelle di Clover e consente di forzare il caricamento da /System/Library/Extensions e /Library/Extensions.";
+
+"GrubEXFAT.efi" = "Driver GRUB per il filesystem ExFAT.";
+
+"GrubISO9660.efi" = "Driver GRUB per il filesystem ISO9600.";
+
+"GrubNTFS.efi" = "Driver GRUB per il filesystem NTFS.";
+
+"GrubUDF.efi" = "Driver GRUB per il filesystem UDF.";
+
+"SMCHelper.efi" = "Ripristina le chiavi SMC lasciate nell’NVRAM da FakeSMC.";
+
+"XhciDxe.efi" = "Driver USB 3.0";
+
+"AppleEvent.uefi" = "Crea il protocollo AppleEvent per FileVault2.";
+
+"AppleGraphicsConfig.uefi" = "Crea il protocollo opzionale AppleGraphicsConfig.";
+
+"CsmVideoDxe.efi" = "Driver video per l'interfaccia grafica utente (GUI) di Clover che permette di scegliere più risoluzioni.
+Basato sul modulo CSM (Compatibility Support Module) dell UEFI BIOS e richiede che il CSM sia attivato.
+Clover potrebbe non avviarsi correttamente con questo driver o potrebbe causare problemi durante la fase di sonno/risveglio!
+Usare con cautela!";
+
+"DataHubDxe.efi" = "Aggiunge supporto al protocollo DataHub necessario per MacOSX.
+Questo protocollo è già presente nella maggior parte dei casi, ma può mancare in determinate configurazioni. In questo caso si dovrebbe ricevere un avviso sullo schermo.";
+
+"EmuVariableUefi.efi" = "Driver per il supporto delle variabili NVRAM necessarie per MacOSX.
+La maggior parte dei firmware UEFI utilizzano hardware NVRAM, ma in rari casi è necessario il driver.
+Usare solo se si ha un problema senza di questo driver.";
+
+"EnglishDxe.efi" = "Supporto per il protocollo UnicodeCollation usato nell’EFI Shell se manca nel firmware UEFI.";
+
+"Fat.efi" = "Driver per il filesystem FAT.";
+
+"HashServiceFix.efi" = "Risolve il support Hash se assente ne BIOS UEFI nativo.";
+
+"HFSPlus.efi" = "Driver alternativo per il filesystem HFS+.";
+
+"NvmExpressDxe.efi" = "Driver per il supporto ai devices NVM Express.";
+
+"OsxAptioFix3Drv.efi" = "Driver alternativo (v3) per risolvere i problemi di memoria nei firmware UEFI. Da non usare con altri driver di tipo AptioFix insieme.";
+
+"OsxAptioFixDrv.efi" = "Vecchio driver  per risolvere i problemi di memoria nei firmware UEFI come AMI Aptio. Da non usare con altri driver di tipo AptioFix insieme.";
+
+"OsxFatBinaryDrv.efi" = "Driver per supporto dei binari FAT (32/64 bit) usato in 10.9 e precedenti.";
+
+"OsxLowMemFixDrv.efi" = "Driver che permette, durante l'avvio UEFI, di riallocare gli indirizzi per boot.efi e quindi di avviare correttamente OS X Mountain Lion (10.8). E' una variante semplificata di OsxAptioFixDrv (non utilizzare entrambi insieme).";
+
+"PartitionDxe.efi" = "Driver che aggiunge supporto a tabelle di partizione non comuni come: GPT/MBR ibrido o Mappa Partizione Apple.";
+
+"Ps2MouseDxe.efi" = "Driver per mouse PS/2.";
+
+"UsbKbDxe.efi" = "Driver della tastiera per il supporto boot UI.";
+
+"UsbMouseDxe.efi" = "Driver per mouse USB.";
+
+"VBoxExt2.efi" = "Driver per accedere a partizioni formattate in ext2/3.";
+
+"VBoxExt4.efi" = "Driver per accedere a partizioni formattate in ext4.";
+
+"VBoxHfs.efi" = "Driver per il filesystem HFS+.";
+
+"VBoxIso9600.efi" = "Driver per il filesystem ISO 9600.";
+
+// Plist Editor Menu
+// Clover.app Menu
+"About Clover" = "Informazione su Clover";
+"Preferences…" = "Preferenze…";
+"Services" = "Servizi";
+"Hide Clover" = "Nascondi Clover";
+"Hide Others" = "Nascondi altri";
+"Show All" = "Mostra tutto";
+"Quit Clover" = "Esci da Clover";
+// File
+"New" = "Nuovo";
+"Open…" = "Apri…";
+"Open Recent" = "Apri recente";
+"Close" = "Chiudi";
+"Page Setup…" = "Setup pagina…";
+"Print…" = "Stampa…";
+// Edit
+"Undo" = "Annulla";
+"Redo" = "Ripeti";
+"Cut" = "Taglia";
+"Copy" = "Copia";
+"Paste" = "Incolla";
+"Paste and Match Style" = "Incolla e associa stile";
+"Delete" = "Elimina";
+"Select All" = "Seleziona tutto";
+// Edit->Find
+"Edit" = "Modifica";
+"File" = "File";
+"Find" = "Cerca";
+"Find…" = "Cerca…";
+"Find and Replace…" = "Cerca e sostituire…";
+"Find Next" = "Cerca successivo";
+"Find Previous" = "Cerca precedente";
+"Use Selection for Find" = "Usa selezione per Cercare";
+"Use Selection for Replace" = "Usa selezione per sostituire";
+"Jump to Selection" = "Vai a selezione";
+// Edit->Spelling and Grammar
+"Spelling" = "Controllo ortografia";
+"Spelling and Grammar" = "Controllo ortografia e grammatica";
+"Show Spelling and Grammar" = "Mostra controllo ortografia e grammatica";
+"Check Document Now" = "Verifica documento ora";
+"Check Spelling While Typing" = "Verifica ortografia durante la digitazione";
+"Check Grammar With Spelling" = "Verifica grammaticale e ortografica";
+"Correct Spelling Automatically" = "Correggi ortografia automaticamente";
+// Edit->Substitutions
+"Substitutions" = "Sostituzioni";
+"Show Substitutions" = "Mostra sostituzioni";
+"Smart Copy/Paste" = "Copia/Incolla smart";
+"Smart Quotes" = "Virgolette smart";
+"Smart Dashes" = "Linee tratteggiate smart";
+"Smart Links" = "Link smart";
+"Text Replacement" = "Sostituzione del testo";
+// Edit->Transformations
+"Transformations" = "Trasformazioni";
+"Make Upper Case" = "Rendi in maiuscolo";
+"Make Lower Case" = "Rendi in minuscolo";
+"Capitalize" = "Iniziali maiuscole";
+// Edit->Speech
+"Speech" = "Sintesi e riconoscimento vocale";
+"Start Speaking" = "Inizia riproduzione";
+"Stop Speaking" = "Interrompi riproduzione";
+// View
+"View" = "Vista";
+"Show Toolbar" = "Mostra Toolbar";
+"Customize Toolbar…" = "Personalizza Toolbar…";
+"Show Sidebar" = "Mostra Sidebar";
+// Window
+"Window" = "Finestra";
+"Minimize" = "Riduci a icona";
+"Zoom" = "Ridimensiona";
+"Bring Clover Window to Front" = "<null>";
+"Bring All to Front" = "Porta tutto in primo piano";
+// Help
+"Clover Help" = "Topic di riferimento";
+
+// Plist Editor document
+"Search" = "Cerca";
+"Replace" = "Sostituisci";
+"All" = "Tutto";
+"Item" = "Elemento";
+"Items" = "Elementi";
+"Untiteled" = "Senza titolo";
+"New Item" = "Nuovo elemento";
+"bytes" = "bytes";
+"typing" = "digitando";
+"change type" = "cambia tag";
+"change bool value" = "cambia valore booleano";
+"replace duplicate key" = "sostituisci chiave esistente";
+"move item" = "muovi elemento";
+"paste Item" = "incolla elemento";
+"remove Item" = "rimuovi elemento";
+"cut Item" = "taglia elemento";
+"add new Item" = "aggiungi nuovo elemento";
+"No data" = "Nessun dato";
+"missing '<' at the beginning" = "carattere '<' mancante all'inizio";
+"missing '>' at the end" = "carattere '>' mancante alla fine";
+"Your data contains illegal characters" = "I tuoi dati contengono caratteri non consentiti";
+"bytes count is odd, must be even" = "La conta dei bytes count è dispari, deve essere pari";
+"Keep editing" = "Continua a scrivere";
+"Duplicate key in the Dictionary!" = "Chiave duplicata nel Dizionario!";
+"'%@' is already present in the Dictionary. Do you want to undo the editing or replace the existing key?" = "'%@' è già presente nel Dizionario. Vuoi annullare le modifiche o vuoi continuare a scrivere?";
+"Replace existing key" = "Sostituisci chiave esistente";
+"Invalid value detected!" = "Rilevato un valore non valido!";
+"Your edit is not valid. Do you want to restore last valid value or keep editing?" = "La tua modifica non è valida. Vuoi ripristinare il vecchio valore o vuoi continuare a scrivere?";
+
+// Plist Editor header
+"Key" = "Chiave";
+"Type" = "Tag";
+"Value" = "Valore";
+// Plist Editor tags
+"Dictionary" = "Dizionario";
+"Array" = "Array";
+"String" = "Stringa";
+"Number" = "Numero";
+"Bool" = "Bool";
+"Date" = "Data";
+"Data" = "Dati";
+
+// Plist Editor Boolean values
+"YES" = "SI";
+"NO" = "NO";

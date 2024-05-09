@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if MACH_MIPS_XBURST
+
+config CPU_JZ4755
+	bool
+	select SYS_HAS_CPU_MIPS32_R1
+	select WATCHDOG
+	select WATCHDOG_JZ4740
+
+config CPU_JZ4780
+	bool
+	select SYS_HAS_CPU_MIPS32_R2
+	select WATCHDOG
+	select WATCHDOG_JZ4740
+
+config BOARD_RZX50
+	bool "Ritmix RZX-50"
+	select CPU_JZ4755
+
+config BOARD_CI20
+	bool "Imagination Creator CI20"
+	select CPU_JZ4780
+	select HAS_DM9000
+
+if DEBUG_LL
+choice
+	prompt "DEBUG_LL driver"
+
+config DEBUG_JZ4750D_UART
+	bool "JZ4750D Debug UART"
+
+config DEBUG_JZ4780_UART
+	bool "JZ4780 Debug UART"
+
+endchoice
+
+choice
+	prompt "DEBUG_LL port"
+
+config JZ47XX_DEBUG_LL_UART0
+	depends on CPU_JZ4755 || CPU_JZ4780
+	bool "UART0"
+
+config JZ47XX_DEBUG_LL_UART1
+	depends on CPU_JZ4755 || CPU_JZ4780
+	bool "UART1"
+
+config JZ47XX_DEBUG_LL_UART2
+	depends on CPU_JZ4755 || CPU_JZ4780
+	bool "UART2"
+
+config JZ47XX_DEBUG_LL_UART3
+	depends on CPU_JZ4780
+	bool "UART3"
+
+config JZ47XX_DEBUG_LL_UART4
+	depends on CPU_JZ4780
+	bool "UART4"
+
+endchoice
+endif # DEBUG_LL
+
+endif # MACH_MIPS_XBURST

@@ -1,0 +1,6 @@
+set lang=en m$56
+ [  [ -s[ [   [ -s  [  -ot [ sk -od font
+rmmod gfxterm
+ [ -s  [ -s[   [ -s  [ -s  [ -s  [ sk -ot [ sk -od font
+rmmod font
+moext--1

@@ -1,0 +1,13 @@
+&{/ahb} {
+	wdt0: wdt@18060008 {
+		compatible = "qca,ar9331-wdt", "qca,ar9344-wdt";
+		reg = <0x18060008 0x8>;
+		clocks = <&pll ATH79_CLK_CPU>;
+	};
+};
+
+&eth0 {
+	reg = <0x19000000 0x200>,
+	      <0x18070000 0x00000100>;
+	reg-names = "ge0", "gmac";
+};

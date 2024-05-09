@@ -1,0 +1,145 @@
+#!/bin/sh
+
+. /env/config
+
+if [ -f /env/bin/boot_board ]; then
+	. /env/bin/boot_board
+fi
+
+if [ x$kernel_loc = xnet ]; then
+	kernel_loc=tftp
+fi
+
+while getopt "hk:r:i:m:o:" Option
+do
+if [ ${Option} = k ]; then
+	kernel_loc=${OPTARG}
+elif [ ${Option} = r ]; then
+	rootfs_loc=${OPTARG}
+elif [ ${Option} = o ]; then
+	oftree_loc=${OPTARG}
+elif [ ${Option} = i ]; then
+	ip=${OPTARG}
+elif [ ${Option} = m ]; then
+	mode=${OPTARG}
+else
+	. /env/bin/_boot_help
+	exit 0
+fi
+done
+
+if [ x$mode = xnand ]; then
+	rootfs_loc=nand
+	kernel_loc=nand
+elif [ x$mode = xnor ]; then
+	rootfs_loc=nor
+	kernel_loc=nor
+elif [ x$mode = xnfs ]; then
+	rootfs_loc=net
+	kernel_loc=nfs
+elif [ x$mode = xtftp ]; then
+	rootfs_loc=net
+	kernel_loc=tftp
+elif [ x$mode = xdisk ]; then
+	rootfs_loc=disk
+	kernel_loc=disk
+fi
+
+if [ x$ip = xdhcp -o x$ip = "xdhcp-barebox" ]; then
+	if [ x$kernel_loc = xnfs -o x$kernel_loc = xtftp ]; then
+		dhcp
+		if [ x${global.dhcp.rootpath} != x ]; then
+			nfsroot=${global.dhcp.rootpath}
+		fi
+		if [ x${global.dhcp.bootfile} != x ]; then
+			kernelimage=${global.dhcp.bootfile}
+		fi
+		if [ x$global.dhcp.oftree_file} != x ]; then
+			oftreeimage=${global.dhcp.oftree_file}
+		fi
+	fi
+fi
+
+if [ x$ip = xdhcp -o ]; then
+	bootargs="$bootargs ip=dhcp"
+elif [ x$ip = xnone ]; then
+	bootargs="$bootargs ip=none"
+else
+	bootargs="$bootargs ip=$eth0.ipaddr:$eth0.serverip:$eth0.gateway:$eth0.netmask::eth0:"
+fi
+
+
+if [ x$rootfs_loc = xnet ]; then
+	bootargs="$bootargs root=/dev/nfs nfsroot=$nfsroot,v3,tcp noinitrd"
+elif [ x$rootfs_loc = xdisk ]; then
+	bootargs="$bootargs root=/dev/$rootfs_part_linux_dev rootfstype=$rootfs_type noinitrd rootwait"
+elif [ x$rootfs_loc = xinitrd ]; then
+	bootargs="$bootargs root=/dev/ram0 rdinit=/sbin/init"
+else
+	if [ x$rootfs_loc = xnand ]; then
+		rootfs_mtdblock=$rootfs_mtdblock_nand
+	else
+		rootfs_mtdblock=$rootfs_mtdblock_nor
+	fi
+
+	if [ x$rootfs_type = xubifs ]; then
+		if [ -z $ubiroot ]; then
+			ubiroot="root"
+		fi
+		bootargs="$bootargs root=ubi0:$ubiroot ubi.mtd=$rootfs_mtdblock"
+	else
+		bootargs="$bootargs root=/dev/mtdblock$rootfs_mtdblock"
+	fi
+
+	bootargs="$bootargs rootfstype=$rootfs_type noinitrd"
+fi
+
+if [ -n $nor_parts ]; then
+	mtdparts="${mtdparts}physmap-flash.0:${nor_parts}"
+fi
+
+if [ -n $nand_parts ]; then
+	if [ -n ${mtdparts} ]; then
+		mtdparts="${mtdparts};"
+	fi
+	mtdparts="${mtdparts}${nand_device}:${nand_parts}"
+fi
+
+if [ -n $mtdparts ]; then
+	bootargs="${bootargs} mtdparts=${mtdparts}"
+fi
+
+if [ x$kernel_loc = xnfs -o x$kernel_loc = xtftp ]; then
+	kdev=/image
+	$kernel_loc $kernelimage $kdev || exit 1
+elif [ x$kernel_loc = xnor ]; then
+	kdev="/dev/nor0.kernel"
+elif [ x$kernel_loc = xnand ]; then
+	kdev="/dev/nand0.kernel.bb"
+elif [ x$kernel_loc = xdisk ]; then
+	kdev="/dev/$kernel_part"
+else
+	echo "error: set kernel_loc to one of 'tftp', 'nfs', 'nand', 'nor' or 'disk'"
+	exit 1
+fi
+
+if [ x$oftree_loc = xnfs -o x$oftree_loc = xtftp ]; then
+	odev=/oftree
+	$oftree_loc $oftreeimage $odev || exit 1
+elif [ x$oftree_loc = xnor ]; then
+	odev="/dev/nor0.oftree"
+elif [ x$oftree_loc = xnand ]; then
+	odev="/dev/nand0.oftree.bb"
+elif [ x$oftree_loc = xdisk ]; then
+	odev="/dev/$oftree_part"
+fi
+
+[ x$odev = x ] || bootm_opt="$bootm_opt -o $odev"
+
+echo "booting kernel from $kdev"
+
+#try to execute the file
+# it does not work as example for /dev as the file is not executable
+$kdev $bootm_opt
+# fall back on bootm
+bootm $bootm_opt $kdev

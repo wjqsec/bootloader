@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+name=$1
+dtb=$2
+imd=$3
+
+echo "#include <asm/barebox.lds.h>"
+echo "#include <asm-generic/pointer.h>"
+echo ".section .note.GNU-stack,\"\",%progbits"
+
+le32() {
+	printf ".byte 0x%02x, 0x%02x, 0x%02x, 0x%02x\n" \
+		$(($1 & 0xff))				\
+		$((($1 >> 8) & 0xff))			\
+		$((($1 >> 16) & 0xff))			\
+		$((($1 >> 24) & 0xff))
+}
+
+FDTGET=scripts/dtc/fdtget
+
+if [ "$imd" = "y" ]; then
+	echo ".section .barebox_imd_0.${name},\"a\""
+	echo ".global __barebox_imd_OF_${name}"
+	echo "__barebox_imd_OF_${name}:"
+
+	compat=$($FDTGET -d notfound -t bi "$dtb" / compatible | sed "s^ ^,^g")
+	if [ "$compat" != "notfound" ]; then
+
+		compatlen=$($FDTGET -t s "$dtb" / compatible | wc -c)
+		le32 0x640c8005 # IMD_TYPE_OF_COMPATIBLE
+		le32 $compatlen
+		echo ".byte " $compat
+		echo ".balign 4"
+	fi
+
+	model=$($FDTGET -d notfound -t bi "$dtb" / model | sed "s^ ^,^g")
+
+	if [ "$model" != "notfound" ]; then
+		modellen=$($FDTGET -t s "$dtb" / model | wc -c)
+		le32 0x640c8004 # IMD_TYPE_MODEL
+		le32 $modellen
+		echo ".byte " $model
+		echo ".balign 4"
+	fi
+fi
+
+echo ".section .dtb.rodata.${name},\"a\""
+echo ".balign STRUCT_ALIGNMENT"
+echo ".global __dtb_${name}_start"
+echo "__dtb_${name}_start:"
+echo ".incbin \"$dtb\""
+echo "__dtb_${name}_end:"
+echo ".global __dtb_${name}_end"
+if [ "$imd" = "y" ]; then
+	echo ".balign ASM_SZPTR"
+	echo "ASM_PTR __barebox_imd_OF_${name}"
+fi
+echo ".balign STRUCT_ALIGNMENT"
+
+compressed=$(${CONFIG_SHELL} "${srctree}/scripts/file-size.sh" $dtb.z)
+uncompressed=$(${CONFIG_SHELL} "${srctree}/scripts/file-size.sh" $dtb)
+
+echo "#if defined(CONFIG_USE_COMPRESSED_DTB) && defined(__PBL__)"
+echo ".section .dtbz.rodata.${name},\"a\""
+echo ".balign STRUCT_ALIGNMENT"
+echo ".global __dtb_z_${name}_start"
+echo "__dtb_z_${name}_start:"
+printf ".int 0x%08x\n"  0x7b66bcbd
+printf ".int 0x%08x\n"  $compressed
+printf ".int 0x%08x\n"  $uncompressed
+echo ".incbin \"$dtb.z\""
+echo "__dtb_z_${name}_end:"
+echo ".global __dtb_z_${name}_end"
+if [ "$imd" = "y" ]; then
+	echo ".balign ASM_SZPTR"
+	echo "ASM_PTR __barebox_imd_OF_${name}"
+fi
+echo ".balign STRUCT_ALIGNMENT"
+echo "#endif"

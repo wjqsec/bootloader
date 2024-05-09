@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config PPC
+	bool
+	select HAVE_CONFIGURABLE_TEXT_BASE
+	select HAS_KALLSYMS
+	select HAS_MODULES
+	select HAS_CACHE
+	select GENERIC_FIND_NEXT_BIT
+	select OFTREE
+	select ARCH_HAS_SJLJ
+	default y
+
+choice
+	prompt "Processor type"
+
+config ARCH_MPC5XXX
+	bool "Freescale MPC5xxx"
+
+config ARCH_MPC85XX
+	bool "Freescale MPC85xx"
+endchoice
+
+source "arch/powerpc/mach-mpc5xxx/Kconfig"
+source "arch/powerpc/mach-mpc85xx/Kconfig"

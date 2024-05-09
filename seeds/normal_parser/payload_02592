@@ -1,0 +1,3 @@
+set lang=en sole
+terminal_output console
+search --hit=[ --nt=[ -f ${y} --css u --css

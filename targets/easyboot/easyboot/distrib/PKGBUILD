@@ -1,0 +1,34 @@
+# Maintainer: bzt <https://gitlab.com/bztsrc/easyboot/issues>
+pkgname=easyboot-git
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Dependency-free, all-in-one boot manager and bootable disk image creator."
+arch=('x86_64', 'aarch64')
+url="https://gitlab.com/bztsrc/easyboot"
+license=('MIT')
+depends=()
+makedepends=(make tar)
+optdepends=()
+provides=('easyboot')
+conflicts=('easyboot')
+
+_gitname=easyboot
+
+build() {
+	echo "Getting latest Easyboot source code..."
+	curl -L "https://gitlab.com/bztsrc/easyboot/-/archive/main/easyboot-main.tar.gz" --output $_gitname.tar.gz
+
+	echo "Extracting $_gitname.tar.gz..."
+	tar -xf $_gitname.tar.gz
+	cd $_gitname/src
+
+	echo "Building Easyboot..."
+	make clean all
+}
+
+package() {
+	echo "Installing Easyboot..."
+
+	cd $_gitname/src
+	INSTDIR=/usr make install
+}

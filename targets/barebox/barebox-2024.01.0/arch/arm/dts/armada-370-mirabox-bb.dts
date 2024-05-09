@@ -1,0 +1,16 @@
+/*
+ * Barebox specific DT overlay for Globalscale Mirabox
+ *   Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+ */
+
+#include "arm/marvell/armada-370-mirabox.dts"
+
+/ {
+	chosen {
+		stdout-path = &uart0;
+	};
+};
+
+&{/soc/internal-regs/gpio_leds/green_pwr_led} {
+	barebox,default-trigger = "heartbeat";
+};

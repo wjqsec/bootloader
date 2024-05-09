@@ -1,0 +1,154 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menu "serial drivers"
+	depends on !CONSOLE_NONE
+
+config SERIAL_DEV_BUS
+	bool "Serial device bus"
+	select POLLER
+	depends on CONSOLE_FULL
+	help
+	  Core support for devices connected via a serial port.
+
+config DRIVER_SERIAL_ARM_DCC
+	depends on ARM && !CPU_V8
+	bool "ARM Debug Communications Channel (DCC) serial driver"
+
+config SERIAL_AMBA_PL011
+	bool "ARM AMBA PL011 serial port support"
+	depends on ARM_AMBA
+	help
+	  This selects the ARM(R) AMBA(R) PrimeCell PL011 UART. If you have
+	  an Integrator/PP2, Integrator/CP or Versatile platform, say Y here.
+
+	  If unsure, say N.
+
+config DRIVER_SERIAL_AR933X
+	bool "AR933X serial driver"
+	depends on MACH_MIPS_ATH79
+	help
+	  If you have an Atheros AR933X SOC based board and want to use the
+	  built-in UART of the SoC, say Y to this option.
+
+config DRIVER_SERIAL_EFI
+	bool "EFI serial"
+	depends on EFI_BOOTUP
+
+config DRIVER_SERIAL_IMX
+	depends on ARCH_IMX
+	default y
+	bool "i.MX serial driver"
+
+config DRIVER_SERIAL_STM32
+	depends on ARCH_STM32
+	bool "stm32 serial driver"
+
+config DRIVER_SERIAL_STM378X
+	depends on ARCH_MXS
+	default y
+	bool "i.MX23/i.MX28 debug UART serial driver"
+
+config DRIVER_SERIAL_AUART
+	depends on ARCH_MXS
+	select STMP_DEVICE
+	bool "i.MX23/i.MX28 application UART serial driver"
+
+config DRIVER_SERIAL_LINUX_CONSOLE
+	depends on SANDBOX
+	default y
+	bool "linux console driver"
+
+config DRIVER_SERIAL_EFI_STDIO
+	depends on EFI_BOOTUP
+	bool "EFI stdio driver"
+
+config DRIVER_SERIAL_MPC5XXX
+	depends on MPC5200
+	default y
+	bool "MPC5200 serial driver"
+
+config DRIVER_SERIAL_CLPS711X
+	depends on ARCH_CLPS711X
+	default y
+	bool "CLPS711X serial driver"
+
+config DRIVER_SERIAL_NS16550
+	default n
+	bool "NS16550 serial driver"
+	help
+	  Enable this to get support for NS16550 based serial devices
+
+config DRIVER_SERIAL_ATMEL
+	depends on ARCH_AT91
+	default y
+	bool "Atmel serial driver"
+
+config DRIVER_SERIAL_NS16550_PCI
+	depends on DRIVER_SERIAL_NS16550
+	depends on PCI
+	default y
+	bool "NS16550 PCI serial driver"
+	help
+	  Enable this to get support for NS16550 UARTs connected over PCI
+
+config DRIVER_SERIAL_PL010
+	depends on ARCH_EP93XX
+	default y
+	bool "ARM AMBA PL010 support"
+	help
+	  Enable this to get support for AMBA PL010 based serial devices
+
+config DRIVER_SERIAL_PXA
+	bool "PXA serial driver"
+	depends on ARCH_PXA
+
+config DRIVER_SERIAL_OMAP4_USBBOOT
+	bool "serial driver over omap4 usb"
+	default n
+	depends on OMAP4_USBBOOT
+	help
+	  Enable this to get console support over the usb bus used to boot an OMAP4
+
+config DRIVER_SERIAL_CADENCE
+	bool "Cadence UART driver"
+	help
+	  Say Y here if you have a Cadence serial IP core.
+
+config DRIVER_SERIAL_DIGIC
+	bool "Canon DIGIC serial driver"
+	depends on ARCH_DIGIC
+
+config DRIVER_SERIAL_LPUART
+	depends on ARCH_VF610
+	default y
+	bool "LPUART serial driver"
+
+config DRIVER_SERIAL_LPUART32
+	depends on ARCH_IMX
+	bool "LPUART32 serial driver"
+
+config VIRTIO_CONSOLE
+	tristate "Virtio console"
+	depends on VIRTIO
+	help
+	  Virtio console for use with hypervisors.
+
+	  Also serves as a general-purpose serial device for data
+	  transfer between the guest and host.
+
+config SERIAL_SIFIVE
+	tristate "SiFive UART support"
+	depends on OFDEVICE
+	help
+	  Select this option if you are building barebox for a device that
+	  contains a SiFive UART IP block.  This type of UART is present on
+	  SiFive FU540 SoCs, among others.
+
+config SERIAL_SBI
+	tristate "RISCV Serial support over SBI's HTIF"
+	depends on OFDEVICE
+	depends on RISCV_SBI
+	help
+	  Select this option if you are building barebox for a RISCV platform
+	  that implements a serial over SBI.
+
+endmenu

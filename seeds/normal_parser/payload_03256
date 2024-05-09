@@ -1,0 +1,11 @@
+ set lang=en dm
+sry 'Uu' --c`ass uu --cls x --class u --class os $n 'g4-94-4e00-9dcb-eed80c375619' {eo
+	e
+gzio
+	if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+	insmod part_gpt
+	insmod ext2
+	search --no-floppy --fs-uuid --set=root 7deefe43-3a38-414b-9f9f-6f54e63ff46e
+	linux	/vmlinuz-6.0.0-nyx+ root=/dev/mapper/ubuntu--vg-ubuntu--lv ro  
+	initrd	/initrd.img-6.0-nyx+
+}

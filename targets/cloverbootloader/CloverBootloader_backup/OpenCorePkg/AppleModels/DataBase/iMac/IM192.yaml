@@ -1,0 +1,160 @@
+BIOSVendor: "Apple Inc."
+BIOSVersion: "2020.40.3.0.0"
+BIOSLegacyVersion: "IM191.88Z.F000.B00.2308061817"
+BIOSReleaseDate: "08/06/2023"
+SystemManufacturer: "Apple Inc."
+SystemProductName: "iMac19,2"
+SystemVersion: "1.0"
+# Note, this one is used by macserial
+SystemSerialNumber: "C02Y93YXJWDX"
+SystemSKUNumber: ""
+SystemFamily: "iMac"
+BoardManufacturer: "Apple Inc."
+# This and similar ones can be an array itself, like this:
+# BoardProduct:
+#  "Mac-00BE6ED71E35EB86"
+#  "Mac-smthelse"
+BoardProduct: "Mac-63001698E7A34814"
+BoardVersion: "iMac19,2"
+BoardRevision: 0x7
+BoardAssetTag: ""
+BoardType: 0xA
+BoardLocationInChassis: ""
+ChassisManufacturer: "Apple Inc."
+ChassisType: 0xD
+ChassisVersion: "Mac-63001698E7A34814"
+ChassisAssetTag: ""
+PlatformFeature: 0x20
+FirmwareFeatures: 0xFD8FF576
+FirmwareFeaturesMask: 0xFFDFFF7F
+ExtendedFirmwareFeatures: 0x00000008FD8FF576
+ExtendedFirmwareFeaturesMask: 0x00000008FFDFFF7F
+MemoryFormFactor: 0x9
+# FIXME: check values (most should be correct?) and add missing, if any
+ProcessorType:
+  - 0x0605
+  - 0x0905
+  - 0x0605
+  - 0x0705
+# FIXME: Correct this one
+ProcessorBusSpeed:
+  - 12345
+# FIXME: check
+SmcGeneration: 2
+SmcRevision:
+  - 0x02
+  - 0x47
+  - 0x0f
+  - 0x00
+  - 0x00
+  - 0x03
+# FIXME: check
+SmcBranch:
+  - 0x6A
+  - 0x31
+  - 0x33
+  - 0x38
+  - 0x5F
+  - 0x39
+  - 0x00
+  - 0x00
+# FIXME: check
+SmcPlatform:
+  - 0x6A
+  - 0x31
+  - 0x33
+  - 0x39
+  - 0x00
+  - 0x00
+  - 0x00
+  - 0x00
+# FIXME: check
+SmcEPCI: 0xF070090
+OEMStrings: |-
+  Apple ROM Version
+    BIOS ID:      IM191.88Z.F000.B00.2308061817
+    Model:        IM191
+    EFI Version:  2020.40.3.0.0
+    Built by:     root@hfwvf
+    Date:         Sun Aug  6 18:17:10 2023
+    Revision:     2020.40.3 (B&I)
+    ROM Version:  F000_B00
+    Build Type:   Official Build, RELEASE
+    Compiler:     clang-1500.0.37.1
+    UUID:         420ADAED-BAE1-3269-95A6-3FDEEAA7CB05
+    UUID:         D032625A-CE88-36B0-9A30-04BB68BA66F1
+Specifications:
+  CPUCodename:
+    - "Coffee Lake"
+    - "Coffee Lake"
+    - "Coffee Lake"
+    - "Coffee Lake"
+  CPU:
+    - "Intel Core i5-8500 @ 3.00 GHz"
+    - "Intel Core i3-8100B @ 3.60 GHz"
+    - "Intel Core i5-8500B @ 3.00 GHz"
+    - "Intel Core i7-8700B @ 3.20 GHz"
+  GPU:
+    - "AMD Radeon Pro 555X"
+    - "AMD Radeon Pro 560X"
+    - "AMD Radeon Pro Vega 20"
+  RAM:
+    - "2666 MHz DDR4 SDRAM"
+  SystemReportName:
+    - "iMac (Retina 4K, 21.5-inch, 2019)"
+  MarketingName: ""
+# Note, first model code is used by macserial
+AppleModelCode:
+  - "JWDW"
+  - "JWDX"
+  - "MQ87"
+  - "MC9M"
+  - "MC9L"
+  - "MRVM"
+  - "MPM0"
+  - "MW28"
+  - "JWDY"
+  - "MMTK"
+  - "MMTL"
+  - "MTML"
+  - "MCC1"
+  - "JWF3"
+  - "JWF2"
+  - "JWF1"
+  - "JWF0"
+  - "JWF4"
+  - "N6JT"
+  - "N9LN"
+  - "N07H"
+  - "0LKD"
+  - "0PYY"
+  - "03C7"
+  - "0MN1"
+  - "0L08"
+  - "0KYN"
+  - "0JVT"
+  - "07F8"
+  - "07F5"
+  - "07F4"
+  - "07F7"
+  - "07F6"
+  - "07F1"
+  - "07F3"
+  - "07F2"
+  - "0L0H"
+  - "0L0F"
+  - "0L0G"
+  - "0L09"
+  - "0LX4"
+  - "0LX7"
+  - "0LX8"
+# Note, first board code is used by macserial
+AppleBoardCode:
+  - "KGQG"
+# Note, first year is used by macserial
+AppleModelYear:
+  - 2019
+  - 2020
+  - 2021
+MinimumOSVersion: "10.14.4"
+MaximumOSVersion: null

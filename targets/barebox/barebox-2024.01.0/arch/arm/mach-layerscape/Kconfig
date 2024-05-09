@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if ARCH_LAYERSCAPE
+
+config ARCH_LAYERSCAPE_PPA
+	bool "Include PPA firmware"
+	select ARM_PSCI_OF
+	select ARM_SMCCC
+	select FITIMAGE
+	bool
+	help
+	  The "Primary Protected Application" (PPA) is a PSCI compliant firmware
+	  distributed by NXP. It is needed to start the secondary cores on
+	  Layerscape SoCs. Without it Linux will be started in EL3 and doesn't
+	  work properly. The precompiled firmware images can be found here:
+	  https://github.com/NXP/qoriq-ppa-binary
+
+config ARCH_LS1046
+	select CPU_V8
+	bool
+
+if 64BIT
+
+config MACH_LS1046ARDB
+	bool "QorIQ LS1046A Reference Design Board"
+	select ARCH_LS1046
+	select DDR_SPD
+	select MCI_IMX_ESDHC_PBL
+	select I2C_IMX_EARLY
+	select DDR_FSL
+	select DDR_FSL_DDR4
+
+config MACH_TQMLS1046A
+	bool "TQ TQMLS1046A Board"
+	select ARCH_LS1046
+	select MCI_IMX_ESDHC_PBL
+	select DDR_FSL
+	select DDR_FSL_DDR4
+
+endif
+
+config ARCH_LS1021
+	select CPU_V7
+	bool
+
+if 32BIT
+
+config MACH_LS1021AIOT
+	bool "LS1021AIOT Board"
+	select ARCH_LS1021
+	select DDR_FSL
+	select DDR_FSL_DDR3
+
+endif
+
+endif

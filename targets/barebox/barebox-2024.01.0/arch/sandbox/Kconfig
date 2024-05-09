@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+source "scripts/Kconfig.include"
+
+config SANDBOX
+	bool
+	select OFTREE
+	select GPIOLIB
+	select ARCH_HAS_UBSAN_SANITIZE_ALL
+	select HAVE_ARCH_ASAN
+	select HAS_DMA
+	select BLOCK
+	select BLOCK_WRITE
+	select PARTITION
+	select PARTITION_DISK
+	select ARCH_HAS_STACK_DUMP if ASAN
+	select GENERIC_FIND_NEXT_BIT
+	select ARCH_HAS_SJLJ
+	select ARCH_HAS_CTRLC
+	select HAS_DEBUG_LL
+	default y
+
+config ARCH_TEXT_BASE
+	hex
+	default 0x00000000
+
+menu "Sandbox specific settings"
+
+config PHYS_ADDR_T_64BIT
+	bool
+
+config CC_IS_64BIT
+	def_bool $(success,$(srctree)/scripts/gcc-64bitptr.sh $(CC))
+
+config CC_HAS_LINUX_I386_SUPPORT
+	def_bool $(cc-option,-m32) && $(ld-option,-m elf_i386)
+
+config 64BIT
+	bool
+	default n if SANDBOX_LINUX_I386
+	default CC_IS_64BIT
+	select ARCH_DMA_ADDR_T_64BIT
+	select PHYS_ADDR_T_64BIT
+
+config 32BIT
+	def_bool !64BIT
+
+config SANDBOX_LINUX_I386
+	bool "32-bit x86 barebox" if CC_HAS_LINUX_I386_SUPPORT
+
+config SANDBOX_REEXEC
+	prompt "exec(2) reset handler"
+	def_bool y
+	help
+	  The normal reset handler hangs barebox. On Linux, barebox
+	  instead can exec itself to simulate a reset.
+
+config SDL
+	bool
+
+endmenu

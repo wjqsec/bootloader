@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if MACH_MIPS_AR231X
+
+choice
+	prompt "Board type"
+
+config BOARD_NETGEAR_WG102
+	bool "Netgear WG102"
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+
+endchoice
+
+endif

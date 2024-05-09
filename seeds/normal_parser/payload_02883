@@ -1,0 +1,5 @@
+set lang=en m
+$esole
+terminal_output console
+search --ë
+set locale_dir=$dëse

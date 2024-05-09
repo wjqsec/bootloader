@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menuconfig FS_SQUASHFS
+	bool
+	prompt "squashfs support"
+	help
+	  Saying Y here includes support for SquashFS 4.0 (a Compressed
+	  Read-Only File System).  Squashfs is a highly compressed read-only
+	  filesystem for Linux.  It uses zlib, lzo or xz compression to
+	  compress both files, inodes and directories.  Inodes in the system
+	  are very small and all blocks are packed to minimise data overhead.
+	  Block sizes greater than 4K are supported up to a maximum of 1 Mbytes
+	  (default block size 128K).  SquashFS 4.0 supports 64 bit filesystems
+	  and files (larger than 4GB), full uid/gid information, hard links and
+	  timestamps.
+
+	  Squashfs is intended for general read-only filesystem use, for
+	  archival use (i.e. in cases where a .tar.gz file may be used), and in
+	  embedded systems where low overhead is needed.  Further information
+	  and tools are available from http://squashfs.sourceforge.net.
+
+config SQUASHFS_ZLIB
+	bool
+	depends on FS_SQUASHFS
+	depends on ZLIB
+	default y
+
+if !SQUASHFS_ZLIB
+	comment "ZLIB support disabled"
+endif
+
+config SQUASHFS_LZ4
+	bool
+	depends on FS_SQUASHFS
+	depends on LZ4_DECOMPRESS
+	default y
+
+if !SQUASHFS_LZ4
+	comment "LZ4 support disabled"
+endif
+
+config SQUASHFS_LZO
+	bool
+	depends on FS_SQUASHFS
+	depends on LZO_DECOMPRESS
+	default y
+
+if !SQUASHFS_LZO
+	comment "LZO support disabled"
+endif
+
+config SQUASHFS_XZ
+	bool
+	depends on FS_SQUASHFS
+	depends on XZ_DECOMPRESS
+	default y
+
+if !SQUASHFS_XZ
+	comment "XZ support disabled"
+endif
+
+config SQUASHFS_ZSTD
+	bool
+	depends on FS_SQUASHFS
+	depends on ZSTD_DECOMPRESS
+	default y
+
+if !SQUASHFS_ZSTD
+	comment "ZSTD support disabled"
+endif

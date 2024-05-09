@@ -1,0 +1,55 @@
+/*
+ * Copyright 2013 Boundary Devices, Inc.
+ * Copyright 2011 Freescale Semiconductor, Inc.
+ * Copyright 2011 Linaro Ltd.
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+#include <arm/nxp/imx/imx6qdl-nitrogen6x.dtsi>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	chosen {
+		environment {
+			compatible = "barebox,environment";
+			device-path = &env_nor;
+		};
+	};
+};
+
+&flash {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "barebox";
+		reg = <0x0 0xe0000>;
+	};
+
+	/delete-node/ partition@c0000;
+	/delete-node/ partition@c2000;
+
+	env_nor: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};
+
+&ocotp {
+	barebox,provide-mac-address = <&fec 0x620>;
+};
+
+&usbh1 {
+	phy_type = "utmi";
+	dr_mode = "host";
+};
+
+&usbotg {
+	phy_type = "utmi";
+};

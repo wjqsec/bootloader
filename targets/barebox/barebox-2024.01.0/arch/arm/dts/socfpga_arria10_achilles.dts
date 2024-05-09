@@ -1,0 +1,258 @@
+/*
+ * Copyright (C) 2015 Altera Corporation <www.altera.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/dts-v1/;
+#include <arm/intel/socfpga/socfpga_arria10.dtsi>
+
+/ {
+	model = "Reflex SOCFPGA Arria 10 Achilles";
+	compatible = "reflex,achilles", "altr,socfpga-arria10", "altr,socfpga";
+
+	aliases {
+		serial0 = &uart0;
+		state = &state;
+	};
+
+	chosen {
+		stdout-path = &uart0;
+
+		environment {
+			compatible = "barebox,environment";
+			device-path = &environment_mmc;
+		};
+	};
+
+	memory {
+		name = "memory";
+		device_type = "memory";
+		reg = <0x0 0xc0000000>;
+	};
+
+	state: state {
+		magic = <0x4d433230>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&state_mmc>;
+		backend-stridesize = <1024>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		bootstate {
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			system0 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				remaining_attempts {
+					reg = <0x0 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x4 0x4>;
+					type = "uint32";
+					default = <21>;
+				};
+			};
+
+			system1 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				remaining_attempts {
+					reg = <0x10 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x14 0x4>;
+					type = "uint32";
+					default = <20>;
+				};
+			};
+			factory {
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				remaining_attempts {
+					reg = <0x20 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x24 0x4>;
+					type = "uint32";
+					default = <10>;
+				};
+			};
+			last_chosen {
+				reg = <0x2C 0x4>;
+				type = "uint32";
+			};
+		};
+	};
+};
+
+&osc1 {
+	clock-frequency = <25000000>;
+};
+
+&cb_intosc_hs_div2_clk {
+	clock-frequency = <0>;
+};
+
+&cb_intosc_ls_clk {
+	clock-frequency = <60000000>;
+};
+
+&f2s_free_clk {
+	clock-frequency = <200000000>;
+};
+
+&gmac1 {
+	phy-mode = "rgmii";
+	phy-addr = <0x00fffff0>; /* probe for phy addr */
+
+	/*
+	 * These skews assume the user's FPGA design is adding 600ps of delay
+	 * for TX_CLK on Arria 10.
+	 *
+	 * All skews are offset since hardware skew values for the ksz9031
+	 * range from a negative skew to a positive skew.
+	 * See the micrel-ksz90x1.txt Documentation file for details.
+	 */
+	txd0-skew-ps = <0>; /* -420ps */
+	txd1-skew-ps = <0>; /* -420ps */
+	txd2-skew-ps = <0>; /* -420ps */
+	txd3-skew-ps = <0>; /* -420ps */
+	rxd0-skew-ps = <420>; /* 0ps */
+	rxd1-skew-ps = <420>; /* 0ps */
+	rxd2-skew-ps = <420>; /* 0ps */
+	rxd3-skew-ps = <420>; /* 0ps */
+	txen-skew-ps = <0>; /* -420ps */
+	txc-skew-ps = <1860>; /* 960ps */
+	rxdv-skew-ps = <420>; /* 0ps */
+	rxc-skew-ps = <1680>; /* 780ps */
+	max-frame-size = <3800>;
+	status = "okay";
+};
+
+&gmac2 {
+	phy-mode = "rgmii";
+	phy-addr = <0x3>;
+
+	status = "okay";
+
+	txd0-skew-ps = <0>; /* -420ps */
+	txd1-skew-ps = <0>; /* -420ps */
+	txd2-skew-ps = <0>; /* -420ps */
+	txd3-skew-ps = <0>; /* -420ps */
+	rxd0-skew-ps = <420>; /* 0ps */
+	rxd1-skew-ps = <420>; /* 0ps */
+	rxd2-skew-ps = <420>; /* 0ps */
+	rxd3-skew-ps = <420>; /* 0ps */
+	txen-skew-ps = <0>; /* -420ps */
+	txc-skew-ps = <1860>; /* 960ps */
+	rxdv-skew-ps = <420>; /* 0ps */
+	rxc-skew-ps = <1680>; /* 780ps */
+	max-frame-size = <3800>;
+};
+
+&i2c0 {
+	status = "okay";
+
+	tempsensor: ti,tmp102@48 {
+		compatible = "ti,tmp102";
+		reg = <0x48>;
+	};
+
+	rtc: nxp,pcf8563@51 {
+		compatible = "nxp,pcf8563";
+		reg = <0x51>;
+	};
+
+	eeprom: at24@54 {
+		compatible = "at24";
+		reg = <0x54>;
+		bytelen = <256>;
+		pagesize = <16>;
+	};
+};
+
+&mmc {
+	supports-highspeed;
+	broken-cd;
+	bus-width = <1>;
+	status = "okay";
+
+	partitions {
+		compatible = "fixed-partitions";
+		#size-cells = <1>;
+		#address-cells = <1>;
+
+		barebox1_xload: partition@100000 {
+			label = "barebox1-xload";
+			reg = <0x100000 0x40000>;
+		};
+
+		barebox2_xload: partition@140000 {
+			label = "barebox2-xload";
+			reg = <0x140000 0x40000>;
+		};
+
+		barebox1: partition@200000 {
+			label = "barebox1";
+			reg = <0x200000 0x80000>;
+		};
+
+		barebox2: partition@280000 {
+			label = "barebox2";
+			reg = <0x280000 0x80000>;
+		};
+
+		environment_mmc: partition@300000 {
+			label = "environment";
+			reg = <0x300000 0x8000>;
+		};
+
+		state_mmc: partition@400000 {
+			label = "state";
+			reg = <0x400000 0x8000>;
+		};
+
+		bitstream1: partition@700000 {
+			label = "bitstream1";
+			reg = <0x700000 0x2000000>;
+		};
+
+		bitstream2: partition@2700000 {
+			label = "bitstream2";
+			reg = <0x2700000 0x2000000>;
+		};
+
+	};
+};
+
+&uart0 {
+	reg-io-width = <4>;
+	status = "okay";
+};
+
+&watchdog1 {
+	status = "okay";
+};

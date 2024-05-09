@@ -1,0 +1,94 @@
+/dts-v1/;
+
+#include "tegra20-colibri.dtsi"
+
+/ {
+	model = "Toradex Colibri T20 on Iris";
+	compatible = "toradex,iris", "toradex,colibri_t20", "nvidia,tegra20";
+
+	chosen {
+		stdout-path = &uarta;
+	};
+};
+
+&{/host1x@50000000/hdmi@54280000} {
+	status = "okay";
+};
+
+&pinmux {
+	hdint {
+		nvidia,tristate = <TEGRA_PIN_DISABLE>;
+	};
+
+	i2cddc {
+		nvidia,tristate = <TEGRA_PIN_DISABLE>;
+	};
+
+	sdio4 {
+		nvidia,tristate = <TEGRA_PIN_DISABLE>;
+	};
+
+	uarta {
+		nvidia,tristate = <TEGRA_PIN_DISABLE>;
+	};
+
+	uartd {
+		nvidia,tristate = <TEGRA_PIN_DISABLE>;
+	};
+};
+
+&uarta {
+	status = "okay";
+};
+
+&uartd {
+	status = "okay";
+};
+
+i2c_ddc: &i2c2 {
+	status = "okay";
+};
+
+&{/usb@c5000000} {
+	status = "okay";
+};
+
+&phy1 {
+	status = "okay";
+};
+
+&{/usb@c5008000} {
+	status = "okay";
+};
+
+&phy3 {
+	status = "okay";
+};
+
+&{/mmc@c8000600} {
+	status = "okay";
+	bus-width = <4>;
+	vmmc-supply = <&vcc_sd_reg>;
+	vqmmc-supply = <&vcc_sd_reg>;
+};
+
+/ {
+	regulator_usb_host_vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb_host_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		regulator-boot-on;
+		regulator-always-on;
+		gpio = <&gpio TEGRA_GPIO(W, 2) GPIO_ACTIVE_HIGH>;
+	};
+
+	vcc_sd_reg: regulator_vcc_sd {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc_sd";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+};

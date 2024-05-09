@@ -1,0 +1,180 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config WATCHDOG_IMX_RESET_SOURCE
+	bool
+
+menuconfig WATCHDOG
+	bool "Watchdog support"
+	help
+	  Many platforms support a watchdog to keep track of a working machine.
+	  This framework provides routines to handle these watchdogs.
+
+if WATCHDOG
+
+config WATCHDOG_POLLER
+	bool "Watchdog periodic feeder support"
+	select POLLER
+	help
+	  Provides support for periodic watchdog feeder.
+
+config WATCHDOG_AR9344
+	bool "QCA AR9344"
+	depends on SOC_QCA_AR9344 || SOC_QCA_AR9331 || COMPILE_TEST
+	help
+	  Add support for watchdog on the QCA AR9344 SoC.
+
+config WATCHDOG_AT91SAM9
+	bool "Watchdog for AT91SAM9 and SAMA5 SoCs"
+	depends on ARCH_AT91
+	help
+	  Support for the watchdog in AT91SAM9X and SAMA5D{2,3,4} SoCs.
+
+config WATCHDOG_EFI
+	bool "Generic EFI Watchdog Driver"
+	depends on EFI_BOOTUP
+	help
+	  Add support for the EFI watchdog.
+
+config WATCHDOG_DAVINCI
+	bool "TI Davinci"
+	depends on ARCH_DAVINCI || COMPILE_TEST
+	help
+	  Add support for watchdog on the TI Davinci SoC.
+
+config WATCHDOG_DW
+	bool "Synopsys DesignWare watchdog"
+	select RESET_CONTROLLER
+	help
+	  Add support for the Synopsys DesignWare watchdog timer.
+
+config WATCHDOG_MXS28
+	bool "i.MX28"
+	depends on ARCH_IMX28 || COMPILE_TEST
+	help
+	  Add support for watchdog management for the i.MX28 SoC.
+
+config WATCHDOG_IMX
+	bool "i.MX watchdog"
+	depends on ARCH_IMX || ARCH_LAYERSCAPE || COMPILE_TEST
+	help
+	  Add support for watchdog found on Freescale i.MX SoCs.
+
+config WATCHDOG_IMXULP
+	bool "i.MX ULP watchdog"
+	depends on ARCH_IMX || COMPILE_TEST
+	help
+	  Add support for watchdog found on Freescale i.MX SoCs.
+
+config WATCHDOG_JZ4740
+	bool "Ingenic jz4740 SoC hardware watchdog"
+	depends on MACH_MIPS_XBURST || COMPILE_TEST
+	help
+	  Hardware driver for the built-in watchdog timer on Ingenic jz4740 SoCs.
+
+config WATCHDOG_OMAP
+	bool "TI OMAP"
+	depends on ARCH_OMAP || COMPILE_TEST
+	help
+	  Add support for watchdog on the TI OMAP SoC.
+
+config WATCHDOG_ORION
+	bool "Watchdog for Armada XP"
+	depends on ARCH_ARMADA_XP || COMPILE_TEST
+	help
+	  Add support for watchdog on the Marvall Armada XP
+
+config WATCHDOG_KVX
+	bool "KVX Core watchdog"
+	depends on KVX
+	help
+	  Add support for the KVX core watchdog.
+
+config WATCHDOG_BCM2835
+	bool "Watchdog for BCM283x SoCs"
+	depends on ARCH_BCM283X || COMPILE_TEST
+	help
+	  Add support for watchdog on the Broadcom BCM283X SoCs.
+
+config RAVE_SP_WATCHDOG
+	bool "RAVE SP Watchdog timer"
+	depends on RAVE_SP_CORE
+	help
+	  Support for the watchdog on RAVE SP device.
+
+config STM32_IWDG_WATCHDOG
+	bool "STM32 IWDG"
+	depends on ARCH_STM32 || COMPILE_TEST
+	select MFD_SYSCON
+	help
+	  Enable to support configuration of the STM32's on-SoC IWDG watchdog.
+	  Once started by the user, the IWDG can't be disabled.
+
+config STPMIC1_WATCHDOG
+	bool "STPMIC1 Watchdog"
+	depends on MFD_STPMIC1
+	help
+	  Enable to support configuration of the stpmic1's built-in watchdog.
+
+config RN568_WATCHDOG
+	bool "Ricoh RN5t568 PMIC based Watchdog"
+	depends on MFD_RN568PMIC
+	help
+	  Enable to support system control via the PMIC based watchdog.
+
+config F71808E_WDT
+	bool "Fintek F718xx, F818xx Super I/O Watchdog"
+	depends on X86
+	depends on FINTEK_SUPERIO
+	help
+	  This is the driver for the hardware watchdog on the Fintek F71808E,
+	  F71862FG, F71868, F71869, F71882FG, F71889FG, F81865 and F81866
+	  Super I/O controllers.
+
+config GPIO_WATCHDOG
+	tristate "Watchdog device controlled through GPIO-line"
+	depends on OF_GPIO
+	help
+	  If you say yes here you get support for watchdog device
+	  controlled through GPIO-line.
+
+config ITCO_WDT
+	bool "Intel TCO Timer/Watchdog"
+	depends on X86
+	depends on PCI
+	help
+	  Hardware driver for the intel TCO timer based watchdog devices.
+	  These drivers are included in the Intel 82801 I/O Controller
+	  Hub family (from ICH0 up to ICH10) and in the Intel 63xxESB
+	  controller hub.
+
+	  The TCO (Total Cost of Ownership) timer is a watchdog timer
+	  that will reboot the machine after its second expiration.
+
+	  On some motherboards the driver may fail to reset the chipset's
+	  NO_REBOOT flag which prevents the watchdog from rebooting the
+	  machine.
+
+config STARFIVE_WDT
+	tristate "StarFive Watchdog Timer"
+	depends on SOC_STARFIVE && OFDEVICE
+	help
+	  If you say yes here you get support for the watchdog device
+	  on StarFive SoCs.
+
+config WDAT_WDT
+	bool "ACPI Watchdog Action Table (WDAT)"
+	depends on X86
+	depends on ACPI
+	help
+	  This driver adds support for systems with ACPI Watchdog Action
+	  Table (WDAT) table. Servers typically have this but it can be
+	  found on some desktop machines as well. This driver will take
+	  over the native iTCO watchdog driver found on many Intel CPUs.
+
+config CADENCE_WATCHDOG
+	tristate "Cadence Watchdog Timer"
+	help
+	  Say Y here if you want to include support for the watchdog
+	  timer in the Xilinx Zynq.
+
+endif

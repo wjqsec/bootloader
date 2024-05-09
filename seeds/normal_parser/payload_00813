@@ -1,0 +1,23 @@
+ld	{2{ if  "" ]; then
+"$n}"
+ fi
+}
+df{
+if -"$v}" ]; then if -"$d}" ]; then
+if -"$l}" ]; then
+ if  "" ]; then
+=""
+fi
+  fi
+fi; fi
+}
+f {if -"$v}" ]; then if -"$d}" ]; then
+if -"$l}" ]; then
+ if  "" ]; then
+=""
+fi
+  fi
+fi; fi
+}
+f {if -"$v}" ]; then if -"$ce}"; then s; fi; fi
+}

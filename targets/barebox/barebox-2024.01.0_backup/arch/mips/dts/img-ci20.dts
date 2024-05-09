@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+ * CI20 device tree
+ *
+ * Copyright (c) 2013 Imagination Technologies
+ * Author: Paul Burton <paul.burton@imgtec.com>
+ */
+
+/dts-v1/;
+
+#include "jz4780.dtsi"
+
+/ {
+	model = "MIPS Creator CI20";
+	compatible = "img,ci20";
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x10000000>;
+	};
+
+	board {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		ranges = <>;
+
+		dm9000@16000000 {
+			compatible = "davicom,dm9000";
+			davicom,no-eeprom;
+
+			reg = <0x16000000 1   /* addr */
+			       0x16000002 1>; /* data */
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+};

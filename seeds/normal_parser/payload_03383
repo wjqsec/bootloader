@@ -1,0 +1,7 @@
+set lang=en $egfxtm
+se=em
+rmmod font
+rmmodfx
+r font
+rmnt
+r

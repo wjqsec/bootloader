@@ -1,0 +1,350 @@
+/ {
+	chosen {
+		stdout-path = &uart0;
+
+		environment-spi {
+			compatible = "barebox,environment";
+			device-path = &env_nor;
+			status = "disabled";
+		};
+
+		environment-nand {
+			compatible = "barebox,environment";
+			device-path = &env_nand;
+			status = "disabled";
+		};
+	};
+};
+
+&am33xx_pinmux {
+	usb_pins: pinmux_usb_pins {
+		pinctrl-single,pins = <
+			0x21c PIN_OUTPUT_PULLDOWN MUX_MODE0 /* usb0_drvvbus.usb0_drvvbus */
+			0x234 PIN_OUTPUT_PULLDOWN MUX_MODE0 /* usb1_drvvbus.usb1_drvvbus */
+		>;
+	};
+
+	i2c0_pins: pinmux_i2c0_pins {
+			pinctrl-single,pins = <
+			0x188 PIN_INPUT_PULLUP MUX_MODE0    /* i2c0_sda.i2c0_sda */
+			0x18c PIN_INPUT_PULLUP MUX_MODE0    /* i2c0_scl.i2c0_scl */
+		>;
+	};
+
+	spi0_pins: pinmux_spi0_pins {
+		pinctrl-single,pins = <
+			0x150 PIN_INPUT_PULLDOWN MUX_MODE0	/* spi0_clk.spi0_clk */
+			0x154 PIN_INPUT_PULLDOWN MUX_MODE0	/* spi0_d0.spi0_d0 */
+			0x158 PIN_INPUT_PULLUP MUX_MODE0	/* spi0_d1.spi0_d1 */
+			0x15c PIN_INPUT_PULLUP MUX_MODE0	/* spi0_cs0.spi0_cs0 */
+		>;
+	};
+
+	uart0_pins: pinmux_uart0_pins {
+		pinctrl-single,pins = <
+			0x170 PIN_INPUT_PULLUP MUX_MODE0    /* uart0_rxd.uart0_rxd */
+			0x174 PIN_OUTPUT_PULLDOWN MUX_MODE0 /* uart0_txd.uart0_txd */
+		>;
+	};
+
+	mmc1_pins: pinmux_mmc1_pins {
+		pinctrl-single,pins = <
+			0xf0 MUX_MODE0 (INPUT_EN | PULL_UP)	/* mmc0_dat3.mmc0_dat3 */
+			0xf4 MUX_MODE0 (INPUT_EN | PULL_UP)	/* mmc0_dat2.mmc0_dat2 */
+			0xf8 MUX_MODE0 (INPUT_EN | PULL_UP)	/* mmc0_dat1.mmc0_dat1 */
+			0xfc MUX_MODE0 (INPUT_EN | PULL_UP)	/* mmc0_dat0.mmc0_dat0 */
+			0x100 MUX_MODE0 (INPUT_EN | PULL_UP)	/* mmc0_clk.mmc0_clk */
+			0x104 MUX_MODE0 (INPUT_EN | PULL_UP)	/* mmc0_cmd.mmc0_cmd */
+		>;
+	};
+
+	emmc_pins: pinmux_emmc_pins {
+		pinctrl-single,pins = <
+			0x80 PIN_INPUT_PULLUP MUX_MODE2 /* gpmc_csn1.mmc1_clk */
+			0x84 PIN_INPUT_PULLUP MUX_MODE2 /* gpmc_csn2.mmc1_cmd */
+			0x00 PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad0.mmc1_dat0 */
+			0x04 PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad1.mmc1_dat1 */
+			0x08 PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad2.mmc1_dat2 */
+			0x0c PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad3.mmc1_dat3 */
+			0x10 PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad4.mmc1_dat4 */
+			0x14 PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad5.mmc1_dat5 */
+			0x18 PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad6.mmc1_dat6 */
+			0x1c PIN_INPUT_PULLUP MUX_MODE1 /* gpmc_ad7.mmc1_dat7 */
+		>;
+	};
+
+	emac_rmii1_pins: pinmux_emac_rmii1_pins {
+		pinctrl-single,pins = <
+			0x10c PIN_INPUT_PULLDOWN MUX_MODE1	/* mii1_crs.rmii1_crs_dv */
+			0x110 PIN_INPUT_PULLDOWN MUX_MODE1	/* mii1_rxerr.rmii1_rxerr */
+			0x114 PIN_OUTPUT MUX_MODE1		/* mii1_txen.rmii1_txen */
+			0x124 PIN_OUTPUT MUX_MODE1		/* mii1_txd1.rmii1_txd1 */
+			0x128 PIN_OUTPUT MUX_MODE1		/* mii1_txd0.rmii1_txd0 */
+			0x13c PIN_INPUT_PULLDOWN MUX_MODE1	/* mii1_rxd1.rmii1_rxd1 */
+			0x140 PIN_INPUT_PULLDOWN MUX_MODE1	/* mii1_rxd0.rmii1_rxd0 */
+			0x144 PIN_INPUT_PULLDOWN MUX_MODE0	/* rmii1_refclk.rmii1_refclk */
+		>;
+	};
+
+	nandflash_pins_s0: nandflash_pins_s0 {
+		pinctrl-single,pins = <
+			0x0 PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad0.gpmc_ad0 */
+			0x4 PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad1.gpmc_ad1 */
+			0x8 PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad2.gpmc_ad2 */
+			0xc PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad3.gpmc_ad3 */
+			0x10 PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad4.gpmc_ad4 */
+			0x14 PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad5.gpmc_ad5 */
+			0x18 PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad6.gpmc_ad6 */
+			0x1c PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_ad7.gpmc_ad7 */
+			0x70 PIN_INPUT_PULLUP MUX_MODE0	/* gpmc_wait0.gpmc_wait0 */
+			0x7c PIN_OUTPUT MUX_MODE0	/* gpmc_csn0.gpmc_csn0  */
+			0x90 PIN_OUTPUT MUX_MODE0	/* gpmc_advn_ale.gpmc_advn_ale */
+			0x94 PIN_OUTPUT MUX_MODE0	/* gpmc_oen_ren.gpmc_oen_ren */
+			0x98 PIN_OUTPUT MUX_MODE0	/* gpmc_wen.gpmc_wen */
+			0x9c PIN_OUTPUT MUX_MODE0	/* gpmc_be0n_cle.gpmc_be0n_cle */
+		>;
+	};
+
+	davinci_mdio_default: davinci_mdio_default {
+		pinctrl-single,pins = <
+			/* MDIO */
+			0x148 (PIN_INPUT_PULLUP | SLEWCTRL_FAST) MUX_MODE0	/* mdio_data.mdio_data */
+			0x14c PIN_OUTPUT_PULLUP MUX_MODE0			/* mdio_clk.mdio_clk */
+		>;
+	};
+
+	pcm051_led_pins: pinmux_pcm051_led_pins {
+		pinctrl-single,pins = <
+			0x80 0 MUX_MODE7
+			0x84 0 MUX_MODE7
+		>;
+	};
+
+	pcm051_user_pins: pinmux_pcm051_user_pins {
+		pinctrl-single,pins = <
+			0x1e4 (PULL_UP |INPUT_EN) MUX_MODE7
+			0x1e8 (PULL_UP |INPUT_EN) MUX_MODE7
+		>;
+	};
+};
+
+&cppi41dma {
+        status = "okay";
+};
+
+&usb_ctrl_mod {
+        status = "okay";
+};
+
+&usb {
+        pinctrl-names = "default";
+        pinctrl-0 = <&usb_pins>;
+        status = "okay";
+};
+
+&usb1 {
+        status = "okay";
+        dr_mode = "host";
+};
+
+&usb1_phy {
+        status = "okay";
+};
+
+&i2c0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c0_pins>;
+
+	status = "okay";
+	clock-frequency = <400000>;
+
+	eeprom: eeprom@52 {
+		status = "disabled";
+		compatible = "atmel,24c32";
+		pagesize = <32>;
+		reg = <0x52>;
+	};
+
+	/* The following i2c nodes are for the autoenable */
+	i2c_tmp102: temp@4b {
+		compatible = "ti,tmp102";
+		reg = <0x4b>;
+		status = "disabled";
+	};
+
+	i2c_rtc: rtc@68 {
+		compatible = "rv4162";
+		reg = <0x68>;
+		status = "disabled";
+	};
+
+};
+
+&mmc1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&mmc1_pins>;
+	status = "okay";
+};
+
+&mmc2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_pins>;
+	bus-width = <8>;
+	status = "disabled";
+	ti,vcc-aux-disable-is-sleep;
+	non-removable;
+};
+
+&spi0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi0_pins>;
+	status = "disabled";
+
+	flash: m25p80@0 {
+		compatible = "m25p80";
+		spi-max-frequency = <48000000>;
+		reg = <0>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		partition@0 {
+			label = "xload";
+			reg = <0x0 0x20000>;
+		};
+
+		partition@20000 {
+			label = "barebox";
+			reg = <0x20000 0x80000>;
+		};
+
+		env_nor: partition@a0000 {
+			label = "bareboxenv";
+			reg = <0xa0000 0x20000>;
+		};
+
+		partition@c0000 {
+			label = "oftree";
+			reg = <0xc0000 0x20000>;
+		};
+
+		partition@e0000 {
+			label = "kernel";
+			reg = <0xe0000 0x0>;
+		};
+	};
+};
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_pins>;
+	status = "okay";
+};
+
+&davinci_mdio {
+	pinctrl-names = "default";
+	pinctrl-0 = <&davinci_mdio_default>;
+	status = "okay";
+
+	phy0: ethernet-phy@0 {
+		reg = <0>;
+	};
+};
+
+&cpsw_emac0 {
+	phy-handle = <&phy0>;
+	phy-mode = "rmii";
+	dual_emac_res_vlan = <1>;
+};
+
+&mac {
+	pinctrl-names = "default";
+	pinctrl-0 = <&emac_rmii1_pins>;
+	slaves = <1>;
+	status = "okay";
+};
+
+&gpmc {
+	status = "disabled";
+	pinctrl-names = "default";
+	pinctrl-0 = <&nandflash_pins_s0>;
+	ranges = <0 0 0x08000000 0x1000000>;	/* CS0: 16MB for NAND */
+	nand: nand@0,0 {
+		reg = <0 0 4>; /* CS0, offset 0, IO size 4 */
+		nand-bus-width = <8>;
+		ti,nand-ecc-opt = "bch8";
+		gpmc,device-nand = "true";
+		gpmc,device-width = <1>;
+		gpmc,sync-clk-ps = <0>;
+		gpmc,cs-on-ns = <0>;
+		gpmc,cs-rd-off-ns = <30>;
+		gpmc,cs-wr-off-ns = <30>;
+		gpmc,adv-on-ns = <0>;
+		gpmc,adv-rd-off-ns = <30>;
+		gpmc,adv-wr-off-ns = <30>;
+		gpmc,we-on-ns = <0>;
+		gpmc,we-off-ns = <20>;
+		gpmc,oe-on-ns = <10>;
+		gpmc,oe-off-ns = <30>;
+		gpmc,access-ns = <30>;
+		gpmc,rd-cycle-ns = <30>;
+		gpmc,wr-cycle-ns = <30>;
+		gpmc,wait-pin = <1>;
+		gpmc,wait-on-read = "true";
+		gpmc,wait-on-write = "true";
+		gpmc,bus-turnaround-ns = <0>;
+		gpmc,cycle2cycle-delay-ns = <50>;
+		gpmc,cycle2cycle-diffcsen;
+		gpmc,clk-activation-ns = <0>;
+		gpmc,wait-monitoring-ns = <0>;
+		gpmc,wr-access-ns = <0>;
+		gpmc,wr-data-mux-bus-ns = <0>;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		elm_id = <&elm>;
+
+		partition@0 {
+			label = "xload";
+			reg = <0x0 0x20000>;
+		};
+
+		partition@20000 {
+			label = "xload_backup1";
+			reg = <0x20000 0x20000>;
+		};
+
+		partition@40000 {
+			label = "xload_backup2";
+			reg = <0x40000 0x20000>;
+		};
+
+		partition@60000 {
+			label = "xload_backup3";
+			reg = <0x60000 0x20000>;
+		};
+
+		partition@80000 {
+			label = "barebox";
+			reg = <0x80000 0x80000>;
+		};
+
+		partition@100000 {
+			label = "barebox_backup";
+			reg = <0x100000 0x80000>;
+		};
+
+		env_nand: partition@180000 {
+			label = "bareboxenv";
+			reg = <0x180000 0x40000>;
+		};
+
+		partition@1C0000 {
+			label = "root";
+			/*
+			 * Size 0x0 extends partition to
+			 * end of nand flash.
+			 */
+			reg = <0x1C0000 0x0>;
+		};
+	};
+};

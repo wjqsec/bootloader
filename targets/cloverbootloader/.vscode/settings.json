@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "type_traits": "cpp",
+        "xtr1common": "cpp",
+        "array": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp",
+        "initializer_list": "c",
+        "list": "c",
+        "xhash": "c",
+        "xtree": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "bitset": "c",
+        "string": "c",
+        "string_view": "c",
+        "unordered_map": "c"
+    }
+}

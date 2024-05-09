@@ -1,0 +1,348 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config ARCH_HAS_FEC_IMX
+	bool
+
+config HAS_AT91_ETHER
+	bool
+
+config HAS_CS8900
+	bool
+
+config HAS_DM9000
+	bool
+
+config HAS_MACB
+	bool
+
+config PHYLIB
+	bool
+
+menu "Network drivers"
+	depends on NET
+
+config DRIVER_NET_AR231X
+	bool "AR231X Ethernet support"
+	depends on MACH_MIPS_AR231X
+	select PHYLIB
+	help
+	  Support for the AR231x/531x ethernet controller
+
+config DRIVER_NET_ARC_EMAC
+	bool "ARC Ethernet MAC driver"
+	depends on HAS_DMA && 32BIT
+	select PHYLIB
+	help
+	  This option enables support for the ARC EMAC ethernet
+	  controller.
+
+config DRIVER_NET_AT91_ETHER
+	bool "at91 ethernet driver"
+	depends on HAS_AT91_ETHER
+	select PHYLIB
+
+config DRIVER_NET_BCMGENET
+        bool "BCMGENET V5 support"
+        select PHYLIB
+        help
+          This driver supports the BCMGENET Ethernet MAC.
+
+config DRIVER_NET_CS8900
+	bool "cs8900 ethernet driver"
+	depends on HAS_CS8900 || COMPILE_TEST
+
+config DRIVER_NET_CPSW
+	bool "CPSW ethernet driver"
+	depends on ARCH_OMAP
+	select PHYLIB
+
+config DRIVER_NET_DAVINCI_EMAC
+	bool "TI Davinci/OMAP EMAC ethernet driver"
+	depends on ARCH_OMAP3
+	select PHYLIB
+
+config DRIVER_NET_DESIGNWARE
+	bool "Designware DWMAC1000 Ethernet driver support" if COMPILE_TEST
+	depends on HAS_DMA
+	select PHYLIB
+	help
+	  This option is selected by platform glue drivers that contain
+	  a DWMAC1000-compatible Ethernet IP.
+
+config DRIVER_NET_DESIGNWARE_GENERIC
+	bool "Generic Synopsis Designware Ethernet driver"
+	select DRIVER_NET_DESIGNWARE
+	depends on HAS_DMA
+	help
+	  This option enables support for the generic Synopsys
+	  Designware Core Universal MAC 10M/100M/1G binding. Supported
+	  are 3.70a and 3.72. Most integrations additionally require
+	  access to platform-specific registers, e.g. for clocking.
+	  If you are on such a platform, use the platform specific
+	  driver instead.
+
+config DRIVER_NET_DESIGNWARE_SOCFPGA
+	bool "SOCFPGA Designware Ethernet driver"
+	depends on HAS_DMA && (ARCH_SOCFPGA || COMPILE_TEST)
+	select DRIVER_NET_DESIGNWARE
+	select MFD_SYSCON
+	select RESET_CONTROLLER
+	help
+	  This option enables support for the Synopsys
+	  Designware Core Universal MAC 10M/100M/1G Ethernet IP on SoCFPGA.
+
+config DRIVER_NET_DESIGNWARE_STARFIVE
+	bool "StarFive Designware Ethernet driver"
+	depends on HAS_DMA && (SOC_STARFIVE || COMPILE_TEST)
+	select DRIVER_NET_DESIGNWARE
+	select MFD_SYSCON
+	help
+	  This option enables support for the Synopsys
+	  Designware Core Universal MAC 10M/100M/1G Ethernet IP on StarFive.
+
+config DRIVER_NET_DESIGNWARE_EQOS
+	bool "Designware EQOS (GMAC4) Ethernet driver support" if COMPILE_TEST
+	depends on HAS_DMA && OFTREE
+	select PHYLIB
+	help
+	  This option enables support for the Synopsys
+	  Designware Ethernet Quality-of-Service (GMAC4).
+
+config DRIVER_NET_DESIGNWARE_IMX8
+	bool "Designware EQOS i.MX Ethernet driver"
+	depends on HAS_DMA && COMMON_CLK && OFTREE && (ARCH_IMX8M || ARCH_IMX93 || COMPILE_TEST)
+	select DRIVER_NET_DESIGNWARE_EQOS
+	select MFD_SYSCON
+	help
+	  This option enables support for the Designware EQOS MAC implemented on
+	  the NXP i.MX SoCs.
+
+config DRIVER_NET_DESIGNWARE_STM32
+	bool "STM32 Designware Ethernet driver"
+	depends on HAS_DMA && COMMON_CLK && OFTREE && (ARCH_STM32MP || COMPILE_TEST)
+	select DRIVER_NET_DESIGNWARE_EQOS
+	select MFD_SYSCON
+	help
+	  This option enables support for the Ethernet MAC on the STM32MP platforms.
+
+config DRIVER_NET_DESIGNWARE_TEGRA186
+	bool "Tegra 186/194 Designware Ethernet driver"
+	depends on HAS_DMA && COMMON_CLK && OFTREE && (ARCH_TEGRA || COMPILE_TEST)
+	select DRIVER_NET_DESIGNWARE_EQOS
+	select RESET_CONTROLLER
+	help
+	  This option enables support for the Ethernet MAC on the Tegra186 & 194.
+
+config DRIVER_NET_DESIGNWARE_ROCKCHIP
+	bool "Rockchip Designware Ethernet driver"
+	select DRIVER_NET_DESIGNWARE_EQOS
+	depends on HAS_DMA && COMMON_CLK && OFTREE && (ARCH_ROCKCHIP || COMPILE_TEST)
+	select MFD_SYSCON
+	help
+	  This option enables support for the Ethernet MAC on different Rockchip SoCs
+
+config DRIVER_NET_DM9K
+	bool "Davicom dm9k[E|A|B] ethernet driver"
+	depends on HAS_DM9000 || COMPILE_TEST
+	select PHYLIB
+
+config DRIVER_NET_E1000
+	bool "Intel e1000 ethernet driver"
+	depends on PCI
+	depends on HAS_DMA
+	select PHYLIB
+	help
+	  This is a driver for the Gigabit Ethernet PCI network cards based on
+	  the Intel e1000 chips.
+
+config DRIVER_NET_ENC28J60
+	bool "ENC28J60 support"
+	depends on SPI
+	select PHYLIB
+	help
+	  Support for the Microchip EN28J60 ethernet chip.
+
+config DRIVER_NET_ENC28J60_WRITEVERIFY
+	bool "Enable write verify"
+	depends on DRIVER_NET_ENC28J60
+	help
+	  Enable the verify after the buffer write useful for debugging purpose.
+	  If unsure, say N.
+
+config DRIVER_NET_EP93XX
+	bool "EP93xx Ethernet driver"
+	depends on ARCH_EP93XX
+	select PHYLIB
+
+config DRIVER_NET_ETHOC
+	bool "OpenCores ethernet MAC driver"
+	depends on OPENRISC
+	depends on HAS_CACHE
+	select PHYLIB
+	help
+	  This option enables support for the OpenCores 10/100 Mbps
+	  Ethernet MAC core.
+
+config DRIVER_NET_FEC_IMX
+	bool "i.MX FEC Ethernet driver"
+	depends on ARCH_HAS_FEC_IMX || COMPILE_TEST
+	depends on HAS_DMA
+	select PHYLIB
+
+config DRIVER_NET_FSL_FMAN
+	bool "Freescale fman ethernet driver"
+	select PHYLIB
+	select FSL_QE_FIRMWARE
+	help
+	  This option enabled support for the Freescale fman core found
+	  on Layerscape SoCs.
+
+config DRIVER_NET_GIANFAR
+	bool "Gianfar Ethernet"
+	depends on ARCH_MPC85XX
+	select PHYLIB
+
+config DRIVER_NET_KS8851_MLL
+	bool "ks8851 mll ethernet driver"
+	select PHYLIB
+	help
+	  This option enables support for the Micrel KS8851 MLL
+	  ethernet chip.
+
+config DRIVER_NET_MACB
+	bool "macb Ethernet driver"
+	depends on HAS_MACB || COMPILE_TEST
+	depends on HAS_DMA
+	select PHYLIB
+
+config DRIVER_NET_MICREL
+	depends on SPI
+	bool "Micrel KSZ8864RMN Ethernet Switch driver"
+	help
+	  This option enables support for enabling the Micrel
+	  KSZ8864RMN Ethernet Switch over SPI.
+
+config DRIVER_NET_MPC5200
+	bool "MPC5200 Ethernet driver"
+	depends on ARCH_MPC5200
+	select PHYLIB
+
+config DRIVER_NET_MVNETA
+	bool "Marvell NETA"
+	depends on ARCH_MVEBU
+	select PHYLIB
+	select MDIO_MVEBU
+
+config DRIVER_NET_ORION
+	bool "Marvell Orion SoC Ethernet"
+	depends on ARCH_MVEBU
+	select PHYLIB
+	select MDIO_MVEBU
+
+config DRIVER_NET_RTL8139
+	bool "RealTek RTL-8139 PCI Ethernet driver"
+	depends on PCI
+	select PHYLIB
+	help
+	  This is a driver for the Fast Ethernet PCI network cards based on
+	  the RTL 8139 chips.
+
+config DRIVER_NET_RTL8169
+	bool "RealTek RTL-8169 PCI Ethernet driver"
+	depends on PCI
+	depends on HAS_DMA
+	select PHYLIB
+	select REALTEK_PHY
+	help
+	  This is a driver for the Fast Ethernet PCI network cards based on
+	  the RTL 8169 chips.
+
+config DRIVER_NET_SMC911X
+	bool "smc911x ethernet driver"
+	select PHYLIB
+	help
+	  This option enables support for the SMSC LAN9[12]1[567]
+	  ethernet chip.
+
+config DRIVER_NET_SMC91111
+	bool "smc91111 ethernet driver"
+	select PHYLIB
+	help
+	  This option enables support for the SMSC LAN91C111
+	  ethernet chip.
+
+config DRIVER_NET_TAP
+	bool "tap Ethernet driver"
+	depends on SANDBOX
+
+config DRIVER_NET_EFI_SNP
+	bool "EFI SNP ethernet driver"
+	depends on EFI_BOOTUP
+
+config DRIVER_NET_VIRTIO
+	bool "virtio net driver"
+	depends on VIRTIO
+	help
+	  This is the virtual net driver for virtio. It can be used with
+	  QEMU based targets.
+
+config DRIVER_NET_AG71XX
+	bool "Atheros AG71xx ethernet driver"
+	depends on MACH_MIPS_ATH79
+	select PHYLIB
+	help
+	  This option enables support for Atheros AG71XX ethernet chip.
+
+config DRIVER_NET_LITEETH
+	bool "LiteX ethernet driver"
+	select PHYLIB
+	select MDIO_BITBANG
+	help
+	  This option enables support for the LiteX LiteEth
+	  ethernet IP core.
+
+source "drivers/net/phy/Kconfig"
+source "drivers/net/usb/Kconfig"
+
+menuconfig DSA
+	bool "Distributed Switch Architecture (DSA)"
+	select PHYLIB
+
+if DSA
+
+config DRIVER_NET_KSZ8873
+	bool "KSZ8873 switch driver"
+	help
+	  This option enables support for the Microchip KSZ8873
+	  switch chip.
+
+config DRIVER_NET_KSZ9477
+	bool "KSZ9477 switch driver"
+	depends on SPI || I2C
+	select REGMAP_SPI if SPI
+	select REGMAP_I2C if I2C
+	help
+	  This option enables support for the Microchip KSZ9477
+	  switch chip.
+
+config DRIVER_NET_SJA1105
+	bool "NXP SJA1105 Ethernet switch family driver"
+	depends on SPI
+	select BITREV
+	help
+	  This is the driver for the NXP SJA1105 automotive Ethernet switch
+	  family. These are 5-port devices and are managed over an SPI
+	  interface. Probing is handled based on OF bindings. The driver
+	  supports the following revisions:
+	    - SJA1105E (Gen. 1, No TT-Ethernet)
+	    - SJA1105T (Gen. 1, TT-Ethernet)
+	    - SJA1105P (Gen. 2, No SGMII, No TT-Ethernet)
+	    - SJA1105Q (Gen. 2, No SGMII, TT-Ethernet)
+	    - SJA1105R (Gen. 2, SGMII, No TT-Ethernet)
+	    - SJA1105S (Gen. 2, SGMII, TT-Ethernet)
+
+source "drivers/net/realtek-dsa/Kconfig"
+
+endif
+
+endmenu
+

@@ -1,0 +1,32 @@
+#include <arm/nxp/mxs/imx28-evk.dts>
+
+/ {
+	chosen {
+		stdout-path = &duart;
+
+		environment {
+			compatible = "barebox,environment";
+			device-path = &env_nand;
+		};
+	};
+};
+
+&ocotp {
+	status = "okay";
+};
+
+&gpmi {
+	partition@0 {
+		label = "boot";
+		reg = <0x0 0x80000>;
+	};
+
+	env_nand: partition@80000 {
+		label = "environment";
+		reg = <0x80000 0x80000>;
+	};
+};
+
+&mac1 {
+	status = "disabled";
+};

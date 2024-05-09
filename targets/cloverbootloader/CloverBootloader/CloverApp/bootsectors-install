@@ -1,0 +1,182 @@
+#!/bin/bash
+
+#  Created by vector sigma on 04/11/2019.
+#  Copyright © 2019 CloverHackyColor. All rights reserved.
+
+logPath="/tmp/cltmplog"
+exec > >(tee -a $logPath) 2>&1
+
+cd /tmp
+
+boot1install="/tmp/boot1-install" # must be there
+
+# arguments
+disk="${1}"             # disk0s1
+filesystem="${2}"       # fat32, hfs, exfat
+partition_scheme="${3}" # FDisk_partition_scheme, GUID_partition_scheme
+boot0="/tmp/${4}"       # /tmp/boot0af, /tmp/boot0ss
+boot1="/tmp/${5}"       # /tmp/boot1h, /tmp/boot1f32, /tmp/boot1x etc.
+ESP="${6}"              # ESP, OTHER
+
+bootdev="/dev/${disk}"
+bootrdev=${bootdev/disk/rdisk}
+bootdisk="${bootdev%s*}"
+bootrdisk="${bootdisk/disk/rdisk}"
+bootslice="${bootdev#*disk*s}"
+
+keepmounted=0
+journaled=0
+
+saveLog() {
+/usr/sbin/diskutil mount "$bootdev" > /dev/null 2>&1
+local mp=$(LC_ALL=C /sbin/mount | egrep "^$bootdev on" | sed 's/^.* on *//;s/ ([^(]*//')
+
+if [[ -n "$mp" ]]; then
+  if [[ -d "${mp}"/EFI/CLOVER ]] && [[ -f "${logPath}" ]]; then
+    cat "${logPath}" > "${mp}"/EFI/CLOVER/Clover.app_install.log
+    chmod 777 "${mp}"/EFI/CLOVER/Clover.app_install.log
+  fi
+fi
+}
+
+echo
+echo "Installing boot sectors (version of Wed 13 May 2020, 15:49)"
+echo
+echo "disk:       ${disk}"
+echo "bootdev:    ${bootdev}"
+echo "bootrdev:   ${bootrdev}"
+echo "bootdisk:   ${bootdisk}"
+echo "bootrdisk:  ${bootrdisk}"
+echo "bootslice:  ${bootslice}"
+echo "filesystem: ${filesystem}"
+echo "partition_scheme: ${partition_scheme}"
+echo
+
+if [[ "$disk" != disk*s* ]]; then
+  echo "Error: target disk not specified or not in the correct format as diskXsY."
+  exit 1
+fi
+
+if [ "${partition_scheme}" != FDisk_partition_scheme ] && \
+   [ "${partition_scheme}" != GUID_partition_scheme ]; then
+  echo "Error: unsupported Partition Scheme Map \"${partition_scheme}\"."
+  saveLog && exit 1
+fi
+
+
+if [ "${filesystem}" != fat32 ] && \
+   [ "${filesystem}" != exfat ] && \
+   [ "${filesystem}" !=  hfs ]; then
+  echo "Error: unsupported filesystem \"${filesystem}\""
+  saveLog && exit 1
+fi
+
+if [[ ! -f "${boot0}" ]]; then
+  echo "Error: cannot found /tmp/boot0[af-ss] sector."
+  saveLog && exit 1
+fi
+
+if [[ ! -f "${boot1}" ]]; then
+  echo "Error: cannot found /tmp/boot1[1f32-h-x] sector."
+  saveLog && exit 1
+fi
+
+if [[ ! -f "${boot1install}" ]]; then
+  echo "Error: cannot found /tmp/boot1-install."
+  saveLog && exit 1
+fi
+
+# chmod +x "${boot1install}"
+
+rootdisk=$(LC_ALL=C /usr/sbin/diskutil info / | grep -i 'device identifier:' | awk '{print $NF}')
+
+if [[ "${rootdisk}" == "${disk}" ]]; then
+  keepmounted=1
+fi
+
+echo
+
+# hfs can cause a panic writing boot sectors if journaled
+# panic(cpu 0 caller 0xffffff7fa32683ad): "jnl: end_tr: !!!DANGER!!! bp 0xffffff8134a09650 flags (0x101) not LOCKED & DELWRI\n"@/
+
+# code:
+# panic("jnl: end_tr: !!!DANGER!!! bp %p flags (0x%x) not LOCKED & DELWRI\n", bp, buf_flags(bp));
+
+# fix? disable the journal (will be reactivated later)
+if [[ $(LC_ALL=C /usr/sbin/diskutil info "${disk}" | grep -i 'file system personality:') == *ournaled* ]]; then
+  /usr/sbin/diskutil disableJournal "${disk}"
+  journaled=1
+fi
+
+# Try to unmount the partition first
+mnt_pt=$(LC_ALL=C /sbin/mount | egrep "^$bootdev on" | sed 's/^.* on *//;s/ ([^(]*//')
+if [[ $keepmounted -eq 0 ]]; then
+  if [[ -n "$mnt_pt" ]]; then
+    # Try to umount the partition with umount
+    /sbin/umount $bootdev 2>/dev/null
+    if [[ $? -ne 0 ]]; then
+        # If it doesn't work try with diskutil
+        /usr/sbin/diskutil unmount $bootdev 2>/dev/null
+        [[ $? -ne 0 ]] && mnt_pt=''
+    fi
+  fi
+fi
+
+### Stage 0 ###
+echo
+echo "Stage 0 - Writing ${boot0} to ${bootrdisk}"
+echo "Executing: dd if=${bootrdisk} count=1 bs=512 of=/tmp/CloverOrigMBR"
+/bin/dd if="${bootrdisk}" count=1 bs=512 of=/tmp/CloverOrigMBR
+echo "Executing: cp /tmp/CloverOrigMBR /tmp/CloverNewMBR"
+/bin/cp -R /tmp/CloverOrigMBR /tmp/CloverNewMBR
+echo "Executing: dd if=${boot0} of=/tmp/CloverNewMBR bs=440 count=1 conv=notrunc"
+/bin/dd if="${boot0}" of=/tmp/CloverNewMBR bs=440 count=1 conv=notrunc
+echo "Executing: fdisk -f /tmp/CloverNewMBR -u -y ${bootrdisk}"
+/usr/sbin/fdisk -f /tmp/CloverNewMBR -u -y "${bootrdisk}"
+
+### Stage 1 ###
+echo
+echo "Stage 1 - Writing ${boot1} to ${bootrdev}"
+if [[ $keepmounted -eq 1 ]]; then
+  echo "Executing: boot1-install -y -f -M ${boot1} ${bootrdev}"
+  "$boot1install" -y -f -M "${boot1}" "${bootrdev}"
+else
+  echo "Executing: boot1-install -y -f ${boot1} ${bootrdev}"
+  "$boot1install" -y -f "${boot1}" "${bootrdev}"
+fi
+
+if [[ "${partition_scheme}" == FDisk_partition_scheme && "$boot0" == "/tmp/boot0af" ]]; then
+    echo "Setup Active Partition to be: ${bootslice}"
+    /usr/sbin/fdisk -e "${bootrdisk}" <<-MAKEACTIVE
+print
+flag "${bootslice}"
+write
+y
+quit
+MAKEACTIVE
+
+    partitionactive=$( /usr/sbin/fdisk -d "${bootrdisk}" | grep -n "*" | awk -F: '{print $1}')
+    echo "New Active Partition: ${partitionactive}"
+    echo ""
+fi
+
+sleep 2
+saveLog
+
+if [[ $journaled -ne 0 ]]; then
+  /usr/sbin/diskutil enableJournal "${disk}"
+fi
+
+# Now try to remount the partition
+if [[ "${ESP}" == ESP ]]; then
+  /usr/sbin/diskutil unmount force $bootdev > /dev/null 2>&1
+else
+  /usr/sbin/diskutil mount "$bootdev"  > /dev/null 2>&1
+fi
+
+/bin/rm -rf /tmp/Clover*
+/bin/rm -rf /tmp/boot1*
+/bin/rm -rf /tmp/boot2*
+/bin/rm -rf /tmp/bootsec*
+
+exit 0

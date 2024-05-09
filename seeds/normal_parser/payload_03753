@@ -1,0 +1,8 @@
+set lang=en 
+. (
+function t{if "$*";then i
+fi
+}
+t In s{if "";then
+""
+fi}

@@ -1,0 +1,139 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "Rockchip Features"
+	depends on ARCH_ROCKCHIP
+
+config ARCH_TEXT_BASE
+	hex
+	default 0x68000000 if ARCH_RK3188
+	default 0x0
+
+config RK_TIMER
+	hex
+	default 1
+
+config ARCH_ROCKCHIP_V7
+	bool
+	select CPU_V7
+	select ARM_SMP_TWD
+	select ARCH_HAS_L2X0
+
+config ARCH_RK3188
+	bool
+	select ARCH_ROCKCHIP_V7
+
+config ARCH_RK3288
+	bool
+	select ARCH_ROCKCHIP_V7
+	select CLOCKSOURCE_ROCKCHIP
+
+config ARCH_ROCKCHIP_V8
+	bool
+	select CPU_V8
+	select ARM_ATF
+	select RELOCATABLE
+
+config ARCH_RK3399
+	bool
+	select ARCH_ROCKCHIP_V8
+	select ARCH_HAS_RESET_CONTROLLER
+
+config ARCH_RK3399PRO
+	bool
+	select ARCH_RK3399
+
+config ARCH_RK3568
+	bool
+	select ARCH_ROCKCHIP_V8
+	select HW_HAS_PCI
+
+config ARCH_RK3588
+	bool
+	select ARCH_ROCKCHIP_V8
+	select HW_HAS_PCI
+
+comment "select Rockchip boards:"
+
+if 32BIT
+
+config MACH_RADXA_ROCK
+	select ARCH_RK3188
+	select I2C
+	select MFD_ACT8846
+	bool "Radxa rock board"
+
+config MACH_PHYTEC_SOM_RK3288
+	select ARCH_RK3288
+	select I2C
+	bool "RK3288 phyCORE SOM"
+	help
+	  Say Y here if you are using a RK3288 based Phytecs SOM
+
+endif
+
+if 64BIT
+
+config MACH_RK3568_EVB
+	select ARCH_RK3568
+	bool "RK3568 EVB"
+	help
+	  Say Y here if you are using a RK3568 EVB
+
+config MACH_RK3568_BPI_R2PRO
+	select ARCH_RK3568
+	bool "RK3568 BPI R2PRO"
+	help
+	  Say Y here if you are using a RK3568 Bananpi R2 Pro
+
+config MACH_PINE64_QUARTZ64
+	select ARCH_RK3568
+	bool "Pine64 Quartz64"
+	help
+	  Say Y here if you are using a Pine64 Quartz64
+
+config MACH_RADXA_ROCK3
+	select ARCH_RK3568
+	bool "Radxa ROCK3"
+	help
+	  Say Y here if you are using a Radxa ROCK3
+
+config MACH_RADXA_ROCK5
+	select ARCH_RK3588
+	bool "Radxa ROCK5"
+	help
+	  Say Y here if you are using a Radxa ROCK5
+
+config MACH_RADXA_CM3
+	select ARCH_RK3568
+	bool "Radxa CM3"
+	help
+	  Say Y here if you are using a Radxa CM3
+
+endif
+
+comment "select board features:"
+
+config ARCH_ROCKCHIP_ATF
+	bool "Build rockchip ATF binaries into barebox"
+	depends on ARCH_ROCKCHIP_V8
+	default y
+	help
+	  When deselected, barebox proper will run in EL3. This can be
+	  useful for debugging early startup, but for all other cases,
+	  say y here.
+
+config ARCH_RK3399_OPTEE
+	bool "Build rk3399 OP-TEE binary into barebox"
+	depends on ARCH_ROCKCHIP_ATF && ARCH_RK3399
+	help
+	  With this option enabled the RK3399 OP-TEE binary is compiled
+	  into barebox and started along with the BL31 trusted firmware.
+
+config ARCH_RK3568_OPTEE
+	bool "Build rk3568 OP-TEE binary into barebox"
+	depends on ARCH_ROCKCHIP_ATF && ARCH_RK3568
+	help
+	  With this option enabled the RK3568 OP-TEE binary is compiled
+	  into barebox and started along with the BL31 trusted firmware.
+
+endmenu

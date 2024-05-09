@@ -1,0 +1,127 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menu "Clocksource"
+
+config ARCH_HAS_IMX_GPT
+       bool
+
+config AMBA_SP804
+	bool
+	depends on ARM_AMBA
+
+config ARM_SMP_TWD
+	bool
+	depends on ARM && CPU_V7
+
+config CLOCKSOURCE_BCM283X
+	bool "BCM283x clock source" if COMPILE_TEST
+	depends on ARCH_BCM283X || COMPILE_TEST
+
+config CLOCKSOURCE_CLPS711X
+	bool "CLPS711x clock source" if COMPILE_TEST
+	depends on ARCH_CLPS711X || COMPILE_TEST
+
+config CLOCKSOURCE_DIGIC
+	bool "DIGIC clock source" if COMPILE_TEST
+	depends on ARCH_DIGIC || COMPILE_TEST
+
+config CLOCKSOURCE_DUMMY_RATE
+	int
+	prompt "dummy clocksource rate"
+	default 1000
+	help
+	  When porting barebox to a new SoC there might be a case
+	  of broken or absent clocksource. This causes barebox serial
+	  console to be non functional.
+	  To solve the problem barebox has built-in software-only clocksource.
+	  The software-only clocksource is used only if no hardware clocksource
+	  is registered. This can help if initialization order is wrong so that
+	  the time functions are used before the real clocksource was initialized.
+	      WARNING!!! Built-in software-only clocksource doesn't provide correct timing.
+	  The option CONFIG_CLOCKSOURCE_DUMMY_RATE is used to adjust this clocksource.
+	  The bigger rate valuest makes clocksource "faster".
+
+config CLOCKSOURCE_EFI
+	bool "Generic EFI Driver"
+	depends on EFI_BOOTUP
+
+config CLOCKSOURCE_EFI_X86
+	bool "EFI X86 HW driver"
+	depends on EFI_BOOTUP && X86
+
+config CLOCKSOURCE_KVX
+	bool "KVX core timer clocksource"
+	depends on KVX
+
+config CLOCKSOURCE_MVEBU
+	bool "MVEBU clock source" if COMPILE_TEST
+	depends on ARCH_MVEBU || COMPILE_TEST
+
+config CLOCKSOURCE_NOMADIK
+	bool "Nomadik clock source" if COMPILE_TEST
+	depends on ARM || COMPILE_TEST
+
+config CLOCKSOURCE_ORION
+	bool "ORION clock source" if COMPILE_TEST
+	depends on ARCH_MVEBU || COMPILE_TEST
+
+config CLOCKSOURCE_UEMD
+	bool "UEMD clock source" if COMPILE_TEST
+	depends on ARCH_UEMD || COMPILE_TEST
+
+config CLOCKSOURCE_ROCKCHIP
+	bool
+	depends on ARCH_ROCKCHIP
+
+config CLOCKSOURCE_ATMEL_PIT
+       bool
+
+config CLOCKSOURCE_ARM_ARCHITECTED_TIMER
+	bool "ARM architected timer clock source" if COMPILE_TEST
+	default y
+	depends on ARM && (CPU_64v8 || CPU_V7)
+
+config CLOCKSOURCE_ARM_GLOBAL_TIMER
+	bool "ARM global timer clock source" if COMPILE_TEST
+	depends on (ARM && CPU_V7) || COMPILE_TEST
+
+config CLOCKSOURCE_IMX_GPT
+	bool "i.MX GPT clock source" if COMPILE_TEST
+	default y if ARCH_HAS_IMX_GPT
+	depends on ARCH_HAS_IMX_GPT || COMPILE_TEST
+
+config CLOCKSOURCE_DW_APB_TIMER
+	bool "DW APB timer driver"
+	help
+	  Enables the support for the dw_apb timer.
+
+config CLOCKSOURCE_TI_DM
+	bool
+
+config CLOCKSOURCE_TI_32K
+	bool
+
+config RISCV_TIMER
+	bool "Timer for the RISC-V platform" if COMPILE_TEST
+	depends on RISCV
+	help
+	  This enables the per-hart timer built into all RISC-V systems, which
+	  is accessed via both the SBI and the rdcycle instruction.  This is
+	  required for all RISC-V systems.
+
+config CLINT_TIMER
+	bool "CLINT Timer for the RISC-V platform"
+	depends on RISCV && OFDEVICE
+	help
+	  This option enables the CLINT timer for RISC-V systems.  The CLINT
+	  driver is usually used for NoMMU RISC-V systems.
+
+config ARMV7M_SYSTICK
+	bool "Support for the ARMv7M system timer" if COMPILE_TEST
+	help
+	  This option enables support for the ARMv7M system timer unit.
+
+config CLKSRC_STM32
+	bool "Clocksource for STM32 SoCs"
+	depends on OFDEVICE && (ARCH_STM32 || COMPILE_TEST)
+
+endmenu

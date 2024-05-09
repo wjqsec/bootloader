@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if ARCH_STM32MP
+
+config ARCH_NR_GPIO
+	int
+	default 416
+
+config ARCH_STM32MP13
+	select ARM_PSCI_CLIENT
+	bool
+
+config ARCH_STM32MP157
+	select ARM_PSCI_CLIENT
+	bool
+
+config MACH_STM32MP13XX_DK
+	select ARCH_STM32MP13
+	bool "STM32MP135F DK board"
+
+config MACH_STM32MP15XX_DKX
+	select ARCH_STM32MP157
+	bool "STM32MP157 DK1 and DK2 boards"
+	help
+	  builds a single barebox-stm32mp15xx-dkx.stm32 that can be deployed
+	  as SSBL on both the stm32mp157a-dk1 and stm32mp157c-dk2
+
+config MACH_LXA_MC1
+	select ARCH_STM32MP157
+	bool "Linux Automation MC-1 board"
+
+config MACH_SEEED_ODYSSEY
+	select ARCH_STM32MP157
+	bool "Seeed Studio Odyssey"
+
+config MACH_STM32MP15X_EV1
+	select ARCH_STM32MP157
+	bool "STM32MP15X-EV1 board"
+	help
+	  builds a single barebox-stm32mp15x-ev1.stm32 that can be deployed
+	  as SSBL on any STM32MP15X-EVAL platform, like the
+	  STM32MP157C-EV1
+
+config MACH_PROTONIC_STM32MP1
+	select ARCH_STM32MP157
+	bool "Protonic PRTT1L family of boards"
+	help
+	  Builds all barebox-prtt1*.stm32 that can be deployed as SSBL
+	  on the respective PRTT1L family board
+
+config MACH_PHYTEC_PHYCORE_STM32MP1
+	select ARCH_STM32MP157
+	bool "phyCORE-STM32MP1"
+	help
+	  builds an additional barebox-phytec-phycore.stm32
+	  that can be deployed as SSBL on the phyCORE-STM32MP1
+
+endif

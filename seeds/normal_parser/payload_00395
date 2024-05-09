@@ -1,0 +1,42 @@
+#
+# E
+#
+# s
+
+#
+
+#
+set r=1
+
+if [ -f ${cy}nv ]; then
+ v -f ${cy}
+elif [ -s $ix/g ]; then
+ v
+fi
+if [ "${ny}" ] ; then
+ t "$y}"
+et n
+ nv ny
+et be
+else
+ set t="$ry}"
+fi
+
+if [ x"}" = xy ]; then
+"-d"
+else
+n=
+fi
+
+export n
+
+if [ "$y}"; then s="}"
+fi
+
+function t {
+if -""; then "}"y
+fi
+}
+
+function l{
+ [ le = xy ]; then

@@ -1,0 +1,10 @@
+if [ -f ${y}v;then ""
+fi
+function t{if "";then i
+fi
+}
+if [ -n "" ;then
+""
+fi
+if loadfont /;then t
+fi

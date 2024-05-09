@@ -1,0 +1,95 @@
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+#include <arm/microchip/at91sam9x5.dtsi>
+#include <arm/microchip/at91sam9x5_macb0.dtsi>
+#include <arm/microchip/at91sam9x5_lcd.dtsi>
+#include <arm/microchip/at91sam9x5dm.dtsi>
+#include <arm/microchip/at91sam9x5ek.dtsi>
+
+/ {
+	aliases {
+		mmc0 = &mmc0;
+		mmc1 = &mmc1;
+	};
+};
+
+&{/i2c-gpio-0} {
+	status = "okay";
+};
+
+/*
+ * PB18 has a resource conflict since it is both used
+ * as a heartbeat LED and 1-wire bus in the kernel
+ * device tree. Because 1-wire EEPROMs contains
+ * importatnt revision information we move heartbeat
+ * to PD21 and remove the original pb18 node
+ */
+/delete-node/ &{/leds/pb18};
+
+&{/leds/pd21} {
+	linux,default-trigger = "heartbeat";
+};
+
+&spi0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_spi0>, <&pinctrl_board_spi>;
+};
+
+&i2c0 {
+	status = "disabled";
+};
+
+/*
+ * This one conflicts with SPI NOR on the SoM
+ */
+&mmc1 {
+	status = "disabled";
+};
+
+&macb0 {
+	status = "okay";
+	phy-mode = "rmii";
+};
+
+&nand_controller {
+	nand@3 {
+		/delete-node/ partitions;
+
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			at91bootstrap@0 {
+				label = "at91bootstrap";
+				reg = <0x0 0x20000>;
+			};
+
+			barebox@20000 {
+				label = "barebox";
+				reg = <0x20000 0x100000>;
+			};
+
+			environment_nand: bareboxenv@120000 {
+				label = "barebox-environment";
+				reg = <0x120000 0x20000>;
+			};
+
+			rootfs@140000 {
+				label = "root";
+				reg = <0x140000 0x0>;
+			};
+		};
+	};
+};
+
+&{/ahb/apb/pinctrl@fffff400} {
+	spi0 {
+		pinctrl_board_spi: spi-board {
+			atmel,pins = <AT91_PIOA 14 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+	};
+};

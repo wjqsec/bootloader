@@ -1,0 +1,3 @@
+rmmod ls  "}"
+rmmod echo
+rmmod part_gpt

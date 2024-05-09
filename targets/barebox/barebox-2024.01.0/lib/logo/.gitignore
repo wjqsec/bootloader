@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+barebox-logo-*.bblogo
+barebox-logo-*.bblogo.S
+barebox-logo-*.bmp
+barebox-logo-*.png
+barebox-logo-*.qoi

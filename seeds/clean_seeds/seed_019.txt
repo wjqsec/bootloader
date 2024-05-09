@@ -1,0 +1,29 @@
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-42f132e4-6a94-4e00-9dcb-eed80c375619' {
+	menuentry 'Ubuntu, with Linux 6.0.0-nyx+' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-6.0.0-nyx+-advanced-42f132e4-6a94-4e00-9dcb-eed80c375619' {
+		recordfail
+		load_video
+		gfxmode $linux_gfx_mode
+		insmod gzio
+		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+		insmod part_gpt
+		insmod ext2
+		search --no-floppy --fs-uuid --set=root 7deefe43-3a38-414b-9f9f-6f54e63ff46e
+		echo	'Loading Linux 6.0.0-nyx+ ...'
+		linux	/vmlinuz-6.0.0-nyx+ root=/dev/mapper/ubuntu--vg-ubuntu--lv ro  
+		echo	'Loading initial ramdisk ...'
+		initrd	/initrd.img-6.0.0-nyx+
+	}
+	menuentry 'Ubuntu, with Linux 6.0.0-nyx+ (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-6.0.0-nyx+-recovery-42f132e4-6a94-4e00-9dcb-eed80c375619' {
+		recordfail
+		load_video
+		insmod gzio
+		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+		insmod part_gpt
+		insmod ext2
+		search --no-floppy --fs-uuid --set=root 7deefe43-3a38-414b-9f9f-6f54e63ff46e
+		echo	'Loading Linux 6.0.0-nyx+ ...'
+		linux	/vmlinuz-6.0.0-nyx+ root=/dev/mapper/ubuntu--vg-ubuntu--lv ro recovery nomodeset dis_ucode_ldr 
+		echo	'Loading initial ramdisk ...'
+		initrd	/initrd.img-6.0.0-nyx+
+	}
+}

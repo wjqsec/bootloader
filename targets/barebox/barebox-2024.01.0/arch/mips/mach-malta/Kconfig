@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if MACH_MIPS_MALTA
+
+config BOARD_QEMU_MALTA
+	bool "qemu malta"
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+endif

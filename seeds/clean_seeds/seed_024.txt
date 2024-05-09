@@ -1,0 +1,5 @@
+submenu "Installer ISOs ->" --class gnu-linux {
+    for configfile in /boot/grub/grub.d/*-install.cfg; do
+        source $configfile
+    done
+}

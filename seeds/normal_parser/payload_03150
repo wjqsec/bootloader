@@ -1,0 +1,4 @@
+set lang=en " "7
+rmmod part_gpt
+if loadfont;then t
+fi

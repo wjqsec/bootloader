@@ -1,0 +1,5 @@
+. "÷"
+submenu  ''b '' - -"÷" "è"
+multiboot$id (hd2147483649)2+ "ô"Ã"¯"[='f [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+		insmod part_gpsearch --no-floppy --fs-uuid --set=root 7deefe43-3a38-414b-9f9f-6f54e63ff46e
+		echo	yx+ ...'

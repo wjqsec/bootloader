@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menuconfig USB_GADGET
+	select USB
+	select POLLER
+	select NLS
+	bool "USB gadget support"
+
+if USB_GADGET
+
+config USB_GADGET_DUALSPEED
+	bool
+
+config USB_GADGET_DRIVER_ARC
+	bool
+	prompt "Arc OTG device core"
+	depends on ARCH_IMX || ARCH_MXS
+	default y
+	select USB_GADGET_DUALSPEED
+
+config USB_GADGET_DRIVER_AT91
+	bool
+	prompt "at91 gadget driver"
+	depends on ARCH_AT91
+	default y
+	select USB_GADGET_DUALSPEED
+
+config USB_GADGET_DRIVER_PXA27X
+	bool
+	prompt "PXA27x gadget driver"
+	depends on ARCH_PXA27X
+	default y
+	select USB_GADGET_DUALSPEED
+
+config USB_GADGET_AUTOSTART
+	bool
+	default y
+	prompt "Automatically start usbgadget on boot"
+	depends on GLOBALVAR
+	select SYSTEM_PARTITIONS if USB_GADGET_MASS_STORAGE
+	help
+	  Enabling this option allows to automatically start a dfu or
+	  fastboot gadget during boot. This behaviour is controlled with
+	  the global.usbgadget.dfu_function, global.system.partitions
+	  and global.fastboot.* variables.
+
+comment "USB Gadget drivers"
+
+config USB_GADGET_DFU
+	bool
+	prompt "Device Firmware Update Gadget"
+
+config USB_GADGET_SERIAL
+	bool
+	depends on !CONSOLE_NONE
+	prompt "Serial Gadget"
+
+config USB_GADGET_FASTBOOT
+	bool
+	select BANNER
+	select FASTBOOT_BASE
+	prompt "Android Fastboot USB Gadget"
+
+config USB_GADGET_MASS_STORAGE
+	bool
+	select BTHREAD
+	prompt "USB Mass Storage Gadget"
+	help
+	  The Mass Storage Gadget acts as a USB Mass Storage disk drive.
+	  As its storage repository it can use a regular file or a block
+	  device. Multiple storages can be specified at once on
+	  instantiation time.
+
+endif

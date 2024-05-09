@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if MACH_MIPS_BCM47XX
+
+choice
+	prompt "Board type"
+
+config BOARD_DLINK_DIR320
+	bool "D-Link DIR-320"
+
+endchoice
+
+endif

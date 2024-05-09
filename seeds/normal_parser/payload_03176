@@ -1,0 +1,4 @@
+lang=en ""
+rmmod part_gpt
+mopapt
+if load

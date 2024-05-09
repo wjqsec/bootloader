@@ -1,0 +1,14 @@
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_gpt
+insmod lvm
+insmod ext2
+set root='lvmid/ofPlCT-Irc2-Pwq0-vAvK-1Cw5-z5aA-fS5YHH/x12dIl-z9yE-OMdL-FC1t-WDy0-ZsU3-QfXuuD'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint='lvmid/ofPlCT-Irc2-Pwq0-vAvK-1Cw5-z5aA-fS5YHH/x12dIl-z9yE-OMdL-FC1t-WDy0-ZsU3-QfXuuD'  42f132e4-6a94-4e00-9dcb-eed80c375619
+else
+  search --no-floppy --fs-uuid --set=root 42f132e4-6a94-4e00-9dcb-eed80c375619
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi

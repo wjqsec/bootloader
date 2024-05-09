@@ -1,0 +1,302 @@
+#!/usr/bin/env bash
+#
+# SPDX-License-Identifier: GPL-2.0-only
+
+# Keep track of the number of builds and errors
+nb_warnings=0
+warnings_list=""
+nb_errors=0
+errors_list=""
+nb_defconfigs=0
+ret=0
+
+time_start=$(date +%s)
+
+filename=$(basename $0)
+
+#-----------------------------------------------------------------------
+
+usage() {
+	echo "Usage: ${filename} [OPTION]..."
+	echo "Barebox MAKEALL tools."
+	echo ""
+	echo "it's allow you to compile specific defconfig or ARCH or all"
+	echo "as"
+	echo ""
+	echo "CROSS_COMPILE=arm-linux- ARCH=arm ./MAKEALL at91sam9263ek_defconfig"
+	echo "CROSS_COMPILE=arm-linux- ARCH=arm ./MAKEALL"
+	echo ""
+	echo "The cross-compiler can be specify via"
+	echo "    CROSS_COMPILE               default"
+	echo "    CROSS_COMPILE_<arch>        arch default"
+	echo "    CROSS_COMPILE_<target>      defconfig specific"
+	echo ""
+	echo "it will be evaluated in the invert order"
+	echo ""
+	echo "or via config"
+	echo ""
+	echo "you can specify it via env CONFIG or option -c (overwrite env)"
+	echo ""
+	echo "CONFIG=./MAKEALL.cfg ARCH=arm ./MAKEALL at91sam9263ek_defconfig"
+	echo "CONFIG=./MAKEALL.cfg ARCH=arm ./MAKEALL"
+	echo ""
+	echo "and for all"
+	echo ""
+	echo "CONFIG=./MAKEALL.cfg ./MAKEALL"
+	echo ""
+	echo "you can specify via env or option"
+	echo "env         option"
+	echo "ARCH        -a      arch"
+	echo "CONFIG      -c      config"
+	echo "JOBS        -j      jobs"
+	echo "BUILDDIR    -O      build dir"
+	echo "LOGDIR      -l      log dir"
+	echo "REGEX       -e      regex"
+	echo "KCONFIG_ADD -k      kconfig fragment"
+	echo "INCREMENTAL -i"
+	echo ""
+}
+
+stats() {
+	echo ""
+	echo "--------------------- SUMMARY ----------------------------"
+	echo "defconfigs compiled: ${nb_defconfigs}"
+	time_stop=$(date +%s)
+	time_diff=$((${time_stop} - ${time_start}))
+	printf "compiled in %4is\n" ${time_diff}
+	if [ ${nb_errors} -gt 0 ] ; then
+		echo "defconfigs with errors: ${nb_errors} (${errors_list} )"
+	fi
+	if [ ${nb_warnings} -gt 0 ] ; then
+		echo "defconfigs with warnings: ${nb_warnings} (${warnings_list} )"
+	fi
+	echo "----------------------------------------------------------"
+
+	exit ${ret}
+}
+
+check_pipe_status() {
+	for i in "${PIPESTATUS[@]}"
+	do
+		[ $i -gt 0 ] && return 1
+	done
+	return 0
+}
+
+do_build_target() {
+	local arch=$1
+	local target=$2
+	local target_time_start=$(date +%s)
+	local log_report="${LOGDIR}/${target}/report.log"
+	local log_err="${LOGDIR}/${target}/errors.log"
+
+	[ "$INCREMENTAL" != "1" ] && rm -rf "${BUILDDIR}"
+	mkdir -p "${LOGDIR}/${target}"
+
+	MAKE="make -j${JOBS} ARCH=${arch} O=${BUILDDIR}"
+	${MAKE} ${target} &>/dev/null
+
+	if [ ${arch} = "arm" ]; then
+		grep -q "CONFIG_CPU_64=y" ${BUILDDIR}/.config
+		if [ $? = 0 ]; then
+			arch=arm64
+		fi
+	fi
+
+	tmp=$(echo "${target}" | tr - _)
+
+	cross_compile=$(eval echo '$CROSS_COMPILE_'${tmp})
+	cross_compile_set=$(eval echo '${CROSS_COMPILE_'${tmp}'+set}')
+	if [ "${cross_compile_set}" = "" ]
+	then
+		cross_compile=$(eval echo '$CROSS_COMPILE_'${arch})
+		cross_compile_set=$(eval echo '${CROSS_COMPILE_'${arch}'+set}')
+		if [ "${cross_compile_set}" = "" ]
+		then
+			cross_compile=${CROSS_COMPILE}
+		fi
+	fi
+
+	printf "Building ${arch} ${target} \n" >&2 | tee -a "${log_report}"
+	MAKE="${MAKE} CROSS_COMPILE=${cross_compile}"
+	${MAKE} ${target} 2>&1 > "${log_report}" | tee "${log_err}"
+	for i in ${KCONFIG_ADD}; do
+		./scripts/kconfig/merge_config.sh -m -O \
+			${BUILDDIR} ${BUILDDIR}/.config $i \
+			2>&1 > "${log_report}" | tee "${log_err}"
+	done
+	${MAKE} olddefconfig 2>&1 > "${log_report}" | tee "${log_err}"
+
+	check_pipe_status
+	configure_result="$?"
+
+	printf "Configure: " | tee -a "${log_report}"
+
+	if [ "$configure_result" = "0" ]; then
+		printf "OK     \n" | tee -a "${log_report}"
+
+		${MAKE} -s 2>&1 >> "${log_report}" | tee -a "${log_err}"
+
+		check_pipe_status
+		compile_result="$?"
+
+		printf "Compile: " ${target} | tee -a "${log_report}"
+
+		if [ "$compile_result" = "0" ]; then
+			printf "OK     \n" | tee -a "${log_report}"
+		else
+			printf "FAILED \n" | tee -a "${log_report}"
+			nb_errors=$((nb_errors + 1))
+			errors_list="${errors_list} ${target}"
+			ret=1
+		fi
+	else
+		printf "FAILED \n" | tee -a "${log_report}"
+		printf "Compile: ------ \n" | tee -a "${log_report}"
+		ret=1
+	fi
+
+	if [ -s "${log_err}" ] ; then
+		nb_warnings=$((nb_warnings + 1))
+		warnings_list="${warnings_list} ${target}"
+	else
+		rm "${log_err}"
+	fi
+
+	nb_defconfigs=$((nb_defconfigs + 1))
+
+	target_time_stop=$(date +%s)
+	target_time_diff=$((${target_time_stop} - ${target_time_start}))
+	printf "Compiled in %4is\n" ${target_time_diff} | tee -a "${log_report}"
+}
+
+do_build() {
+	local arch=$1
+	local regex=$2
+
+	configs=$(find arch/${arch}/configs -name "${regex}_defconfig" | sort)
+	for i in ${configs}; do
+		local target=$(basename $i)
+
+		do_build_target ${arch} ${target}
+	done
+}
+
+do_build_all() {
+	local build_target=0
+
+	for i in arch/*
+	do
+		local arch=$(basename $i)
+
+		if [ -d $i ]
+		then
+			do_build ${arch} "*"
+			build_target=$((build_target + 1))
+		fi
+	done
+
+	return $build_target
+}
+
+while getopts "hc:j:O:l:a:e:k:i" Option
+do
+case $Option in
+	a )
+		ARCH=${OPTARG}
+		;;
+	c )
+		CONFIG=${OPTARG}
+		;;
+	j )
+		JOBS=${OPTARG}
+		;;
+	l )
+		LOGDIR=${OPTARG}
+		;;
+	O )
+		BUILDDIR=${OPTARG}
+		;;
+	e )
+		REGEX=${OPTARG}
+		;;
+	k )
+		KCONFIG_ADD="${KCONFIG_ADD} ${OPTARG}"
+		;;
+	i )
+		INCREMENTAL=1
+		;;
+	h )
+		usage
+		exit 0
+		;;
+esac
+done
+
+shift $((OPTIND - 1))
+
+if [ ! "${JOBS}" ] ; then
+	#linux, BSD, MacOS
+	nb_cpu=`getconf _NPROCESSORS_ONLN`
+
+	if [ $? -gt 0 ]
+	then
+		nb_cpu=1
+	fi
+
+	JOBS=$((${nb_cpu} * 2))
+fi
+
+if [ ! "${LOGDIR}" ]
+then
+	LOGDIR="log"
+fi
+
+if [ ! "${BUILDDIR}" ]
+then
+	BUILDDIR="makeall_builddir"
+fi
+
+if [ "${CONFIG}" ]
+then
+	basedir=$(dirname ${CONFIG})
+
+	if [ ! "${basedir}" ] || [ "${basedir}" = "." ]
+	then
+		CONFIG="./${CONFIG}"
+	fi
+
+	. "${CONFIG}"
+fi
+
+[ -d "${LOGDIR}" ] || mkdir ${LOGDIR} || exit 1
+
+if [ ! "${REGEX}" ]
+then
+	REGEX="*"
+fi
+
+if [ ! "${ARCH}" ] || [ ! -d arch/${ARCH} ]
+then
+	do_build_all
+	if [ $? -eq 0 ]
+	then
+		echo "You need to specify the ARCH or CROSS_COMPILE_<arch> or CROSS_COMPILE_<target> in your config file"
+		usage
+		exit 1
+	fi
+	exit 0
+fi
+
+if [ $# -eq 0 ]
+then
+	do_build ${ARCH} "${REGEX}"
+else
+	for i in $*; do
+		do_build_target ${ARCH} $i
+	done
+fi
+
+stats
+
+exit ${nb_errors}

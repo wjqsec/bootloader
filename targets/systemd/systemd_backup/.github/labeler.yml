@@ -1,0 +1,207 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# vi: sw=2 ts=2 et:
+
+apparmor:
+  - changed-files:
+    - any-glob-to-any-file: '**/*apparmor*'
+binfmt:
+  - changed-files:
+    - any-glob-to-any-file: '**/*binfmt*'
+bsod:
+  - changed-files:
+    - any-glob-to-any-file: '**/*bsod*'
+btrfs:
+  - changed-files:
+    - any-glob-to-any-file: '**/*btrfs*'
+build-system:
+  - changed-files:
+    - any-glob-to-any-file: ['meson_options.txt', '**/meson.build', 'Makefile', 'configure']
+busctl:
+  - changed-files:
+    - any-glob-to-any-file: '**/*busctl*'
+cgls:
+  - changed-files:
+    - any-glob-to-any-file: '**/*cgls*'
+cgtop:
+  - changed-files:
+    - any-glob-to-any-file: '**/*cgtop*'
+ci:
+  - changed-files:
+    - any-glob-to-any-file: '.github/*'
+coccinelle:
+  - changed-files:
+    - any-glob-to-any-file: 'coccinelle/*'
+coredump:
+  - changed-files:
+    - any-glob-to-any-file: '**/*coredump*'
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: ['NEWS', 'README*', 'docs/*', 'man/*']
+env-generator:
+  - changed-files:
+    - any-glob-to-any-file: '**/*environment*generator*'
+escape:
+  - changed-files:
+    - any-glob-to-any-file: '**/*escape*'
+debug-generator:
+  - changed-files:
+    - any-glob-to-any-file: '**/debug-generator*'
+fstab-generator:
+  - changed-files:
+    - any-glob-to-any-file: '**/*fstab-generator*'
+growfs:
+  - changed-files:
+    - any-glob-to-any-file: '**/*growfs*'
+hibernate-resume:
+  - changed-files:
+    - any-glob-to-any-file: '**/*hibernate-resume*'
+hwdb:
+  - changed-files:
+    - any-glob-to-any-file: 'hwdb.d/**/*'
+journal:
+  - changed-files:
+    - any-glob-to-any-file: ['src/journal/*', 'src/libsystemd/sd-journal/*']
+journal-remote:
+  - changed-files:
+    - any-glob-to-any-file: 'src/journal-remote/*'
+login:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-login*/**'
+logind:
+  - changed-files:
+    - any-glob-to-any-file: 'src/login/*'
+meson:
+  - changed-files:
+    - any-glob-to-any-file: ['meson_options.txt', '**/meson.build']
+mkosi:
+  - changed-files:
+    - any-glob-to-any-file: ['.mkosi/*', 'mkosi.build']
+network:
+  - changed-files:
+    - any-glob-to-any-file: ['src/libsystemd-network/**/*', 'src/network/**/*']
+nspawn:
+  - changed-files:
+    - any-glob-to-any-file: '**/*nspawn*'
+portable:
+  - changed-files:
+    - any-glob-to-any-file: 'src/portable/**/*'
+rc-local-generator:
+  - changed-files:
+    - any-glob-to-any-file: 'src/rc-local-generator/*'
+repart:
+  - changed-files:
+    - any-glob-to-any-file: '**/*repart*'
+resolve:
+  - changed-files:
+    - any-glob-to-any-file: '**/*resolve*'
+rfkill:
+  - changed-files:
+    - any-glob-to-any-file: '**/*rfkill*'
+rpm:
+  - changed-files:
+    - any-glob-to-any-file: 'src/rpm/*'
+run:
+  - changed-files:
+    - any-glob-to-any-file: ['src/run/*', 'man/systemd-run*']
+sd-boot/sd-stub/bootctl:
+  - changed-files:
+    - any-glob-to-any-file: ['src/boot/**/*', 'man/bootctl*', 'man/systemd-boot.xml']
+sd-bus:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-bus*/**'
+sd-daemon:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-daemon*/**'
+sd-device:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-device*/**'
+sd-event:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-event*/**'
+sd-hwdb:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-hwdb*/**'
+sd-id128:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-id128*/**'
+sd-netlink:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-netlink*/**'
+sd-path:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-path*/**'
+sd-resolve:
+  - changed-files:
+    - any-glob-to-any-file: '**/sd-resolve*/**'
+selinux:
+  - changed-files:
+    - any-glob-to-any-file: '**/*selinux*'
+shell-completion:
+  - changed-files:
+    - any-glob-to-any-file: 'shell-completion/*'
+sleep:
+  - changed-files:
+    - any-glob-to-any-file: ['src/shared/*sleep*', 'src/sleep/*']
+smack:
+  - changed-files:
+    - any-glob-to-any-file: '**/*smack*'
+socket-proxy:
+  - changed-files:
+    - any-glob-to-any-file: '**/*socket-proxy*'
+sysv-generator:
+  - changed-files:
+    - any-glob-to-any-file: '**/*sysv-generator*'
+systemctl:
+  - changed-files:
+    - any-glob-to-any-file: '**/systemctl*'
+sysupdate:
+  - changed-files:
+    - any-glob-to-any-file: '**/*sysupdate*'
+sysvcompat:
+  - changed-files:
+    - any-glob-to-any-file: '**/*sysv*'
+sysctl:
+  - changed-files:
+    - any-glob-to-any-file: '**/*sysctl*'
+timedate:
+  - changed-files:
+    - any-glob-to-any-file: '**/*timedate*'
+timesync:
+  - changed-files:
+    - any-glob-to-any-file: '**/*timesync*'
+tests:
+  - changed-files:
+    - any-glob-to-any-file: [
+      'src/test/**/*',
+      'src/fuzz/**/*',
+      'test/**/*',
+      '**/test-*',
+      '.github/workflows/*'
+  ]
+tpm2:
+  - changed-files:
+    - any-glob-to-any-file: ['**/*tpm2*', '**/*tpm-*']
+udev:
+  - changed-files:
+    - any-glob-to-any-file: ['src/udev/**/*', 'src/libudev/*', 'man/*udev*']
+uki:
+  - changed-files:
+    - any-glob-to-any-file: '**/ukify*'
+units:
+  - changed-files:
+    - any-glob-to-any-file: 'units/**/*'
+userdb:
+  - changed-files:
+    - any-glob-to-any-file: '**/*userdb*'
+util-lib:
+  - changed-files:
+    - any-glob-to-any-file: ['src/fundamental/**/*', 'src/basic/**/*', 'src/shared/**/*']
+vconsole:
+  - changed-files:
+    - any-glob-to-any-file: '**/*vconsole*'
+vmspawn:
+  - changed-files:
+    - any-glob-to-any-file: '**/*vmspawn*'
+xdg-autostart:
+  - changed-files:
+    - any-glob-to-any-file: '**/**xdg-autostart-generator*'

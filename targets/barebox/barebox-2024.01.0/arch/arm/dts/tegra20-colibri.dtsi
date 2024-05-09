@@ -1,0 +1,2 @@
+#include <arm/nvidia/tegra20-colibri.dtsi>
+#include "tegra20.dtsi"

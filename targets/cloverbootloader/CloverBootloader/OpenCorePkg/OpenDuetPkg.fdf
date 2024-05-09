@@ -1,0 +1,83 @@
+## @file
+# This is DUET FDF file with UEFI HII features enabled
+#
+# Copyright (c) 2007 - 2011, Intel Corporation. All rights reserved.<BR>
+#
+#    This program and the accompanying materials
+#    are licensed and made available under the terms and conditions of the BSD License
+#    which accompanies this distribution. The full text of the license may be found at
+#    http://opensource.org/licenses/bsd-license.php
+#
+#    THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+[Defines]
+
+#
+# Normal DUET build (with USB and ATA/AHCI drivers)
+#
+!if ($(ARCH) == X64)
+  [FV.DuetEfiMainFvX64]
+!else
+  [FV.DuetEfiMainFvIA32]
+!endif
+
+  !include OpenDuetPkgDefines.fdf.inc
+
+  # IDE/AHCI
+  INF  MdeModulePkg/Bus/Pci/SataControllerDxe/SataControllerDxe.inf
+  INF  MdeModulePkg/Bus/Ata/AtaAtapiPassThru/AtaAtapiPassThru.inf
+  INF  MdeModulePkg/Bus/Ata/AtaBusDxe/AtaBusDxe.inf
+  INF  MdeModulePkg/Bus/Scsi/ScsiBusDxe/ScsiBusDxe.inf
+  INF  MdeModulePkg/Bus/Scsi/ScsiDiskDxe/ScsiDiskDxe.inf
+
+  # USB (UHCI may be used for input, XHCI cannot be booted from)
+  INF  MdeModulePkg/Bus/Pci/UhciDxe/UhciDxe.inf
+  INF  MdeModulePkg/Bus/Pci/EhciDxe/EhciDxe.inf
+  INF  MdeModulePkg/Bus/Usb/UsbBusDxe/UsbBusDxe.inf
+  INF  MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
+
+#
+# Alternative DUET build (with Block I/O driver)
+#
+!if ($(ARCH) == X64)
+  [FV.DuetEfiMainFvBlockIoX64]
+!else
+  [FV.DuetEfiMainFvBlockIoIA32]
+!endif
+
+  !include OpenDuetPkgDefines.fdf.inc
+
+  # BIOS Block I/O
+  INF OpenCorePkg/Legacy/BootPlatform/BlockIoDxe/BlockIoDxe.inf
+
+[Rule.Common.DXE_CORE]
+  FILE DXE_CORE = $(NAMED_GUID) {
+    UE           UE                      $(INF_OUTPUT)/$(MODULE_NAME).efi
+  }
+
+[Rule.Common.UEFI_DRIVER]
+  FILE DRIVER = $(NAMED_GUID) {
+    DXE_DEPEX    DXE_DEPEX Optional      $(INF_OUTPUT)/$(MODULE_NAME).depex
+    UE           UE                      $(INF_OUTPUT)/$(MODULE_NAME).efi
+  }
+
+[Rule.Common.UEFI_DRIVER.BINARY]
+  FILE DRIVER = $(NAMED_GUID) {
+    DXE_DEPEX    DXE_DEPEX Optional      |.depex
+    PE32         PE32                    |.efi
+  }
+
+[Rule.Common.DXE_DRIVER]
+  FILE DRIVER = $(NAMED_GUID) {
+    DXE_DEPEX    DXE_DEPEX Optional      $(INF_OUTPUT)/$(MODULE_NAME).depex
+    UE           UE                      $(INF_OUTPUT)/$(MODULE_NAME).efi
+  }
+
+[Rule.Common.DXE_RUNTIME_DRIVER]
+  FILE DRIVER = $(NAMED_GUID) {
+    DXE_DEPEX    DXE_DEPEX Optional      $(INF_OUTPUT)/$(MODULE_NAME).depex
+    UE           UE                      $(INF_OUTPUT)/$(MODULE_NAME).efi
+  }

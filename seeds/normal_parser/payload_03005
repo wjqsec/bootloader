@@ -1,0 +1,2 @@
+set lang=en e
+search  --h  --hint=cd ""sh --fs-uuid --hint=cd  -

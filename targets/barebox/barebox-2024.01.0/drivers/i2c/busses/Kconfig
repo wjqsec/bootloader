@@ -1,0 +1,92 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Sensor device configuration
+#
+
+menu "I2C Hardware Bus support"
+
+config I2C_GPIO
+	tristate "GPIO-based bitbanging I2C"
+	depends on GENERIC_GPIO
+	select I2C_ALGOBIT
+	help
+	  This is a very simple bitbanging I2C driver utilizing the
+	  arch-neutral GPIO API to control the SCL and SDA lines.
+
+config I2C_AT91
+	bool "AT91 I2C Master driver"
+	depends on ARCH_AT91
+
+config I2C_BCM283X
+	bool "BCM283X I2C Master driver"
+	depends on ARCH_BCM283X || COMPILE_TEST
+
+config I2C_IMX
+	bool "MPC85xx/MPC5200/i.MX I2C Master driver"
+	depends on ARCH_IMX || ARCH_MPC85XX || ARCH_MPC5200 || ARCH_LAYERSCAPE
+	help
+	  If you say yes to this option, support will be included for many
+	  built-in I2C master controllers found in Freescale SoCs. This is true
+	  for many i.MX ARM based SoCs, for MPC85xx and MPC5200 PowerPC based
+	  SoCs.
+
+config I2C_IMX_LPI2C
+	tristate "IMX Low Power I2C interface"
+	depends on ARCH_IMX || COMPILE_TEST
+	help
+	  Say Y here if you want to use the Low Power IIC bus controller
+	  on the Freescale i.MX processors.
+
+config I2C_DESIGNWARE
+	bool "Synopsys DesignWare I2C Master driver"
+	help
+	  If you say yes to this option, support will be included for the
+	  Synopsys DesignWare I2C adapter. Only master mode is supported.
+
+config I2C_MV64XXX
+	bool "Marvell mv64xxx I2C Controller"
+	depends on HAVE_CLK && OFDEVICE
+	help
+	  If you say yes to this option, support will be included for the
+	  built-in I2C interface on the Marvell 64xxx line of host bridges.
+	  This driver is also used for Allwinner SoCs I2C controllers.
+
+config I2C_OMAP
+	bool "OMAP I2C Master driver"
+	depends on ARCH_OMAP
+
+config I2C_TEGRA
+	bool "Tegra I2C master driver"
+	depends on ARCH_TEGRA
+
+config I2C_VERSATILE
+	tristate "ARM Versatile/Realview I2C bus support"
+	depends on ARCH_VERSATILE
+	select I2C_ALGOBIT
+	help
+	  Say yes if you want to support the I2C serial bus on ARMs Versatile
+	  range of platforms.
+
+config I2C_STM32
+	bool "STM32 I2C master driver"
+	select RESET_CONTROLLER
+	depends on HAVE_CLK
+	depends on ARCH_STM32 || COMPILE_TEST
+
+config I2C_RK3X
+	tristate "Rockchip RK3xxx I2C adapter"
+	depends on HAVE_CLK
+	depends on ARCH_ROCKCHIP || COMPILE_TEST
+	help
+	  Say Y here to include support for the I2C adapter in Rockchip RK3xxx
+	  SoCs.
+
+config I2C_CADENCE
+	bool "Cadence I2C adapter"
+	depends on HAVE_CLK
+	depends on ARCH_ZYNQMP || COMPILE_TEST
+	help
+	  Say Y here to include support for the Cadence I2C host controller found
+	  in Zynq UltraScale+ MPSoCs.
+
+endmenu

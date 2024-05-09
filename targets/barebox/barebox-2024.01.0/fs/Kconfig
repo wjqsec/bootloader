@@ -1,0 +1,145 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "Filesystem support"
+
+config FS
+	bool
+	default y
+	select FILETYPE
+
+config FS_LEGACY
+	bool
+	help
+	  invisible option selected by filesystem drivers which haven't
+	  been ported to dentry cache.
+
+if FS_LEGACY
+comment "Some selected filesystems still use the legacy FS API."
+comment "Consider updating them."
+endif
+
+config FS_AUTOMOUNT
+	bool
+
+config FS_CRAMFS
+	bool
+	select ZLIB
+	prompt "cramfs support"
+
+source "fs/ext4/Kconfig"
+
+config FS_RAMFS
+	bool
+	default y
+	prompt "ramfs support"
+
+config FS_DEVFS
+	bool
+	default y
+	prompt "devfs support"
+
+config FS_TFTP
+	bool
+	prompt "tftp support"
+	depends on NET
+
+config FS_TFTP_MAX_WINDOW_SIZE
+	int
+	prompt "maximum tftp window size (RFC 7440)"
+	depends on FS_TFTP
+	default 128
+	range 1 128
+	help
+	  The maximum allowed tftp "windowsize" (RFC 7440).  Higher
+	  value increase speed of the tftp download with the cost of
+	  memory (1432 bytes per slot).
+
+	  Requires tftp "windowsize" (RFC 7440) support on server side
+	  to have an effect.
+
+config FS_OMAP4_USBBOOT
+	bool
+	prompt "Filesystem over usb boot"
+	depends on OMAP4_USBBOOT
+	select FS_LEGACY
+
+config FS_NFS
+	depends on NET
+	bool
+	prompt "nfs support"
+
+config FS_EFI
+	depends on EFI_BOOTUP
+	select FS_LEGACY
+	bool
+	prompt "EFI filesystem support"
+	help
+	  This filesystem driver provides access to the filesystems provided
+	  by the EFI Firmware via the EFI Simple File System Protocol.
+
+config FS_EFIVARFS
+	depends on EFI_BOOTUP
+	select FS_LEGACY
+	bool
+	prompt "EFI variable filesystem support (efivarfs)"
+	help
+	  This filesystem driver provides access to EFI variables.
+
+source "fs/fat/Kconfig"
+source "fs/jffs2/Kconfig"
+source "fs/ubifs/Kconfig"
+
+config FS_BPKFS
+	bool
+	select CRC32
+	select FS_LEGACY
+	prompt "BPKFS support"
+	help
+	  Simple update file format developed for Somfy, tools and library are
+	  available under LGPLv2 (https://www.gitorious.org/libbpk).
+	  This format in the v1.0 allow you to store 6 types a binary stream for
+	  a unique hardware id:
+	   - bootloader
+	   - bootloader_version
+	   - description.gz
+	   - kernel
+	   - rootfs
+	   - firmware_version
+
+config FS_UIMAGEFS
+	bool
+	select CRC32
+	select FS_LEGACY
+	prompt "uImage FS support"
+
+config FS_SMHFS
+	depends on ARM_SEMIHOSTING
+	select FS_LEGACY
+	bool
+	prompt "Semihosting FS support"
+	help
+	  If enabled this filesystem provides access to the files
+	  located on a debugging host connected to the target running
+	  Barebox
+
+source "fs/pstore/Kconfig"
+source "fs/squashfs/Kconfig"
+
+config FS_RATP
+	bool
+	depends on RATP
+	select FS_LEGACY
+	prompt "RATP filesystem support"
+	help
+	  This enables support for transferring files over RATP. A host can
+	  export a directory which can then be mounted under barebox.
+
+config FS_UBOOTVARFS
+	bool
+	depends on UBOOTVAR
+	prompt "U-Boot environment variable filesystem support"
+	help
+	  This filesystem driver provides access to U-Boot environment
+	  variables.
+
+endmenu

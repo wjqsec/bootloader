@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menuconfig TEST
+	bool "Testing"
+
+if TEST
+
+source "test/self/Kconfig"
+
+endif

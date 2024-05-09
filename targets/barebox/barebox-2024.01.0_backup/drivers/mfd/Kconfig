@@ -1,0 +1,156 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menu "Multifunction device drivers"
+
+config MFD_ACT8846
+	depends on I2C
+	bool "ACT8846 driver"
+
+config MFD_DA9053
+	depends on I2C
+	bool "DA9053 PMIC driver"
+	help
+	  This power management controller provides configurable power supplies,
+	  a machine restart feature and a watchdog.
+
+config MFD_DA9063
+	depends on I2C
+	bool "DA9063/DA9062 PMIC driver"
+
+config MFD_LP3972
+	depends on I2C
+	bool "LP3972 driver"
+
+config MFD_MC13XXX
+	depends on I2C || SPI
+	bool "MC13XXX a.k.a. PMIC driver (MC13783, MC13892, MC34708)"
+
+config MFD_MC34704
+	depends on I2C
+	bool "MC34704 PMIC driver"
+
+config MFD_MC9SDZ60
+	depends on I2C
+	bool "MC9SDZ60 driver"
+
+config MFD_STMPE
+	depends on I2C
+	bool "STMPE-i2c driver"
+
+config MFD_SYSCON
+	bool "System Controller Register"
+	help
+	  Select this option to enable accessing system control registers
+
+config MFD_TWLCORE
+	bool
+
+config MFD_TWL4030
+	depends on I2C
+	select MFD_TWLCORE
+	bool "TWL4030 driver"
+
+config MFD_TWL6030
+	depends on I2C
+	select MFD_TWLCORE
+	bool "TWL6030 driver"
+
+config RAVE_SP_CORE
+	tristate "RAVE SP MCU core driver"
+	depends on SERIAL_DEV_BUS
+	select CRC_CCITT
+	help
+	  Select this to get support for the Supervisory Processor
+	  device found on several devices in RAVE line of hardware.
+
+config MFD_STPMIC1
+	depends on I2C
+	select REGMAP_I2C
+	bool "STPMIC1 MFD driver"
+	help
+	  Select this to support communication with the STPMIC1.
+
+config MFD_PCA9450
+	depends on I2C
+	select REGMAP_I2C
+	bool "PCA9450 MFD driver"
+	help
+	  Select this to support communication with the PCA9450 PMIC.
+
+config MFD_RN568PMIC
+	depends on I2C
+	select REGMAP_I2C
+	bool "Ricoh RN5T568 MFD driver"
+	help
+	  Select this to support communication with the Ricoh RN5T568 PMIC.
+
+config MFD_SUPERIO
+	bool
+
+config FINTEK_SUPERIO
+       bool "Fintek Super I/O chip"
+       select MFD_SUPERIO
+       depends on X86 || COMPILE_TEST
+       help
+         Select this to probe for IO-port connected Fintek Super I/O chips.
+
+config SMSC_SUPERIO
+       bool "SMSC Super I/O chip"
+       select MFD_SUPERIO
+       depends on X86 || COMPILE_TEST
+       help
+         Select this to probe for IO-port connected SMSC Super I/O chips.
+
+config MFD_STM32_TIMERS
+	bool "STM32 Timers"
+	depends on ARCH_STM32 || COMPILE_TEST
+	help
+	  Select this to get regmap support for the timer blocks on STM32
+	  MCUs and MPUs.
+
+config MFD_ATMEL_FLEXCOM
+	tristate "Atmel Flexcom (Flexible Serial Communication Unit)"
+	depends on OFDEVICE
+	help
+	  Select this to get support for Atmel Flexcom. This is a wrapper
+	  which embeds a SPI controller, a I2C controller and a USART. Only
+	  one function can be used at a time. The choice is done at boot time
+	  by the probe function of this MFD driver according to a device tree
+	  property.
+
+config MFD_RK808
+	tristate "Rockchip RK805/RK808/RK809/RK817/RK818 Power Management Chip"
+	depends on I2C && OFDEVICE
+	select REGMAP_I2C
+	help
+	  If you say yes here you get support for the RK805, RK808, RK809,
+	  RK817 and RK818 Power Management chips.
+	  This driver provides common support for accessing the device
+	  through I2C interface.
+
+config MFD_AXP20X_I2C
+	tristate "X-Powers AXP series PMICs with I2C"
+	depends on I2C && OFDEVICE
+	select REGMAP_I2C
+	help
+	  If you say Y here you get support for the X-Powers AXP series power
+	  management ICs (PMICs) controlled with I2C.
+	  This driver currently only provide a character device in /dev.
+
+config MFD_ROHM_BD718XX
+	tristate "ROHM BD71837 Power Management IC"
+	depends on I2C=y
+	depends on OFDEVICE
+	select REGMAP_I2C
+	help
+	  Select this option to get support for the ROHM BD71837
+	  Power Management ICs. BD71837 is designed to power processors like
+	  NXP i.MX8. It contains 8 BUCK outputs and 7 LDOs, voltage monitoring
+	  and emergency shut down as well as 32,768KHz clock output.
+
+	  This driver currently only provide a character device in /dev.
+
+config MFD_ATMEL_SMC
+	bool
+	select MFD_SYSCON
+
+endmenu

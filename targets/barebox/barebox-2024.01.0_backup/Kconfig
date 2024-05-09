@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+#
+# For a description of the syntax of this configuration file,
+# see Documentation/kbuild/kconfig-language.txt.
+#
+mainmenu "Barebox/$(ARCH) $(KERNELVERSION) Configuration"
+
+source "scripts/Kconfig.include"
+
+source "arch/Kconfig"
+
+source "common/Kconfig"
+source "commands/Kconfig"
+source "net/Kconfig"
+source "drivers/Kconfig"
+source "fs/Kconfig"
+source "lib/Kconfig"
+source "crypto/Kconfig"
+source "firmware/Kconfig"
+source "scripts/Kconfig"
+source "test/Kconfig"

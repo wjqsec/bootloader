@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>
+    </IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <SupportJustMyCode>false</SupportJustMyCode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);JCONST=const;MDEPKG_NDEBUG;CLOVER_BUILD;AMD_SUPPORT;ANDX86;DEBUG_ON_SERIAL_PORT;JIEF_DEBUG;DISABLE_NEW_DEPRECATED_INTERFACES;IS_UEFI_MODULE;OC_TARGET_DEBUG</PreprocessorDefinitions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ForcedIncludeFiles>$(ProjectDir)..\..\Build/Clover/RELEASE_VS2017/X64/rEFIt_UEFI/refit/DEBUG/AutoGen.h</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <ShowIncludes>false</ShowIncludes>
+      <AdditionalOptions>/Gs32768 /Oi- /EHs-c- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\rEFIt_UEFI\PlatformEFI;$(ProjectDir)..\..\rEFIt_UEFI\PlatformEFI\include;$(ProjectDir)..\..\rEFIt_UEFI\PlatformEFI\posix;$(ProjectDir)..\..\rEFIt_UEFI\include;$(ProjectDir)..\..\Include;$(ProjectDir)..\..\Include\Library;$(ProjectDir)..\..\UefiCpuPkg\Include;$(ProjectDir)..\..\MdePkg;$(ProjectDir)..\..\MdePkg/Include;$(ProjectDir)..\..\MdePkg/Include/X64;$(ProjectDir)..\..\MdeModulePkg;$(ProjectDir)..\..\MdeModulePkg/Include;$(ProjectDir)..\..\IntelFrameworkPkg;$(ProjectDir)..\..\IntelFrameworkPkg/Include;$(ProjectDir)..\..\IntelFrameworkModulePkg;$(ProjectDir)..\..\IntelFrameworkModulePkg/Include;$(ProjectDir)..\..\EdkCompatibilityPkg;$(ProjectDir)..\..\EdkCompatibilityPkg/Compatibility/Include;$(ProjectDir)..\..\StdLib;$(ProjectDir)..\..\StdLib/Include;$(ProjectDir)..\..\StdLib/Include/X64;$(ProjectDir)..\..\OpenCorePkg;$(ProjectDir)..\..\OpenCorePkg\Include\Acidanthera;$(ProjectDir)..\..\OpenCorePkg\User\Include;$(ProjectDir)..\..\OpenCorePkg\Include\Apple;$(ProjectDir)..\..\OpenCorePkg\Include\VMWare;$(ProjectDir)..\..\OpenCorePkg\Include\Intel;$(ProjectDir)..\..\Library\OpensslLib\Include</AdditionalIncludeDirectories>
+      <MinimalRebuild />
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError />
+    </ClCompile>
+    <CustomBuild>
+      <Command>cmd /c echo %cd%</Command>
+    </CustomBuild>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)\LinkCmd.bat $(TargetDir) $(TargetFileName)</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Generate EFI</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

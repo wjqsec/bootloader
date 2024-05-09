@@ -1,0 +1,234 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "Library routines"
+config PARAMETER
+	bool
+
+config UNCOMPRESS
+	bool
+	select FILETYPE
+
+config JSMN
+	bool "JSMN JSON Parser" if COMPILE_TEST
+	help
+	  A minimalistic JSON parser.
+
+config XXHASH
+	bool
+
+config ZLIB
+	bool "include gzip uncompression support"
+	select UNCOMPRESS
+
+config BZLIB
+	bool "include bzip2 uncompression support"
+	select UNCOMPRESS
+
+config LZ4_DECOMPRESS
+	bool "include lz4 uncompression support"
+	select UNCOMPRESS
+
+config ZSTD_DECOMPRESS
+	bool "include zstd uncompression support"
+	select UNCOMPRESS
+	select XXHASH
+
+config XZ_DECOMPRESS
+	bool "include xz uncompression support"
+	select UNCOMPRESS
+	select XZ_DEC_X86
+	select XZ_DEC_POWERPC
+	select XZ_DEC_IA64
+	select XZ_DEC_ARM
+	select XZ_DEC_ARMTHUMB
+	select XZ_DEC_SPARC
+	select XZ_DEC_ARM64
+
+config XZ_DEC_X86
+        bool
+
+config XZ_DEC_POWERPC
+        bool
+
+config XZ_DEC_IA64
+        bool
+
+config XZ_DEC_ARM
+        bool
+
+config XZ_DEC_ARMTHUMB
+        bool
+
+config XZ_DEC_SPARC
+        bool
+
+config XZ_DEC_ARM64
+	bool
+
+config REED_SOLOMON
+	bool
+
+config BASE64
+	bool "include base64 encode/decode support"
+
+config CONSTRUCTORS
+	bool
+
+config GENERIC_FIND_NEXT_BIT
+	def_bool n
+
+config PROCESS_ESCAPE_SEQUENCE
+	def_bool n
+
+source "lib/lzo/Kconfig"
+
+config BCH_CONST_PARAMS
+	bool
+
+config BCH
+	bool
+
+config BITREV
+	bool
+
+config FNMATCH
+	bool
+
+config QSORT
+	bool
+
+config XYMODEM
+	bool
+	select CRC_ITU_T
+
+config LIBSCAN
+	bool
+
+config LIBUBIGEN
+	bool
+
+config IMAGE_SPARSE
+	bool
+
+config STMP_DEVICE
+	bool "STMP device support" if COMPILE_TEST
+
+config FSL_QE_FIRMWARE
+	select CRC32
+	bool
+
+config LIBFDT
+	bool
+
+config RATP
+	select CRC_ITU_T
+	select DEV_MEM
+	select COMMAND_SUPPORT
+	select POLLER
+	depends on CONSOLE_FULL
+	depends on !SHELL_NONE
+	bool "RATP protocol support"
+	help
+	  Reliable Asynchronous Transfer Protocol (RATP) is a protocol for reliably
+	  transferring packets over serial links described in RFC916. This implementation
+	  is used for controlling barebox over serial ports.
+
+config ALLOW_PRNG_FALLBACK
+	bool "Allow fallback to PRNG if HWRNG not available."
+	help
+	  WARNING: it is not secure!!
+
+	  get_crypto_bytes() users like cmd_password relay on HWRNG. If HWRNG is not
+	  available and this option is disabled, cmd_password will fail.
+	  Enable it on your own risk.
+
+config CRC_CCITT
+	bool "CRC-CCITT functions"
+	help
+	  This option is provided for the case where no in-kernel-tree
+	  modules require CRC-CCITT functions, but a module built outside
+	  the kernel tree does. Such modules that use library CRC-CCITT
+	  functions require M here.
+
+config CRC8
+        bool "CRC8 function"
+	help
+	  This option provides CRC8 function. Drivers may select this
+	  when they need to do cyclic redundancy check according CRC8
+	  algorithm. Module will be called crc8.
+
+source "lib/gui/Kconfig"
+
+source "lib/fonts/Kconfig"
+
+source "lib/logo/Kconfig"
+
+source "lib/bootstrap/Kconfig"
+
+config PROGRESS_NOTIFIER
+	bool "Progress Notifier" if COMPILE_TEST
+	help
+	  This is selected by boards that register a notifier to visualize
+	  progress, like blinking a LED during an update.
+
+config VERSION_CMP
+	bool
+	help
+	  This is selected by code that needs to compare versions
+	  in a manner compatible with
+	    https://uapi-group.org/specifications/specs/version_format_specification
+
+config PRINTF_UUID
+	bool
+	default y if PRINTF_FULL
+
+config PRINTF_WCHAR
+	bool
+	default y if PRINTF_FULL
+
+config PRINTF_HEXSTR
+	bool
+	default y if PRINTF_FULL
+
+config GENERIC_LIB_ASHLDI3
+	bool
+
+config GENERIC_LIB_ASHRDI3
+	bool
+
+config GENERIC_LIB_LSHRDI3
+	bool
+
+config GENERIC_LIB_MULDI3
+	bool
+
+config NLS
+        bool "Native language support"
+
+config BLOBGEN
+	select BASE64
+	bool "include blob encode/decode support"
+
+config ARCH_HAS_STACK_DUMP
+	bool
+
+config ARCH_HAS_DATA_ABORT_MASK
+	bool
+
+config ARCH_HAS_ZERO_PAGE
+	bool
+
+config HAVE_EFFICIENT_UNALIGNED_ACCESS
+	bool
+
+config GENERIC_ALLOCATOR
+	bool
+	help
+	  Support is curently limited to allocaing a complete mmio-sram at once.
+
+config IDR
+	bool
+
+endmenu
+
+source "lib/Kconfig.hardening"

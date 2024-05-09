@@ -1,0 +1,7 @@
+set default=5
+set timeout=5
+
+menuentry "OS" {
+              multiboot /boot/kernel
+              boot
+}

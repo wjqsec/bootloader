@@ -1,0 +1,15 @@
+lang=en
+setPcolor_highlight=white/black
+function C{if "";then
+""
+fi
+}
+function i{if "";then if "";then
+if "";then if "";then
+""
+fi
+fi
+fi;fi
+}
+function r{if "";then if "";then s;fi;fi
+}

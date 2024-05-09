@@ -1,0 +1,31 @@
+name: Check for compilation failures
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Check for compilation failures
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - name: Install dependencies
+        run: pacman --noconfirm -Syu && pacman --needed --noconfirm -S base-devel git autoconf automake nasm curl mtools llvm clang lld aarch64-linux-gnu-gcc riscv64-linux-gnu-gcc
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Git config
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Build the bootloader (LLVM)
+        run: ./bootstrap && ./configure TOOLCHAIN_FOR_TARGET=llvm --enable-werror --enable-all && make all && make maintainer-clean
+
+      - name: Build the bootloader (GNU, x86)
+        run: ./bootstrap && ./configure TOOLCHAIN_FOR_TARGET=gnu --enable-werror --enable-bios --enable-uefi-ia32 --enable-uefi-x86-64 && make all && make maintainer-clean
+
+      - name: Build the bootloader (GNU, aarch64)
+        run: ./bootstrap && ./configure TOOLCHAIN_FOR_TARGET=aarch64-linux-gnu --enable-werror --enable-uefi-aarch64 && make all && make maintainer-clean
+
+      - name: Build the bootloader (GNU, riscv64)
+        run: ./bootstrap && ./configure TOOLCHAIN_FOR_TARGET=riscv64-linux-gnu --enable-werror --enable-uefi-riscv64 && make all && make maintainer-clean

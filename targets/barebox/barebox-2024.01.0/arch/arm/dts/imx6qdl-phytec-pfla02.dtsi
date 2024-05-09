@@ -1,0 +1,142 @@
+/*
+ * Copyright 2013 Christian Hemp, Phytec Messtechnik GmbH
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#include <arm/nxp/imx/imx6qdl-phytec-pfla02.dtsi>
+
+/ {
+	chosen {
+		environment-nand {
+			compatible = "barebox,environment";
+			device-path = &env_nand;
+			status = "disabled";
+		};
+
+		environment-spinor {
+			compatible = "barebox,environment";
+			device-path = &env_nor;
+			status = "disabled";
+		};
+
+		environment-sd3 {
+			compatible = "barebox,environment";
+			device-path = &env_sd3;
+			status = "disabled";
+		};
+	};
+};
+
+/delete-node/ &{/memory@10000000};
+
+&som_flash {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		partition@0 {
+			label = "barebox";
+			reg = <0x0 0x100000>;
+		};
+
+		env_nor: partition@100000 {
+			label = "barebox-environment";
+			reg = <0x100000 0x20000>;
+		};
+
+		partition@120000 {
+			label = "oftree";
+			reg = <0x120000 0x20000>;
+		};
+
+		partition@140000 {
+			label = "kernel";
+			reg = <0x140000 0x0>;
+		};
+	};
+};
+
+&gpmi {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		partition@0 {
+			label = "barebox";
+			reg = <0x0 0x1000000>;
+		};
+
+		env_nand: partition@1000000 {
+			label = "barebox-environment";
+			reg = <0x1000000 0x100000>;
+		};
+
+		partition@1100000 {
+			label = "root";
+			reg = <0x1100000 0x0>;
+		};
+	};
+};
+
+&iomuxc {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_rev>;
+
+	imx6q-phytec-pfla02 {
+		pinctrl_rev: revgrp {
+			fsl,pins = <
+				MX6QDL_PAD_SD4_DAT3__GPIO2_IO11 0x80000000
+				MX6QDL_PAD_SD4_DAT4__GPIO2_IO12	0x80000000
+				MX6QDL_PAD_SD4_DAT5__GPIO2_IO13	0x80000000
+				MX6QDL_PAD_SD4_DAT6__GPIO2_IO14	0x80000000
+				MX6QDL_PAD_SD4_DAT7__GPIO2_IO15	0x80000000
+			>;
+		};
+	};
+};
+
+&ocotp {
+	barebox,provide-mac-address = <&fec 0x620>;
+};
+
+&som_eeprom {
+	pagesize = <32>;
+};
+
+&usdhc3 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "barebox";
+		reg = <0x0 0xe0000>;
+	};
+
+	env_sd3: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};
+
+&i2c1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c1>;
+	status = "okay";
+
+	pmic@58 {
+		watchdog-priority = <500>;
+		restart-priority = <500>;
+		reset-source-priority = <500>;
+		regulators {
+			barebox,allow-dummy-supply;
+		};
+	};
+};

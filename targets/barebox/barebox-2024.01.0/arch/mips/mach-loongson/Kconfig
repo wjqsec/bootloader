@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if MACH_MIPS_LOONGSON
+
+choice
+	prompt "Board type"
+
+config BOARD_LOONGSON_TECH_LS1B
+	bool "Loongson Tech. LS1B demo board"
+	select SYS_HAS_CPU_LOONGSON1B
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select CSRC_R4K_LIB
+	select HAS_DEBUG_LL
+	select DRIVER_SERIAL_NS16550
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+endchoice
+
+endif

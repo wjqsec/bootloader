@@ -1,0 +1,1424 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		952B4D202426A3FF00BFB8AB /* PETypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B4D1F2426A3FF00BFB8AB /* PETypes.swift */; };
+		952EB6AF24018B4500BEB0F8 /* gfxutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 952EB6A924018B4400BEB0F8 /* gfxutil.c */; };
+		952EB6B024018B4500BEB0F8 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 952EB6AA24018B4400BEB0F8 /* utils.c */; };
+		952EB6B124018B4500BEB0F8 /* efidevp.c in Sources */ = {isa = PBXBuildFile; fileRef = 952EB6AE24018B4500BEB0F8 /* efidevp.c */; };
+		9533718323709517003F1AF4 /* bootsectors-install in Resources */ = {isa = PBXBuildFile; fileRef = 9533718223709517003F1AF4 /* bootsectors-install */; };
+		9533718523709A36003F1AF4 /* bootsectors-install in Copy CloverV2 */ = {isa = PBXBuildFile; fileRef = 9533718223709517003F1AF4 /* bootsectors-install */; };
+		9534B79B242CDC53003F323E /* Replace.png in Resources */ = {isa = PBXBuildFile; fileRef = 9534B799242CDC52003F323E /* Replace.png */; };
+		9534B79C242CDC53003F323E /* Find.png in Resources */ = {isa = PBXBuildFile; fileRef = 9534B79A242CDC52003F323E /* Find.png */; };
+		9534B79F242CDC9B003F323E /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = 9534B79D242CDC9B003F323E /* remove.png */; };
+		9534B7A0242CDC9B003F323E /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 9534B79E242CDC9B003F323E /* add.png */; };
+		953596692422A77E00DE2D5B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 953596682422A77D00DE2D5B /* QuartzCore.framework */; };
+		953BC20323720C0A0039755D /* FixedWidthViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BC20223720C0A0039755D /* FixedWidthViews.swift */; };
+		9542ABC02373783400DC03E6 /* boot1-install in Copy tools */ = {isa = PBXBuildFile; fileRef = 9542ABBD2373780C00DC03E6 /* boot1-install */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		9542ABC22373786700DC03E6 /* CloverV2 in Copy CloverV2 */ = {isa = PBXBuildFile; fileRef = 9542ABC12373786700DC03E6 /* CloverV2 */; };
+		9546AE1B23806299007155A6 /* CloverLogOut in Copy tools */ = {isa = PBXBuildFile; fileRef = 95524B88238051F4005F6425 /* CloverLogOut */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		954B0385243EB0AB001E719A /* update.png in Resources */ = {isa = PBXBuildFile; fileRef = 954B0384243EB0AB001E719A /* update.png */; };
+		954BBE99238196EE0032425F /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954BBE98238196EE0032425F /* Locale.swift */; };
+		954DECD523899F5F006A9876 /* Bootmanager.png in Resources */ = {isa = PBXBuildFile; fileRef = 954DECD423899F5F006A9876 /* Bootmanager.png */; };
+		954FCFD92391818300C9273C /* NSWindowFix.m in Sources */ = {isa = PBXBuildFile; fileRef = 954FCFD82391818300C9273C /* NSWindowFix.m */; };
+		955005ED242531E300AB3979 /* PE_Undo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955005EC242531E300AB3979 /* PE_Undo.swift */; };
+		95509171238B1E3A00933A7E /* daemonInstaller in Copy tools */ = {isa = PBXBuildFile; fileRef = 9550916E238B1DFA00933A7E /* daemonInstaller */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		9552D748236F33CA00C93377 /* CloverDaemonNew in Copy tools */ = {isa = PBXBuildFile; fileRef = 9552D745236F33A700C93377 /* CloverDaemonNew */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		955500E1241ACCCA00618F57 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500E0241ACCCA00618F57 /* Document.swift */; };
+		955500E7241AD12800618F57 /* PEFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500E6241AD12800618F57 /* PEFormatters.swift */; };
+		955500E9241AD1E700618F57 /* PlistParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500E8241AD1E700618F57 /* PlistParser.swift */; };
+		955500EB241AD31900618F57 /* PEValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500EA241AD31900618F57 /* PEValueTransformer.swift */; };
+		955500ED241AD38500618F57 /* PENode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500EC241AD38500618F57 /* PENode.swift */; };
+		955500EF241AD48200618F57 /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500EE241AD48100618F57 /* TagData.swift */; };
+		95550103241AD7C300618F57 /* PETableCellViewPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500F4241AD7C200618F57 /* PETableCellViewPop.swift */; };
+		95550104241AD7C300618F57 /* PESearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500F5241AD7C200618F57 /* PESearchField.swift */; };
+		95550106241AD7C300618F57 /* PETableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500F7241AD7C200618F57 /* PETableCellView.swift */; };
+		95550107241AD7C300618F57 /* PEPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500F8241AD7C200618F57 /* PEPopUpButton.swift */; };
+		95550108241AD7C300618F57 /* PEFindButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500F9241AD7C200618F57 /* PEFindButton.swift */; };
+		95550109241AD7C300618F57 /* PEMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500FA241AD7C200618F57 /* PEMenuItem.swift */; };
+		9555010A241AD7C300618F57 /* ReplaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500FB241AD7C200618F57 /* ReplaceButton.swift */; };
+		9555010B241AD7C300618F57 /* PEReplaceField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500FC241AD7C200618F57 /* PEReplaceField.swift */; };
+		9555010C241AD7C300618F57 /* PEOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500FD241AD7C200618F57 /* PEOutlineView.swift */; };
+		9555010D241AD7C300618F57 /* PETableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500FE241AD7C200618F57 /* PETableRowView.swift */; };
+		9555010E241AD7C300618F57 /* PETextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955500FF241AD7C200618F57 /* PETextField.swift */; };
+		95550110241BEEF300618F57 /* PE_Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9555010F241BEEF200618F57 /* PE_Notifications.swift */; };
+		95550112241BEF4F00618F57 /* PE_Serialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95550111241BEF4F00618F57 /* PE_Serialize.swift */; };
+		95557D6D2436808D00C95FDE /* PE_Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95557D6C2436808D00C95FDE /* PE_Utils.swift */; };
+		9555AF26238EE53300108C33 /* InstallerOutline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9555AF25238EE53300108C33 /* InstallerOutline.swift */; };
+		9555AF28238EFDAD00108C33 /* DriversCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9555AF27238EFDAD00108C33 /* DriversCollection.swift */; };
+		955689DB23A2728000AD323C /* IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955689DA23A2728000AD323C /* IO.swift */; };
+		9556CAF5238DF75600082671 /* InstallerOutline.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9556CAF3238DF75600082671 /* InstallerOutline.xib */; };
+		9558518E23BA3486002CB3D8 /* Speaker.png in Resources */ = {isa = PBXBuildFile; fileRef = 9558518D23BA3485002CB3D8 /* Speaker.png */; };
+		9559D524243540ED0007FCF3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9559D523243540ED0007FCF3 /* Cocoa.framework */; };
+		9559D52624355A810007FCF3 /* PEConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9559D52524355A800007FCF3 /* PEConstraints.swift */; };
+		955BEE1523C6B49C00425AB0 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955BEE1223C6B49C00425AB0 /* ThemeView.swift */; };
+		955BEE1623C6B49C00425AB0 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955BEE1323C6B49C00425AB0 /* ThemeManager.swift */; };
+		955BEE1723C6B49C00425AB0 /* ThemeManagerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955BEE1423C6B49C00425AB0 /* ThemeManagerVC.swift */; };
+		955BEE1923C6B4B300425AB0 /* ThemeManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = 955BEE1823C6B4B300425AB0 /* ThemeManager.xib */; };
+		955BEE1B23C7171100425AB0 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 955BEE1A23C7171000425AB0 /* check.png */; };
+		955F7C6D238DCD170019D088 /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 955F7C6C238DCD160019D088 /* DiskArbitration.framework */; };
+		9560906A238C61E200ACD7F7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95609068238C61E200ACD7F7 /* MainMenu.xib */; };
+		956090B7238C890600ACD7F7 /* Installer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 956090B9238C890600ACD7F7 /* Installer.xib */; };
+		9567B29B242D95A200DAD128 /* PE_Conversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9567B29A242D95A200DAD128 /* PE_Conversions.swift */; };
+		95696B7B2401829800AFAD37 /* GengConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95696B7A2401829800AFAD37 /* GengConfig.swift */; };
+		9569EC42238DD772003AD72C /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9569EC44238DD772003AD72C /* Settings.xib */; };
+		9571A224241BFF44000D6645 /* PlistEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9571A223241BFF44000D6645 /* PlistEditorVC.swift */; };
+		9571A226241C01DB000D6645 /* PlistEditorWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9571A225241C01DB000D6645 /* PlistEditorWC.swift */; };
+		9571A228241C2B0C000D6645 /* PEAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9571A227241C2B0C000D6645 /* PEAlert.swift */; };
+		9571A22A241C2E7F000D6645 /* PlistEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9571A229241C2E7F000D6645 /* PlistEditor.storyboard */; };
+		9571A22F241CF089000D6645 /* PE_Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9571A22E241CF088000D6645 /* PE_Localized.swift */; };
+		957CDBF0242E4845006FD266 /* HTTPErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957CDBEF242E4845006FD266 /* HTTPErrors.swift */; };
+		9580402D2413F63700F09F2C /* kmeans.c in Sources */ = {isa = PBXBuildFile; fileRef = 9580400A2413F63400F09F2C /* kmeans.c */; };
+		9580402E2413F63700F09F2C /* blur.c in Sources */ = {isa = PBXBuildFile; fileRef = 9580400B2413F63400F09F2C /* blur.c */; };
+		958040302413F63700F09F2C /* nearest.c in Sources */ = {isa = PBXBuildFile; fileRef = 958040132413F63400F09F2C /* nearest.c */; };
+		958040312413F63700F09F2C /* libimagequant.c in Sources */ = {isa = PBXBuildFile; fileRef = 958040152413F63500F09F2C /* libimagequant.c */; };
+		958040332413F63700F09F2C /* pam.c in Sources */ = {isa = PBXBuildFile; fileRef = 958040172413F63500F09F2C /* pam.c */; };
+		958040372413F63700F09F2C /* mediancut.c in Sources */ = {isa = PBXBuildFile; fileRef = 9580401E2413F63600F09F2C /* mediancut.c */; };
+		958040392413F63700F09F2C /* mempool.c in Sources */ = {isa = PBXBuildFile; fileRef = 958040232413F63600F09F2C /* mempool.c */; };
+		9580403D2413F8CA00F09F2C /* lodepng.c in Sources */ = {isa = PBXBuildFile; fileRef = 9580403C2413F8C900F09F2C /* lodepng.c */; };
+		958040402414070F00F09F2C /* ThemeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9580403F2414070F00F09F2C /* ThemeImage.m */; };
+		958861DA235F75FB00B64173 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958861D9235F75FB00B64173 /* Driver.swift */; };
+		95BFF3D42451C0420088BA8E /* PEFindAndReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BFF3D32451C0420088BA8E /* PEFindAndReplace.swift */; };
+		95C515222369BAF500E4A3A8 /* NVRAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C515212369BAF500E4A3A8 /* NVRAM.swift */; };
+		95C5152F236A0A7400E4A3A8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C5152E236A0A7400E4A3A8 /* SettingsView.swift */; };
+		95C51536236B1F7700E4A3A8 /* RunAtLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C51535236B1F7700E4A3A8 /* RunAtLogin.swift */; };
+		95C51582236B226500E4A3A8 /* CloverRunAtLogin.app in Copy CloverRunAtLogin */ = {isa = PBXBuildFile; fileRef = 95C5157C236B21AF00E4A3A8 /* CloverRunAtLogin.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		95C5C0A32365D2250049940D /* Lang.bundle in Copy Languages */ = {isa = PBXBuildFile; fileRef = 95C5C0A22365D2250049940D /* Lang.bundle */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		95E50076238ABA56002F3869 /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E50075238ABA56002F3869 /* Tasks.swift */; };
+		95E68ACA235B862F002B37A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68AC9235B862F002B37A5 /* AppDelegate.swift */; };
+		95E68ACC235B862F002B37A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68ACB235B862F002B37A5 /* ViewController.swift */; };
+		95E68ACE235B8632002B37A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95E68ACD235B8632002B37A5 /* Assets.xcassets */; };
+		95E68ADF235B86A1002B37A5 /* Releases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68ADA235B86A0002B37A5 /* Releases.swift */; };
+		95E68AE0235B86A1002B37A5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68ADB235B86A1002B37A5 /* Extensions.swift */; };
+		95E68AE1235B86A1002B37A5 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68ADC235B86A1002B37A5 /* Shared.swift */; };
+		95E68AE2235B86A1002B37A5 /* Disks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68ADD235B86A1002B37A5 /* Disks.swift */; };
+		95E68AE3235B86A1002B37A5 /* bdmesg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68ADE235B86A1002B37A5 /* bdmesg.swift */; };
+		95E68AE5235B89D9002B37A5 /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E68AE4235B89D9002B37A5 /* Installer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9542ABBC2373780C00DC03E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9542ABB82373780C00DC03E6 /* boot1-inst.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 12F2E5471A30F7E70058A333;
+			remoteInfo = "boot1-install";
+		};
+		9542ABBE2373781300DC03E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9542ABB82373780C00DC03E6 /* boot1-inst.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 12F2E5461A30F7E70058A333;
+			remoteInfo = "boot1-install";
+		};
+		9546AE1823806286007155A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95524B83238051F3005F6425 /* CloverLogOut.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 95524B78238051AC005F6425;
+			remoteInfo = CloverLogOut;
+		};
+		9550916D238B1DFA00933A7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95509169238B1DFA00933A7E /* daemonInstaller.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9550915F238B132100933A7E;
+			remoteInfo = daemonInstaller;
+		};
+		9550916F238B1E1C00933A7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95509169238B1DFA00933A7E /* daemonInstaller.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9550915E238B132100933A7E;
+			remoteInfo = daemonInstaller;
+		};
+		95524B87238051F4005F6425 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95524B83238051F3005F6425 /* CloverLogOut.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95524B79238051AC005F6425;
+			remoteInfo = CloverLogOut;
+		};
+		9552D744236F33A700C93377 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9552D740236F33A700C93377 /* CloverDaemonNew.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 953DBFDB236F037400B0C4FB;
+			remoteInfo = CloverDaemonNew;
+		};
+		9552D746236F33B900C93377 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9552D740236F33A700C93377 /* CloverDaemonNew.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 953DBFDA236F037400B0C4FB;
+			remoteInfo = CloverDaemonNew;
+		};
+		95C5157B236B21AF00E4A3A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95C51577236B21AE00E4A3A8 /* CloverRunAtLogin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95C51560236B211200E4A3A8;
+			remoteInfo = CloverRunAtLogin;
+		};
+		95C5157D236B21D400E4A3A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95C51577236B21AE00E4A3A8 /* CloverRunAtLogin.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 956A7AAE238DAD700012F6B0;
+			remoteInfo = CloverRunAtLogin;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		95850588236439D500BCB4A3 /* Copy tools */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				95509171238B1E3A00933A7E /* daemonInstaller in Copy tools */,
+				9546AE1B23806299007155A6 /* CloverLogOut in Copy tools */,
+				9542ABC02373783400DC03E6 /* boot1-install in Copy tools */,
+				9552D748236F33CA00C93377 /* CloverDaemonNew in Copy tools */,
+			);
+			name = "Copy tools";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C51581236B224800E4A3A8 /* Copy CloverRunAtLogin */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				95C51582236B226500E4A3A8 /* CloverRunAtLogin.app in Copy CloverRunAtLogin */,
+			);
+			name = "Copy CloverRunAtLogin";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C5C0A12365D1FB0049940D /* Copy Languages */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 12;
+			files = (
+				95C5C0A32365D2250049940D /* Lang.bundle in Copy Languages */,
+			);
+			name = "Copy Languages";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95E68AE9235C70BE002B37A5 /* Copy CloverV2 */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 12;
+			files = (
+				9542ABC22373786700DC03E6 /* CloverV2 in Copy CloverV2 */,
+				9533718523709A36003F1AF4 /* bootsectors-install in Copy CloverV2 */,
+			);
+			name = "Copy CloverV2";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		952B4D1F2426A3FF00BFB8AB /* PETypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PETypes.swift; sourceTree = "<group>"; };
+		952EB6A924018B4400BEB0F8 /* gfxutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gfxutil.c; sourceTree = "<group>"; };
+		952EB6AA24018B4400BEB0F8 /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utils.c; sourceTree = "<group>"; };
+		952EB6AB24018B4500BEB0F8 /* gfxutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gfxutil.h; sourceTree = "<group>"; };
+		952EB6AC24018B4500BEB0F8 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		952EB6AD24018B4500BEB0F8 /* efidevp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = efidevp.h; sourceTree = "<group>"; };
+		952EB6AE24018B4500BEB0F8 /* efidevp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = efidevp.c; sourceTree = "<group>"; };
+		9533718223709517003F1AF4 /* bootsectors-install */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bootsectors-install"; sourceTree = SOURCE_ROOT; };
+		9534B799242CDC52003F323E /* Replace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Replace.png; sourceTree = "<group>"; };
+		9534B79A242CDC52003F323E /* Find.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Find.png; sourceTree = "<group>"; };
+		9534B79D242CDC9B003F323E /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
+		9534B79E242CDC9B003F323E /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		953596682422A77D00DE2D5B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		953BC20223720C0A0039755D /* FixedWidthViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedWidthViews.swift; sourceTree = "<group>"; };
+		9542ABB82373780C00DC03E6 /* boot1-inst.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "boot1-inst.xcodeproj"; path = "../CloverPackage/utils/boot1-install/boot1-inst.xcodeproj"; sourceTree = "<group>"; };
+		9542ABC12373786700DC03E6 /* CloverV2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloverV2; path = ../CloverPackage/CloverV2; sourceTree = "<group>"; };
+		954B0384243EB0AB001E719A /* update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = update.png; sourceTree = "<group>"; };
+		954BBE98238196EE0032425F /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
+		954C3DF0237DF0250059C698 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		954DECD423899F5F006A9876 /* Bootmanager.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bootmanager.png; sourceTree = "<group>"; };
+		954FCFD023917A8A00C9273C /* Clover-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "Clover-Bridging-Header.h"; sourceTree = "<group>"; };
+		954FCFD72391818300C9273C /* NSWindowFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSWindowFix.h; sourceTree = "<group>"; };
+		954FCFD82391818300C9273C /* NSWindowFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSWindowFix.m; sourceTree = "<group>"; };
+		955005EC242531E300AB3979 /* PE_Undo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PE_Undo.swift; sourceTree = "<group>"; };
+		95509169238B1DFA00933A7E /* daemonInstaller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = daemonInstaller.xcodeproj; path = daemonInstaller/daemonInstaller.xcodeproj; sourceTree = "<group>"; };
+		95524B83238051F3005F6425 /* CloverLogOut.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CloverLogOut.xcodeproj; path = CloverLogOut/CloverLogOut.xcodeproj; sourceTree = "<group>"; };
+		9552D740236F33A700C93377 /* CloverDaemonNew.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CloverDaemonNew.xcodeproj; path = CloverDaemonNew/CloverDaemonNew.xcodeproj; sourceTree = "<group>"; };
+		955500E0241ACCCA00618F57 /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		955500E6241AD12800618F57 /* PEFormatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEFormatters.swift; sourceTree = "<group>"; };
+		955500E8241AD1E700618F57 /* PlistParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistParser.swift; sourceTree = "<group>"; };
+		955500EA241AD31900618F57 /* PEValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEValueTransformer.swift; sourceTree = "<group>"; };
+		955500EC241AD38500618F57 /* PENode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PENode.swift; sourceTree = "<group>"; };
+		955500EE241AD48100618F57 /* TagData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagData.swift; sourceTree = "<group>"; };
+		955500F4241AD7C200618F57 /* PETableCellViewPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PETableCellViewPop.swift; sourceTree = "<group>"; };
+		955500F5241AD7C200618F57 /* PESearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PESearchField.swift; sourceTree = "<group>"; };
+		955500F7241AD7C200618F57 /* PETableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PETableCellView.swift; sourceTree = "<group>"; };
+		955500F8241AD7C200618F57 /* PEPopUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEPopUpButton.swift; sourceTree = "<group>"; };
+		955500F9241AD7C200618F57 /* PEFindButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEFindButton.swift; sourceTree = "<group>"; };
+		955500FA241AD7C200618F57 /* PEMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEMenuItem.swift; sourceTree = "<group>"; };
+		955500FB241AD7C200618F57 /* ReplaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceButton.swift; sourceTree = "<group>"; };
+		955500FC241AD7C200618F57 /* PEReplaceField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEReplaceField.swift; sourceTree = "<group>"; };
+		955500FD241AD7C200618F57 /* PEOutlineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEOutlineView.swift; sourceTree = "<group>"; };
+		955500FE241AD7C200618F57 /* PETableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PETableRowView.swift; sourceTree = "<group>"; };
+		955500FF241AD7C200618F57 /* PETextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PETextField.swift; sourceTree = "<group>"; };
+		9555010F241BEEF200618F57 /* PE_Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PE_Notifications.swift; sourceTree = "<group>"; };
+		95550111241BEF4F00618F57 /* PE_Serialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PE_Serialize.swift; sourceTree = "<group>"; };
+		95557D6C2436808D00C95FDE /* PE_Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PE_Utils.swift; sourceTree = "<group>"; };
+		9555AF25238EE53300108C33 /* InstallerOutline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallerOutline.swift; sourceTree = "<group>"; };
+		9555AF27238EFDAD00108C33 /* DriversCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriversCollection.swift; sourceTree = "<group>"; };
+		955689DA23A2728000AD323C /* IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IO.swift; sourceTree = "<group>"; };
+		9556CAF4238DF75600082671 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InstallerOutline.xib; sourceTree = "<group>"; };
+		9558518D23BA3485002CB3D8 /* Speaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Speaker.png; sourceTree = "<group>"; };
+		9559D523243540ED0007FCF3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		9559D52524355A800007FCF3 /* PEConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEConstraints.swift; sourceTree = "<group>"; };
+		955BEE1223C6B49C00425AB0 /* ThemeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
+		955BEE1323C6B49C00425AB0 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		955BEE1423C6B49C00425AB0 /* ThemeManagerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManagerVC.swift; sourceTree = "<group>"; };
+		955BEE1823C6B4B300425AB0 /* ThemeManager.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThemeManager.xib; sourceTree = "<group>"; };
+		955BEE1A23C7171000425AB0 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		955F7C6C238DCD160019D088 /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = System/Library/Frameworks/DiskArbitration.framework; sourceTree = SDKROOT; };
+		95609069238C61E200ACD7F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9560906C238C624200ACD7F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560906E238C624D00ACD7F7 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609070238C625000ACD7F7 /* bg-BG */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "bg-BG"; path = "bg-BG.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		95609072238C625100ACD7F7 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609074238C625300ACD7F7 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		95609076238C625400ACD7F7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		95609078238C625600ACD7F7 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		9560907A238C625800ACD7F7 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560907C238C625A00ACD7F7 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560907E238C625C00ACD7F7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609080238C625D00ACD7F7 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609082238C625F00ACD7F7 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		95609084238C626000ACD7F7 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609086238C626100ACD7F7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609088238C626600ACD7F7 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560908A238C626700ACD7F7 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560908C238C626900ACD7F7 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560908E238C626B00ACD7F7 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609090238C626D00ACD7F7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609092238C626E00ACD7F7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609094238C627000ACD7F7 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609096238C627200ACD7F7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		95609098238C627300ACD7F7 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560909A238C627500ACD7F7 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560909C238C627700ACD7F7 /* ms */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		9560909E238C627800ACD7F7 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090A0238C627A00ACD7F7 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090A2238C627C00ACD7F7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		956090A4238C627D00ACD7F7 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		956090A6238C627F00ACD7F7 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090A8238C628100ACD7F7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090AA238C628200ACD7F7 /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090AC238C628400ACD7F7 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090AE238C628600ACD7F7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090B0238C628800ACD7F7 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090B2238C628900ACD7F7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090B4238C628C00ACD7F7 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090B6238C628F00ACD7F7 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		956090B8238C890600ACD7F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Installer.xib; sourceTree = "<group>"; };
+		956090BB238C891000ACD7F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090BD238C892400ACD7F7 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090BF238C892900ACD7F7 /* bg-BG */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "bg-BG"; path = "bg-BG.lproj/Installer.strings"; sourceTree = "<group>"; };
+		956090C1238C892D00ACD7F7 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090C3238C893300ACD7F7 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Installer.strings"; sourceTree = "<group>"; };
+		956090C5238C893600ACD7F7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Installer.strings"; sourceTree = "<group>"; };
+		956090C7238C893C00ACD7F7 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Installer.strings"; sourceTree = "<group>"; };
+		956090C9238C894000ACD7F7 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090CB238C894600ACD7F7 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090CD238C894900ACD7F7 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090CF238C894C00ACD7F7 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090D1238C895300ACD7F7 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Installer.strings"; sourceTree = "<group>"; };
+		956090D3238C895800ACD7F7 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090D5238C895C00ACD7F7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090D7238C895F00ACD7F7 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090D9238C896500ACD7F7 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090DB238C896B00ACD7F7 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090DD238C897000ACD7F7 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090DF238C897500ACD7F7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090E1238C897B00ACD7F7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090E3238C897F00ACD7F7 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090E5238C898400ACD7F7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090E7238C898A00ACD7F7 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090E9238C899000ACD7F7 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090EB238C899500ACD7F7 /* ms */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090ED238C899900ACD7F7 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090EF238C899C00ACD7F7 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090F1238C89A000ACD7F7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Installer.strings"; sourceTree = "<group>"; };
+		956090F3238C89A500ACD7F7 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Installer.strings"; sourceTree = "<group>"; };
+		956090F5238C89A900ACD7F7 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090F7238C89AC00ACD7F7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090F9238C89B100ACD7F7 /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090FB238C89B600ACD7F7 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090FD238C89BA00ACD7F7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Installer.strings; sourceTree = "<group>"; };
+		956090FF238C89BE00ACD7F7 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Installer.strings; sourceTree = "<group>"; };
+		95609101238C89C300ACD7F7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Installer.strings; sourceTree = "<group>"; };
+		95609103238C89C600ACD7F7 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Installer.strings; sourceTree = "<group>"; };
+		95609105238C89C900ACD7F7 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Installer.strings; sourceTree = "<group>"; };
+		9567B29A242D95A200DAD128 /* PE_Conversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PE_Conversions.swift; sourceTree = "<group>"; };
+		95696B7A2401829800AFAD37 /* GengConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GengConfig.swift; sourceTree = "<group>"; };
+		9569EC43238DD772003AD72C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Settings.xib; sourceTree = "<group>"; };
+		9569EC46238DD77A003AD72C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC48238DD77C003AD72C /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC4A238DD77F003AD72C /* bg-BG */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "bg-BG"; path = "bg-BG.lproj/Settings.strings"; sourceTree = "<group>"; };
+		9569EC4C238DD781003AD72C /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC4E238DD783003AD72C /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Settings.strings"; sourceTree = "<group>"; };
+		9569EC50238DD786003AD72C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
+		9569EC52238DD788003AD72C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Settings.strings"; sourceTree = "<group>"; };
+		9569EC54238DD78B003AD72C /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC56238DD78D003AD72C /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC58238DD78F003AD72C /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC5A238DD791003AD72C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC5C238DD793003AD72C /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Settings.strings"; sourceTree = "<group>"; };
+		9569EC5E238DD795003AD72C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC60238DD797003AD72C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC62238DD799003AD72C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC64238DD79B003AD72C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC66238DD79D003AD72C /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC68238DD79F003AD72C /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC6A238DD7A1003AD72C /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC6C238DD7A4003AD72C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC6E238DD7A7003AD72C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC70238DD7A9003AD72C /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC72238DD7AB003AD72C /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC74238DD7AD003AD72C /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC76238DD7AF003AD72C /* ms */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC78238DD7B1003AD72C /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC7A238DD7B3003AD72C /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC7C238DD7B5003AD72C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Settings.strings"; sourceTree = "<group>"; };
+		9569EC7E238DD7B7003AD72C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Settings.strings"; sourceTree = "<group>"; };
+		9569EC80238DD7B9003AD72C /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC82238DD7BB003AD72C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC84238DD7BD003AD72C /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC86238DD7C0003AD72C /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC88238DD7C2003AD72C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC8A238DD7C4003AD72C /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC8C238DD7C6003AD72C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC8E238DD7C8003AD72C /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Settings.strings; sourceTree = "<group>"; };
+		9569EC90238DD7CA003AD72C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Settings.strings; sourceTree = "<group>"; };
+		9571A223241BFF44000D6645 /* PlistEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistEditorVC.swift; sourceTree = "<group>"; };
+		9571A225241C01DB000D6645 /* PlistEditorWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistEditorWC.swift; sourceTree = "<group>"; };
+		9571A227241C2B0C000D6645 /* PEAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEAlert.swift; sourceTree = "<group>"; };
+		9571A229241C2E7F000D6645 /* PlistEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PlistEditor.storyboard; sourceTree = "<group>"; };
+		9571A22E241CF088000D6645 /* PE_Localized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PE_Localized.swift; sourceTree = "<group>"; };
+		957CDBEF242E4845006FD266 /* HTTPErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPErrors.swift; sourceTree = "<group>"; };
+		9580400A2413F63400F09F2C /* kmeans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kmeans.c; path = "libimagequant-2.12.6/kmeans.c"; sourceTree = SOURCE_ROOT; };
+		9580400B2413F63400F09F2C /* blur.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = blur.c; path = "libimagequant-2.12.6/blur.c"; sourceTree = SOURCE_ROOT; };
+		958040132413F63400F09F2C /* nearest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = nearest.c; path = "libimagequant-2.12.6/nearest.c"; sourceTree = SOURCE_ROOT; };
+		958040142413F63400F09F2C /* nearest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nearest.h; path = "libimagequant-2.12.6/nearest.h"; sourceTree = SOURCE_ROOT; };
+		958040152413F63500F09F2C /* libimagequant.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = libimagequant.c; path = "libimagequant-2.12.6/libimagequant.c"; sourceTree = SOURCE_ROOT; };
+		958040172413F63500F09F2C /* pam.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pam.c; path = "libimagequant-2.12.6/pam.c"; sourceTree = SOURCE_ROOT; };
+		958040182413F63500F09F2C /* kmeans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kmeans.h; path = "libimagequant-2.12.6/kmeans.h"; sourceTree = SOURCE_ROOT; };
+		9580401A2413F63500F09F2C /* mediancut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediancut.h; path = "libimagequant-2.12.6/mediancut.h"; sourceTree = SOURCE_ROOT; };
+		9580401D2413F63600F09F2C /* mempool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mempool.h; path = "libimagequant-2.12.6/mempool.h"; sourceTree = SOURCE_ROOT; };
+		9580401E2413F63600F09F2C /* mediancut.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mediancut.c; path = "libimagequant-2.12.6/mediancut.c"; sourceTree = SOURCE_ROOT; };
+		9580401F2413F63600F09F2C /* libimagequant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libimagequant.h; path = "libimagequant-2.12.6/libimagequant.h"; sourceTree = SOURCE_ROOT; };
+		958040202413F63600F09F2C /* blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = blur.h; path = "libimagequant-2.12.6/blur.h"; sourceTree = SOURCE_ROOT; };
+		958040212413F63600F09F2C /* pam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pam.h; path = "libimagequant-2.12.6/pam.h"; sourceTree = SOURCE_ROOT; };
+		958040232413F63600F09F2C /* mempool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mempool.c; path = "libimagequant-2.12.6/mempool.c"; sourceTree = SOURCE_ROOT; };
+		9580403B2413F86A00F09F2C /* lodepng.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lodepng.h; sourceTree = "<group>"; };
+		9580403C2413F8C900F09F2C /* lodepng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lodepng.c; sourceTree = "<group>"; };
+		9580403E2414070F00F09F2C /* ThemeImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemeImage.h; sourceTree = "<group>"; };
+		9580403F2414070F00F09F2C /* ThemeImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemeImage.m; sourceTree = "<group>"; };
+		958861D9235F75FB00B64173 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
+		95BFF3D32451C0420088BA8E /* PEFindAndReplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEFindAndReplace.swift; sourceTree = "<group>"; };
+		95C515212369BAF500E4A3A8 /* NVRAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVRAM.swift; sourceTree = "<group>"; };
+		95C5152E236A0A7400E4A3A8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		95C51535236B1F7700E4A3A8 /* RunAtLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunAtLogin.swift; sourceTree = "<group>"; };
+		95C51577236B21AE00E4A3A8 /* CloverRunAtLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CloverRunAtLogin.xcodeproj; path = CloverRunAtLogin/CloverRunAtLogin.xcodeproj; sourceTree = "<group>"; };
+		95C5C0A22365D2250049940D /* Lang.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Lang.bundle; sourceTree = "<group>"; };
+		95E50075238ABA56002F3869 /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
+		95E68AC6235B862F002B37A5 /* Clover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clover.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		95E68AC9235B862F002B37A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		95E68ACB235B862F002B37A5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		95E68ACD235B8632002B37A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		95E68AD2235B8632002B37A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95E68AD3235B8632002B37A5 /* Clover.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Clover.entitlements; sourceTree = "<group>"; };
+		95E68ADA235B86A0002B37A5 /* Releases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Releases.swift; sourceTree = "<group>"; };
+		95E68ADB235B86A1002B37A5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		95E68ADC235B86A1002B37A5 /* Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		95E68ADD235B86A1002B37A5 /* Disks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disks.swift; sourceTree = "<group>"; };
+		95E68ADE235B86A1002B37A5 /* bdmesg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bdmesg.swift; sourceTree = "<group>"; };
+		95E68AE4235B89D9002B37A5 /* Installer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installer.swift; sourceTree = "<group>"; };
+		A5263CE524FEC13300B3EB14 /* CloverOldHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloverOldHeaders.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		954C3DEE237DF0130059C698 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9559D524243540ED0007FCF3 /* Cocoa.framework in Frameworks */,
+				953596692422A77E00DE2D5B /* QuartzCore.framework in Frameworks */,
+				955F7C6D238DCD170019D088 /* DiskArbitration.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		952EB6A824018B2400BEB0F8 /* GfxUtil */ = {
+			isa = PBXGroup;
+			children = (
+				952EB6AE24018B4500BEB0F8 /* efidevp.c */,
+				952EB6AD24018B4500BEB0F8 /* efidevp.h */,
+				952EB6A924018B4400BEB0F8 /* gfxutil.c */,
+				952EB6AB24018B4500BEB0F8 /* gfxutil.h */,
+				952EB6AA24018B4400BEB0F8 /* utils.c */,
+				952EB6AC24018B4500BEB0F8 /* utils.h */,
+			);
+			path = GfxUtil;
+			sourceTree = "<group>";
+		};
+		9542ABB92373780C00DC03E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9542ABBD2373780C00DC03E6 /* boot1-install */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		954C3DEF237DF0250059C698 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9559D523243540ED0007FCF3 /* Cocoa.framework */,
+				953596682422A77D00DE2D5B /* QuartzCore.framework */,
+				955F7C6C238DCD160019D088 /* DiskArbitration.framework */,
+				954C3DF0237DF0250059C698 /* ServiceManagement.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9550916A238B1DFA00933A7E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9550916E238B1DFA00933A7E /* daemonInstaller */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		95524B84238051F3005F6425 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				95524B88238051F4005F6425 /* CloverLogOut */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9552D741236F33A700C93377 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9552D745236F33A700C93377 /* CloverDaemonNew */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		955500DD241ACBD800618F57 /* Plist Editor */ = {
+			isa = PBXGroup;
+			children = (
+				955500F0241AD75B00618F57 /* Views */,
+				9567B29A242D95A200DAD128 /* PE_Conversions.swift */,
+				9571A22E241CF088000D6645 /* PE_Localized.swift */,
+				955005EC242531E300AB3979 /* PE_Undo.swift */,
+				955500E0241ACCCA00618F57 /* Document.swift */,
+				955500EE241AD48100618F57 /* TagData.swift */,
+				955500EC241AD38500618F57 /* PENode.swift */,
+				955500E8241AD1E700618F57 /* PlistParser.swift */,
+				955500E6241AD12800618F57 /* PEFormatters.swift */,
+				955500EA241AD31900618F57 /* PEValueTransformer.swift */,
+				9555010F241BEEF200618F57 /* PE_Notifications.swift */,
+				95550111241BEF4F00618F57 /* PE_Serialize.swift */,
+				95557D6C2436808D00C95FDE /* PE_Utils.swift */,
+				952B4D1F2426A3FF00BFB8AB /* PETypes.swift */,
+			);
+			path = "Plist Editor";
+			sourceTree = "<group>";
+		};
+		955500F0241AD75B00618F57 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9571A229241C2E7F000D6645 /* PlistEditor.storyboard */,
+				9571A225241C01DB000D6645 /* PlistEditorWC.swift */,
+				9571A223241BFF44000D6645 /* PlistEditorVC.swift */,
+				95BFF3D32451C0420088BA8E /* PEFindAndReplace.swift */,
+				9559D52524355A800007FCF3 /* PEConstraints.swift */,
+				955500F9241AD7C200618F57 /* PEFindButton.swift */,
+				955500FB241AD7C200618F57 /* ReplaceButton.swift */,
+				955500FA241AD7C200618F57 /* PEMenuItem.swift */,
+				955500F8241AD7C200618F57 /* PEPopUpButton.swift */,
+				955500FC241AD7C200618F57 /* PEReplaceField.swift */,
+				955500F5241AD7C200618F57 /* PESearchField.swift */,
+				955500FD241AD7C200618F57 /* PEOutlineView.swift */,
+				955500F7241AD7C200618F57 /* PETableCellView.swift */,
+				955500F4241AD7C200618F57 /* PETableCellViewPop.swift */,
+				955500FE241AD7C200618F57 /* PETableRowView.swift */,
+				955500FF241AD7C200618F57 /* PETextField.swift */,
+				9571A227241C2B0C000D6645 /* PEAlert.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9558518C23BA3472002CB3D8 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				9558518D23BA3485002CB3D8 /* Speaker.png */,
+				9534B79E242CDC9B003F323E /* add.png */,
+				9534B79D242CDC9B003F323E /* remove.png */,
+				9534B79A242CDC52003F323E /* Find.png */,
+				9534B799242CDC52003F323E /* Replace.png */,
+				955BEE1A23C7171000425AB0 /* check.png */,
+				954B0384243EB0AB001E719A /* update.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		955BEE1123C6B43C00425AB0 /* ThemeManager */ = {
+			isa = PBXGroup;
+			children = (
+				95803FFB2413F58B00F09F2C /* libimagequant */,
+				955BEE1323C6B49C00425AB0 /* ThemeManager.swift */,
+				957CDBEF242E4845006FD266 /* HTTPErrors.swift */,
+				955BEE1423C6B49C00425AB0 /* ThemeManagerVC.swift */,
+				955BEE1223C6B49C00425AB0 /* ThemeView.swift */,
+				955BEE1823C6B4B300425AB0 /* ThemeManager.xib */,
+			);
+			path = ThemeManager;
+			sourceTree = "<group>";
+		};
+		95803FFB2413F58B00F09F2C /* libimagequant */ = {
+			isa = PBXGroup;
+			children = (
+				9580400B2413F63400F09F2C /* blur.c */,
+				958040202413F63600F09F2C /* blur.h */,
+				9580400A2413F63400F09F2C /* kmeans.c */,
+				958040182413F63500F09F2C /* kmeans.h */,
+				958040152413F63500F09F2C /* libimagequant.c */,
+				9580401F2413F63600F09F2C /* libimagequant.h */,
+				9580401E2413F63600F09F2C /* mediancut.c */,
+				9580401A2413F63500F09F2C /* mediancut.h */,
+				958040232413F63600F09F2C /* mempool.c */,
+				9580401D2413F63600F09F2C /* mempool.h */,
+				958040132413F63400F09F2C /* nearest.c */,
+				958040142413F63400F09F2C /* nearest.h */,
+				958040172413F63500F09F2C /* pam.c */,
+				958040212413F63600F09F2C /* pam.h */,
+				9580403B2413F86A00F09F2C /* lodepng.h */,
+				9580403C2413F8C900F09F2C /* lodepng.c */,
+			);
+			path = libimagequant;
+			sourceTree = "<group>";
+		};
+		95C51578236B21AE00E4A3A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				95C5157C236B21AF00E4A3A8 /* CloverRunAtLogin.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		95E68ABD235B862F002B37A5 = {
+			isa = PBXGroup;
+			children = (
+				954C3DEF237DF0250059C698 /* Frameworks */,
+				95E68AC8235B862F002B37A5 /* Clover */,
+				95524B83238051F3005F6425 /* CloverLogOut.xcodeproj */,
+				9542ABB82373780C00DC03E6 /* boot1-inst.xcodeproj */,
+				95C51577236B21AE00E4A3A8 /* CloverRunAtLogin.xcodeproj */,
+				9552D740236F33A700C93377 /* CloverDaemonNew.xcodeproj */,
+				95509169238B1DFA00933A7E /* daemonInstaller.xcodeproj */,
+				95C5C0A22365D2250049940D /* Lang.bundle */,
+				9542ABC12373786700DC03E6 /* CloverV2 */,
+				95E68AC7235B862F002B37A5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		95E68AC7235B862F002B37A5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				95E68AC6235B862F002B37A5 /* Clover.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		95E68AC8235B862F002B37A5 /* Clover */ = {
+			isa = PBXGroup;
+			children = (
+				955500DD241ACBD800618F57 /* Plist Editor */,
+				952EB6A824018B2400BEB0F8 /* GfxUtil */,
+				955BEE1123C6B43C00425AB0 /* ThemeManager */,
+				95E68AC9235B862F002B37A5 /* AppDelegate.swift */,
+				95C5152E236A0A7400E4A3A8 /* SettingsView.swift */,
+				95C51535236B1F7700E4A3A8 /* RunAtLogin.swift */,
+				95696B7A2401829800AFAD37 /* GengConfig.swift */,
+				95E68ACB235B862F002B37A5 /* ViewController.swift */,
+				95E68ADE235B86A1002B37A5 /* bdmesg.swift */,
+				955689DA23A2728000AD323C /* IO.swift */,
+				95E68ADD235B86A1002B37A5 /* Disks.swift */,
+				95E68ADB235B86A1002B37A5 /* Extensions.swift */,
+				954BBE98238196EE0032425F /* Locale.swift */,
+				95E68ADA235B86A0002B37A5 /* Releases.swift */,
+				95E68ADC235B86A1002B37A5 /* Shared.swift */,
+				95C515212369BAF500E4A3A8 /* NVRAM.swift */,
+				95E50075238ABA56002F3869 /* Tasks.swift */,
+				953BC20223720C0A0039755D /* FixedWidthViews.swift */,
+				9533718223709517003F1AF4 /* bootsectors-install */,
+				9569EC44238DD772003AD72C /* Settings.xib */,
+				95609068238C61E200ACD7F7 /* MainMenu.xib */,
+				95E68AD9235B8666002B37A5 /* Installer */,
+				95E68ACD235B8632002B37A5 /* Assets.xcassets */,
+				9558518C23BA3472002CB3D8 /* images */,
+				954DECD423899F5F006A9876 /* Bootmanager.png */,
+				95E68AD2235B8632002B37A5 /* Info.plist */,
+				95E68AD3235B8632002B37A5 /* Clover.entitlements */,
+				954FCFD023917A8A00C9273C /* Clover-Bridging-Header.h */,
+				A5263CE524FEC13300B3EB14 /* CloverOldHeaders.h */,
+				954FCFD72391818300C9273C /* NSWindowFix.h */,
+				954FCFD82391818300C9273C /* NSWindowFix.m */,
+				9580403E2414070F00F09F2C /* ThemeImage.h */,
+				9580403F2414070F00F09F2C /* ThemeImage.m */,
+			);
+			path = Clover;
+			sourceTree = "<group>";
+		};
+		95E68AD9235B8666002B37A5 /* Installer */ = {
+			isa = PBXGroup;
+			children = (
+				958861D9235F75FB00B64173 /* Driver.swift */,
+				9555AF27238EFDAD00108C33 /* DriversCollection.swift */,
+				95E68AE4235B89D9002B37A5 /* Installer.swift */,
+				956090B9238C890600ACD7F7 /* Installer.xib */,
+				9555AF25238EE53300108C33 /* InstallerOutline.swift */,
+				9556CAF3238DF75600082671 /* InstallerOutline.xib */,
+			);
+			path = Installer;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		95E68AC5235B862F002B37A5 /* Clover */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 95E68AD6235B8632002B37A5 /* Build configuration list for PBXNativeTarget "Clover" */;
+			buildPhases = (
+				9542ABAA23735EE800DC03E6 /* zip CloverV2 */,
+				95E68AC2235B862F002B37A5 /* Sources */,
+				95E68AC4235B862F002B37A5 /* Resources */,
+				95E68AE9235C70BE002B37A5 /* Copy CloverV2 */,
+				954DEB6F2391AA8300F7B60C /* Remove unused */,
+				95850588236439D500BCB4A3 /* Copy tools */,
+				95C5C0A12365D1FB0049940D /* Copy Languages */,
+				95C51581236B224800E4A3A8 /* Copy CloverRunAtLogin */,
+				954C3DEE237DF0130059C698 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				95509170238B1E1C00933A7E /* PBXTargetDependency */,
+				9546AE1923806286007155A6 /* PBXTargetDependency */,
+				9552D747236F33B900C93377 /* PBXTargetDependency */,
+				9542ABBF2373781300DC03E6 /* PBXTargetDependency */,
+				95C5157E236B21D400E4A3A8 /* PBXTargetDependency */,
+			);
+			name = Clover;
+			productName = Clover;
+			productReference = 95E68AC6235B862F002B37A5 /* Clover.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		95E68ABE235B862F002B37A5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = CloverHackyColor;
+				TargetAttributes = {
+					95E68AC5235B862F002B37A5 = {
+						CreatedOnToolsVersion = 11.2;
+						LastSwiftMigration = 1120;
+					};
+				};
+			};
+			buildConfigurationList = 95E68AC1235B862F002B37A5 /* Build configuration list for PBXProject "Clover" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+				"zh-Hant",
+				es,
+				ja,
+				fr,
+				de,
+				ru,
+				"pt-BR",
+				"pt-PT",
+				it,
+				"en-GB",
+				"zh-HK",
+				ko,
+				tr,
+				nl,
+				sv,
+				da,
+				vi,
+				nb,
+				pl,
+				fi,
+				id,
+				el,
+				ro,
+				hu,
+				cs,
+				ca,
+				sk,
+				uk,
+				hr,
+				ms,
+				hi,
+				bg,
+				"bg-BG",
+				lv,
+				lt,
+				sr,
+			);
+			mainGroup = 95E68ABD235B862F002B37A5;
+			productRefGroup = 95E68AC7235B862F002B37A5 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9542ABB92373780C00DC03E6 /* Products */;
+					ProjectRef = 9542ABB82373780C00DC03E6 /* boot1-inst.xcodeproj */;
+				},
+				{
+					ProductGroup = 9552D741236F33A700C93377 /* Products */;
+					ProjectRef = 9552D740236F33A700C93377 /* CloverDaemonNew.xcodeproj */;
+				},
+				{
+					ProductGroup = 95524B84238051F3005F6425 /* Products */;
+					ProjectRef = 95524B83238051F3005F6425 /* CloverLogOut.xcodeproj */;
+				},
+				{
+					ProductGroup = 95C51578236B21AE00E4A3A8 /* Products */;
+					ProjectRef = 95C51577236B21AE00E4A3A8 /* CloverRunAtLogin.xcodeproj */;
+				},
+				{
+					ProductGroup = 9550916A238B1DFA00933A7E /* Products */;
+					ProjectRef = 95509169238B1DFA00933A7E /* daemonInstaller.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				95E68AC5235B862F002B37A5 /* Clover */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9542ABBD2373780C00DC03E6 /* boot1-install */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "boot1-install";
+			remoteRef = 9542ABBC2373780C00DC03E6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9550916E238B1DFA00933A7E /* daemonInstaller */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = daemonInstaller;
+			remoteRef = 9550916D238B1DFA00933A7E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		95524B88238051F4005F6425 /* CloverLogOut */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = CloverLogOut;
+			remoteRef = 95524B87238051F4005F6425 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9552D745236F33A700C93377 /* CloverDaemonNew */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = CloverDaemonNew;
+			remoteRef = 9552D744236F33A700C93377 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		95C5157C236B21AF00E4A3A8 /* CloverRunAtLogin.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CloverRunAtLogin.app;
+			remoteRef = 95C5157B236B21AF00E4A3A8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		95E68AC4235B862F002B37A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				954B0385243EB0AB001E719A /* update.png in Resources */,
+				9534B79B242CDC53003F323E /* Replace.png in Resources */,
+				9571A22A241C2E7F000D6645 /* PlistEditor.storyboard in Resources */,
+				9556CAF5238DF75600082671 /* InstallerOutline.xib in Resources */,
+				9534B7A0242CDC9B003F323E /* add.png in Resources */,
+				9558518E23BA3486002CB3D8 /* Speaker.png in Resources */,
+				956090B7238C890600ACD7F7 /* Installer.xib in Resources */,
+				954DECD523899F5F006A9876 /* Bootmanager.png in Resources */,
+				95E68ACE235B8632002B37A5 /* Assets.xcassets in Resources */,
+				9569EC42238DD772003AD72C /* Settings.xib in Resources */,
+				955BEE1B23C7171100425AB0 /* check.png in Resources */,
+				9560906A238C61E200ACD7F7 /* MainMenu.xib in Resources */,
+				9533718323709517003F1AF4 /* bootsectors-install in Resources */,
+				9534B79F242CDC9B003F323E /* remove.png in Resources */,
+				9534B79C242CDC53003F323E /* Find.png in Resources */,
+				955BEE1923C6B4B300425AB0 /* ThemeManager.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9542ABAA23735EE800DC03E6 /* zip CloverV2 */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "zip CloverV2";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ..\n\nif [[ ! -d \"${PWD}\"/CloverPackage ]]; then\necho \"Error. Cannot found CloverPackage directory.\"\nexit 1\nfi\n\nCLOVER=\"${PWD}\"\nif [[ -d \"${CLOVER}\"/.git ]];then\n  declare -r aname=\"CloverV2-$( git -C \"${CLOVER}\" describe --tags --abbrev=0 )\"\nelse\n  declare -r aname=CloverV2.zip\nfi\n\nfind \"${CLOVER}\"/CloverPackage/CloverV2 -name \".DS_Store\" -delete\n\nrm -f \"${CLOVER}\"/CloverPackage/sym/CloverV2*.zip\nmkdir -p \"${CLOVER}\"/CloverPackage/sym\n\ncd \"${CLOVER}\"/CloverPackage\nzip -qq -r -y \"${CLOVER}\"/CloverPackage/sym/${aname} CloverV2/ -x *.empty\n\n";
+		};
+		954DEB6F2391AA8300F7B60C /* Remove unused */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Remove unused";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ..\n\nif [[ ! -d \"${PWD}\"/CloverPackage ]]; then\n  echo \"Error. Cannot found CloverPackage directory.\"\n  exit 1\nfi\n\nwithV2=\"${PWD}/CloverPackage/sym/.withV2\"\n\nif [[ -f \"${withV2}\" ]]; then\nrm -rf \"${TARGET_BUILD_DIR}\"/Clover.app/Contents/SharedSupport/CloverV2/rcScripts\nrm -rf \"${TARGET_BUILD_DIR}\"/Clover.app/Contents/SharedSupport/CloverV2/ThirdParty\n\nthemeDir=\"${TARGET_BUILD_DIR}\"/Clover.app/Contents/SharedSupport/CloverV2/themespkg\nif [[ -d \"${themeDir}\"/Clovy ]]; then\ncd \"${themeDir}\"\nrm -f *.plist\nfind . -type d -not -name 'Clovy' -not -name \".*\" -print0 | xargs -0  -I {} rm -rf {}\nfi\nelse\nrm -rf \"${TARGET_BUILD_DIR}\"/Clover.app/Contents/SharedSupport/CloverV2/*\nfi\n\nrm -f \"${withV2}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		95E68AC2235B862F002B37A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				955500EF241AD48200618F57 /* TagData.swift in Sources */,
+				955500ED241AD38500618F57 /* PENode.swift in Sources */,
+				95E68AE5235B89D9002B37A5 /* Installer.swift in Sources */,
+				952EB6B124018B4500BEB0F8 /* efidevp.c in Sources */,
+				9555010A241AD7C300618F57 /* ReplaceButton.swift in Sources */,
+				958040312413F63700F09F2C /* libimagequant.c in Sources */,
+				9571A226241C01DB000D6645 /* PlistEditorWC.swift in Sources */,
+				9571A224241BFF44000D6645 /* PlistEditorVC.swift in Sources */,
+				955500E9241AD1E700618F57 /* PlistParser.swift in Sources */,
+				957CDBF0242E4845006FD266 /* HTTPErrors.swift in Sources */,
+				95550107241AD7C300618F57 /* PEPopUpButton.swift in Sources */,
+				95E68AE1235B86A1002B37A5 /* Shared.swift in Sources */,
+				952B4D202426A3FF00BFB8AB /* PETypes.swift in Sources */,
+				9571A228241C2B0C000D6645 /* PEAlert.swift in Sources */,
+				95550106241AD7C300618F57 /* PETableCellView.swift in Sources */,
+				95E68ACC235B862F002B37A5 /* ViewController.swift in Sources */,
+				95E68AE2235B86A1002B37A5 /* Disks.swift in Sources */,
+				954FCFD92391818300C9273C /* NSWindowFix.m in Sources */,
+				9580403D2413F8CA00F09F2C /* lodepng.c in Sources */,
+				958040302413F63700F09F2C /* nearest.c in Sources */,
+				958040372413F63700F09F2C /* mediancut.c in Sources */,
+				9555010B241AD7C300618F57 /* PEReplaceField.swift in Sources */,
+				95550112241BEF4F00618F57 /* PE_Serialize.swift in Sources */,
+				95557D6D2436808D00C95FDE /* PE_Utils.swift in Sources */,
+				95550109241AD7C300618F57 /* PEMenuItem.swift in Sources */,
+				95E68ADF235B86A1002B37A5 /* Releases.swift in Sources */,
+				95550103241AD7C300618F57 /* PETableCellViewPop.swift in Sources */,
+				9559D52624355A810007FCF3 /* PEConstraints.swift in Sources */,
+				954BBE99238196EE0032425F /* Locale.swift in Sources */,
+				9555010C241AD7C300618F57 /* PEOutlineView.swift in Sources */,
+				95BFF3D42451C0420088BA8E /* PEFindAndReplace.swift in Sources */,
+				95E68ACA235B862F002B37A5 /* AppDelegate.swift in Sources */,
+				955BEE1523C6B49C00425AB0 /* ThemeView.swift in Sources */,
+				958861DA235F75FB00B64173 /* Driver.swift in Sources */,
+				958040402414070F00F09F2C /* ThemeImage.m in Sources */,
+				95E68AE3235B86A1002B37A5 /* bdmesg.swift in Sources */,
+				9580402E2413F63700F09F2C /* blur.c in Sources */,
+				95C5152F236A0A7400E4A3A8 /* SettingsView.swift in Sources */,
+				9555AF28238EFDAD00108C33 /* DriversCollection.swift in Sources */,
+				952EB6AF24018B4500BEB0F8 /* gfxutil.c in Sources */,
+				9580402D2413F63700F09F2C /* kmeans.c in Sources */,
+				95E50076238ABA56002F3869 /* Tasks.swift in Sources */,
+				955005ED242531E300AB3979 /* PE_Undo.swift in Sources */,
+				958040392413F63700F09F2C /* mempool.c in Sources */,
+				955500EB241AD31900618F57 /* PEValueTransformer.swift in Sources */,
+				958040332413F63700F09F2C /* pam.c in Sources */,
+				95550104241AD7C300618F57 /* PESearchField.swift in Sources */,
+				9571A22F241CF089000D6645 /* PE_Localized.swift in Sources */,
+				953BC20323720C0A0039755D /* FixedWidthViews.swift in Sources */,
+				95550110241BEEF300618F57 /* PE_Notifications.swift in Sources */,
+				95696B7B2401829800AFAD37 /* GengConfig.swift in Sources */,
+				9555010E241AD7C300618F57 /* PETextField.swift in Sources */,
+				95C515222369BAF500E4A3A8 /* NVRAM.swift in Sources */,
+				95C51536236B1F7700E4A3A8 /* RunAtLogin.swift in Sources */,
+				95550108241AD7C300618F57 /* PEFindButton.swift in Sources */,
+				9555010D241AD7C300618F57 /* PETableRowView.swift in Sources */,
+				95E68AE0235B86A1002B37A5 /* Extensions.swift in Sources */,
+				952EB6B024018B4500BEB0F8 /* utils.c in Sources */,
+				9567B29B242D95A200DAD128 /* PE_Conversions.swift in Sources */,
+				955500E7241AD12800618F57 /* PEFormatters.swift in Sources */,
+				955689DB23A2728000AD323C /* IO.swift in Sources */,
+				955500E1241ACCCA00618F57 /* Document.swift in Sources */,
+				9555AF26238EE53300108C33 /* InstallerOutline.swift in Sources */,
+				955BEE1723C6B49C00425AB0 /* ThemeManagerVC.swift in Sources */,
+				955BEE1623C6B49C00425AB0 /* ThemeManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9542ABBF2373781300DC03E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "boot1-install";
+			targetProxy = 9542ABBE2373781300DC03E6 /* PBXContainerItemProxy */;
+		};
+		9546AE1923806286007155A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CloverLogOut;
+			targetProxy = 9546AE1823806286007155A6 /* PBXContainerItemProxy */;
+		};
+		95509170238B1E1C00933A7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = daemonInstaller;
+			targetProxy = 9550916F238B1E1C00933A7E /* PBXContainerItemProxy */;
+		};
+		9552D747236F33B900C93377 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CloverDaemonNew;
+			targetProxy = 9552D746236F33B900C93377 /* PBXContainerItemProxy */;
+		};
+		95C5157E236B21D400E4A3A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CloverRunAtLogin;
+			targetProxy = 95C5157D236B21D400E4A3A8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9556CAF3238DF75600082671 /* InstallerOutline.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9556CAF4238DF75600082671 /* Base */,
+			);
+			name = InstallerOutline.xib;
+			sourceTree = "<group>";
+		};
+		95609068238C61E200ACD7F7 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				95609069238C61E200ACD7F7 /* Base */,
+				9560906C238C624200ACD7F7 /* en */,
+				9560906E238C624D00ACD7F7 /* bg */,
+				95609070238C625000ACD7F7 /* bg-BG */,
+				95609072238C625100ACD7F7 /* ca */,
+				95609074238C625300ACD7F7 /* zh-HK */,
+				95609076238C625400ACD7F7 /* zh-Hans */,
+				95609078238C625600ACD7F7 /* zh-Hant */,
+				9560907A238C625800ACD7F7 /* hr */,
+				9560907C238C625A00ACD7F7 /* cs */,
+				9560907E238C625C00ACD7F7 /* da */,
+				95609080238C625D00ACD7F7 /* nl */,
+				95609082238C625F00ACD7F7 /* en-GB */,
+				95609084238C626000ACD7F7 /* fi */,
+				95609086238C626100ACD7F7 /* fr */,
+				95609088238C626600ACD7F7 /* de */,
+				9560908A238C626700ACD7F7 /* el */,
+				9560908C238C626900ACD7F7 /* hi */,
+				9560908E238C626B00ACD7F7 /* hu */,
+				95609090238C626D00ACD7F7 /* id */,
+				95609092238C626E00ACD7F7 /* it */,
+				95609094238C627000ACD7F7 /* ja */,
+				95609096238C627200ACD7F7 /* ko */,
+				95609098238C627300ACD7F7 /* lv */,
+				9560909A238C627500ACD7F7 /* lt */,
+				9560909C238C627700ACD7F7 /* ms */,
+				9560909E238C627800ACD7F7 /* nb */,
+				956090A0238C627A00ACD7F7 /* pl */,
+				956090A2238C627C00ACD7F7 /* pt-BR */,
+				956090A4238C627D00ACD7F7 /* pt-PT */,
+				956090A6238C627F00ACD7F7 /* ro */,
+				956090A8238C628100ACD7F7 /* ru */,
+				956090AA238C628200ACD7F7 /* sr */,
+				956090AC238C628400ACD7F7 /* sk */,
+				956090AE238C628600ACD7F7 /* es */,
+				956090B0238C628800ACD7F7 /* sv */,
+				956090B2238C628900ACD7F7 /* tr */,
+				956090B4238C628C00ACD7F7 /* vi */,
+				956090B6238C628F00ACD7F7 /* uk */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		956090B9238C890600ACD7F7 /* Installer.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				956090B8238C890600ACD7F7 /* Base */,
+				956090BB238C891000ACD7F7 /* en */,
+				956090BD238C892400ACD7F7 /* bg */,
+				956090BF238C892900ACD7F7 /* bg-BG */,
+				956090C1238C892D00ACD7F7 /* ca */,
+				956090C3238C893300ACD7F7 /* zh-HK */,
+				956090C5238C893600ACD7F7 /* zh-Hans */,
+				956090C7238C893C00ACD7F7 /* zh-Hant */,
+				956090C9238C894000ACD7F7 /* hr */,
+				956090CB238C894600ACD7F7 /* cs */,
+				956090CD238C894900ACD7F7 /* da */,
+				956090CF238C894C00ACD7F7 /* nl */,
+				956090D1238C895300ACD7F7 /* en-GB */,
+				956090D3238C895800ACD7F7 /* fi */,
+				956090D5238C895C00ACD7F7 /* fr */,
+				956090D7238C895F00ACD7F7 /* de */,
+				956090D9238C896500ACD7F7 /* el */,
+				956090DB238C896B00ACD7F7 /* hi */,
+				956090DD238C897000ACD7F7 /* hu */,
+				956090DF238C897500ACD7F7 /* id */,
+				956090E1238C897B00ACD7F7 /* it */,
+				956090E3238C897F00ACD7F7 /* ja */,
+				956090E5238C898400ACD7F7 /* ko */,
+				956090E7238C898A00ACD7F7 /* lv */,
+				956090E9238C899000ACD7F7 /* lt */,
+				956090EB238C899500ACD7F7 /* ms */,
+				956090ED238C899900ACD7F7 /* nb */,
+				956090EF238C899C00ACD7F7 /* pl */,
+				956090F1238C89A000ACD7F7 /* pt-BR */,
+				956090F3238C89A500ACD7F7 /* pt-PT */,
+				956090F5238C89A900ACD7F7 /* ro */,
+				956090F7238C89AC00ACD7F7 /* ru */,
+				956090F9238C89B100ACD7F7 /* sr */,
+				956090FB238C89B600ACD7F7 /* sk */,
+				956090FD238C89BA00ACD7F7 /* es */,
+				956090FF238C89BE00ACD7F7 /* sv */,
+				95609101238C89C300ACD7F7 /* tr */,
+				95609103238C89C600ACD7F7 /* uk */,
+				95609105238C89C900ACD7F7 /* vi */,
+			);
+			name = Installer.xib;
+			sourceTree = "<group>";
+		};
+		9569EC44238DD772003AD72C /* Settings.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9569EC43238DD772003AD72C /* Base */,
+				9569EC46238DD77A003AD72C /* en */,
+				9569EC48238DD77C003AD72C /* bg */,
+				9569EC4A238DD77F003AD72C /* bg-BG */,
+				9569EC4C238DD781003AD72C /* ca */,
+				9569EC4E238DD783003AD72C /* zh-HK */,
+				9569EC50238DD786003AD72C /* zh-Hans */,
+				9569EC52238DD788003AD72C /* zh-Hant */,
+				9569EC54238DD78B003AD72C /* hr */,
+				9569EC56238DD78D003AD72C /* cs */,
+				9569EC58238DD78F003AD72C /* da */,
+				9569EC5A238DD791003AD72C /* nl */,
+				9569EC5C238DD793003AD72C /* en-GB */,
+				9569EC5E238DD795003AD72C /* fi */,
+				9569EC60238DD797003AD72C /* fr */,
+				9569EC62238DD799003AD72C /* de */,
+				9569EC64238DD79B003AD72C /* el */,
+				9569EC66238DD79D003AD72C /* hi */,
+				9569EC68238DD79F003AD72C /* hu */,
+				9569EC6A238DD7A1003AD72C /* id */,
+				9569EC6C238DD7A4003AD72C /* it */,
+				9569EC6E238DD7A7003AD72C /* ja */,
+				9569EC70238DD7A9003AD72C /* ko */,
+				9569EC72238DD7AB003AD72C /* lv */,
+				9569EC74238DD7AD003AD72C /* lt */,
+				9569EC76238DD7AF003AD72C /* ms */,
+				9569EC78238DD7B1003AD72C /* nb */,
+				9569EC7A238DD7B3003AD72C /* pl */,
+				9569EC7C238DD7B5003AD72C /* pt-BR */,
+				9569EC7E238DD7B7003AD72C /* pt-PT */,
+				9569EC80238DD7B9003AD72C /* ro */,
+				9569EC82238DD7BB003AD72C /* ru */,
+				9569EC84238DD7BD003AD72C /* sr */,
+				9569EC86238DD7C0003AD72C /* sk */,
+				9569EC88238DD7C2003AD72C /* es */,
+				9569EC8A238DD7C4003AD72C /* sv */,
+				9569EC8C238DD7C6003AD72C /* tr */,
+				9569EC8E238DD7C8003AD72C /* uk */,
+				9569EC90238DD7CA003AD72C /* vi */,
+			);
+			name = Settings.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		95E68AD4235B8632002B37A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBC_WARNINGS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+			};
+			name = Debug;
+		};
+		95E68AD5235B8632002B37A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBC_WARNINGS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+			};
+			name = Release;
+		};
+		95E68AD7235B8632002B37A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Clover/Clover.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.24;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Clover/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Frameworks/ObjectiveGit.framework/Headers/",
+					../MdePkg/Include/X64,
+					"../MdePkg/**",
+					../MdeModulePkg/Include,
+					../IntelFrameworkPkg/Include,
+					../rEFIt_UEFI/refit,
+					../rEFIt_UEFI/libeg,
+					../Include,
+				);
+				IBC_WARNINGS = YES;
+				INFOPLIST_FILE = Clover/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Clover/Frameworks",
+					"$(PROJECT_DIR)/Clover/Library",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = 1.24;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = org.slice.Clover;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Clover/Clover-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		95E68AD8235B8632002B37A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Clover/Clover.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.24;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Clover/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Frameworks/ObjectiveGit.framework/Headers/",
+					../MdePkg/Include/X64,
+					"../MdePkg/**",
+					../MdeModulePkg/Include,
+					../IntelFrameworkPkg/Include,
+					../rEFIt_UEFI/refit,
+					../rEFIt_UEFI/libeg,
+					../Include,
+				);
+				INFOPLIST_FILE = Clover/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Clover/Frameworks",
+					"$(PROJECT_DIR)/Clover/Library",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = 1.24;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = org.slice.Clover;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Clover/Clover-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		95E68AC1235B862F002B37A5 /* Build configuration list for PBXProject "Clover" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95E68AD4235B8632002B37A5 /* Debug */,
+				95E68AD5235B8632002B37A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		95E68AD6235B8632002B37A5 /* Build configuration list for PBXNativeTarget "Clover" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95E68AD7235B8632002B37A5 /* Debug */,
+				95E68AD8235B8632002B37A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 95E68ABE235B862F002B37A5 /* Project object */;
+}

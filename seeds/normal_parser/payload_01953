@@ -1,0 +1,3 @@
+. ""
+submenu ''{if ];then o;fi}
+su '' {	if  ]; then o;fi}

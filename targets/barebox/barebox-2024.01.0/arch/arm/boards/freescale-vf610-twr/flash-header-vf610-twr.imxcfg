@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+soc vf610
+loadaddr 0x80000000
+ivtofs 0x400
+
+#include <mach/imx/vf610-iomux-regs.h>
+#include <mach/imx/vf610-ddrmc-regs.h>
+
+#include <mach/imx/flash-header/vf610-ddr-pll2-400mhz.imxcfg>
+#include <mach/imx/flash-header/vf610-iomux-ddr-default.imxcfg>
+#include <mach/imx/flash-header/vf610-ddr-cr-default.imxcfg>
+#include <mach/imx/flash-header/vf610-ddr-phy-default.imxcfg>
+
+wm 32 DDRMC_CR00 DDRMC_CR00_DRAM_CLASS_DDR3_START
+
+check 32 until_any_bit_set 0x400ae140 0x100

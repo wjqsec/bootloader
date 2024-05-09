@@ -1,0 +1,18 @@
+targets:
+  main:
+    drivers:
+      QEMUDriver:
+        qemu_bin: qemu-system-arm
+        machine: vexpress-a9
+        cpu: cortex-a9
+        memory: 1024M
+        bios: barebox-vexpress-ca9.img
+        extra_args: ''
+      BareboxDriver:
+        prompt: 'barebox@[^:]+:[^ ]+ '
+        bootstring: 'commandline:'
+      BareboxTestStrategy: {}
+images:
+  barebox-vexpress-ca9.img: !template "$LG_BUILDDIR/images/barebox-vexpress-ca9.img"
+imports:
+  -  ../strategy.py

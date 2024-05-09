@@ -1,0 +1,4 @@
+rmmod ls  "}"
+rmmod gfxterm
+rmmod font
+rmmod echo

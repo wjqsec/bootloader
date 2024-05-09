@@ -1,0 +1,293 @@
+#
+# OMAP Architecture specific features
+#
+# (C) Copyright 2008
+# Texas Instruments, <www.ti.com>
+# Nishanth Menon <x0nishan@ti.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+
+menu "OMAP Features"
+	depends on ARCH_OMAP
+
+config ARCH_OMAP3
+	bool
+	select CPU_V7
+	select GENERIC_GPIO
+	select CLOCKSOURCE_TI_32K
+	help
+	  Say Y here if you are using Texas Instrument's OMAP343x based platform
+
+config ARCH_OMAP4
+	bool
+	select CPU_V7
+	select GENERIC_GPIO
+	select CLOCKSOURCE_TI_32K
+	help
+	  Say Y here if you are using Texas Instrument's OMAP4 based platform
+
+config ARCH_AM33XX
+	bool
+	select CPU_V7
+	select GENERIC_GPIO
+	select OFTREE
+	select CLOCKSOURCE_TI_DM
+	select ARM_USE_COMPRESSED_DTB
+	help
+	  Say Y here if you are using Texas Instrument's AM33xx based platform
+
+config ARCH_AM35XX
+	bool
+	select ARCH_OMAP3
+	help
+	  Say Y here if you are using Texas Instrument's AM35XX based platform
+
+config OMAP_GPMC
+	prompt "Support for GPMC configuration"
+	bool
+	default y
+	help
+	  Enable this if you use Texas Instrument's General purpose Memory
+	  Controller(GPMC). GPMC allows you to configure devices such as NOR,
+	  NAND, OneNAND etc.
+
+config OMAP_BUILD_IFT
+	prompt "build ift binary (MLO)"
+	bool
+	help
+	  Say Y here if you want to build an MLO binary. On TI SoCs, this
+	  binary is loaded to SRAM. It is responsible for initializing
+	  the SDRAM and possibly chainloading a full-featured barebox.
+
+config OMAP_BUILD_SPI
+	prompt "build SPI binary"
+	bool
+	help
+	  Say Y here if you want to build an barebox.spi image as used
+	  on the AM35xx chips when booting from SPI NOR flash.
+
+config BAREBOX_UPDATE_AM33XX_SPI_NOR_MLO
+	prompt "barebox update SPI NOR MLO handler"
+	bool
+	depends on BAREBOX_UPDATE
+	help
+	  Say Y for barebox update SPI NOR MLO handler.
+	  AM35xx, AM33xx chips use big endian MLO for SPI NOR flash.
+
+config BAREBOX_UPDATE_AM33XX_NAND
+	prompt "barebox update NAND handler"
+	bool
+	depends on BAREBOX_UPDATE
+	help
+	  Say Y for barebox update NAND handler. This update handler updates
+	  4 default NAND xload slots with a single command.
+	  The Handler also checks if the given image has a valid CH header.
+	  This also includes a handler for updating the regular barebox binary
+	  in NAND.
+
+config BAREBOX_UPDATE_AM33XX_EMMC
+	prompt "barebox update eMMC handler"
+	bool
+	depends on BAREBOX_UPDATE
+	help
+	  Say Y for barebox update eMMC handler.
+
+config ARCH_TEXT_BASE
+	hex
+	default 0x80e80000 if MACH_OMAP343xSDP
+	default 0x80e80000 if MACH_BEAGLE
+
+config AM33XX_NET_BOOT
+	bool "enable AM335x network boot"
+	select ENVIRONMENT_VARIABLES
+	select NET_DHCP
+	select FS_RAMFS
+	select FS_TFTP
+	select DRIVER_NET_CPSW
+	default n
+	depends on ARCH_AM33XX && NET
+
+config OMAP4_USBBOOT
+	bool "enable booting from USB"
+	default n
+	depends on ARCH_OMAP4 && !MMU
+	help
+	  Say Y here if you want to be able to boot an OMAP4 cpu from USB.
+	  You need the utility program omap4_usbboot to boot from USB.
+	  Please read omap4_usb_booting.txt for more information.
+
+config OMAP3_USBBOOT
+	bool "enable booting from USB"
+	depends on ARCH_OMAP3
+	help
+	  Say Y here if you want to be able to boot the 2nd stage via USB. This
+	  works by transferring the 2nd stage image using the MUSB controller
+	  which is already initialized by the ROM code. Use the omap3-usb-loader
+	  tool selectable below to upload images.
+
+config OMAP_SERIALBOOT
+	bool "enable booting from serial"
+	select XYMODEM
+	select FS_RAMFS
+	depends on ARCH_AM33XX && SHELL_NONE
+	depends on !CONSOLE_NONE
+	help
+	  Say Y here if you want to load the 2nd stage barebox.bin with
+	  xmodem after booting from serial line.
+
+config OMAP_MULTI_BOARDS
+	bool "Allow multiple boards to be selected"
+	select HAVE_PBL_MULTI_IMAGES
+
+if OMAP_MULTI_BOARDS
+
+config MACH_AFI_GF
+	bool "af inventions GF"
+	select ARCH_AM33XX
+	  help
+	  Say Y here if you are using afis GF
+
+config MACH_BEAGLE
+	bool "Texas Instrument's Beagle Board"
+	select ARCH_OMAP3
+	help
+	  Say Y here if you are using Beagle Board
+
+config MACH_BEAGLEBONE
+	bool "Texas Instrument's Beagle Bone"
+	select ARCH_AM33XX
+	help
+	  Say Y here if you are using Beagle Bone
+
+config MACH_MYIRTECH_X335X
+	bool "MYIR Tech Limited SOMs"
+	select ARCH_AM33XX
+	help
+	  Say Y here if you are using a TI AM335X based MYIR SOM
+
+config MACH_PHYTEC_SOM_AM335X
+	bool "Phytec AM335X SOMs"
+	select ARCH_AM33XX
+	help
+	  Say Y here if you are using a am335x based Phytecs SOM
+
+config MACH_VSCOM_BALTOS
+	bool "VScom Baltos Devices"
+	select ARCH_AM33XX
+	help
+	  Say Y here if you are using a am335x based VScom Baltos devices
+
+config MACH_WAGO_PFC_AM35XX
+        bool "Wago PFC200 Fieldbus Controller"
+        select ARCH_AM35XX
+        select HAVE_PBL_MULTI_IMAGES
+        select HAVE_CONFIGURABLE_MEMORY_LAYOUT
+        help
+          Say Y here if you are using a the AM3505 based PFC200 controller
+
+endif
+
+source "arch/arm/boards/phytec-som-am335x/Kconfig"
+
+choice
+	prompt "Select OMAP board"
+	depends on !OMAP_MULTI_BOARDS
+
+config MACH_OMAP343xSDP
+	bool "Texas Instrument's SDP343x"
+	select ARCH_OMAP3
+	help
+	  Say Y here if you are using SDP343x platform
+
+config MACH_OMAP3EVM
+	bool "Texas Instrument's OMAP3 EVM"
+	select ARCH_OMAP3
+	help
+	  Say Y here if you are using OMAP3EVM
+
+config MACH_PANDA
+	bool "Texas Instrument's Panda Board"
+	select ARCH_OMAP4
+	help
+	  Say Y here if you are using OMAP4 Panda board
+
+config MACH_ARCHOSG9
+	bool "Archos G9 tablets"
+	select ARCH_OMAP4
+	help
+	  Say Y here if you are using OMAP4-based Archos G9 tablet
+
+config MACH_PCM049
+	bool "Phytec phyCORE pcm049"
+	select ARCH_OMAP4
+	help
+	  Say Y here if you are using Phytecs phyCORE pcm049 board
+	  based on OMAP4
+
+config MACH_PCAAL1
+	bool "Phytec phyCARD-A-L1"
+	select ARCH_OMAP3
+	help
+	  Say Y here if you are using a phyCARD-A-L1 PCA-A-L1
+
+config MACH_PCAAXL2
+	bool "Phytec phyCARD XL2"
+	select ARCH_OMAP4
+	help
+	  Say Y here if you are using a phyCARD-A-XL1 PCA-A-XL1
+
+endchoice
+
+if ARCH_OMAP
+
+choice
+	prompt "Select UART"
+	default OMAP_UART3
+	depends on MACH_OMAP3EVM
+
+	config OMAP_UART1
+		bool "Use UART1"
+		depends on ARCH_OMAP
+		help
+		  Say Y here if you would like to use UART1 as console.
+
+	config OMAP_UART3
+		bool "Use UART3"
+		depends on ARCH_OMAP
+		help
+		  Say Y here if you would like to use UART3 as console.
+
+endchoice
+
+endif
+
+if MACH_PCM049
+	choice
+	prompt "Select DDR2-RAM Size"
+
+	config 512MB_DDR2RAM
+		bool "512MB"
+	config 1024MB_DDR2RAM
+		bool "1024MB"
+
+	endchoice
+endif
+
+config MACH_OMAP_ADVANCED_MUX
+	bool "Enable advanced pin muxing"
+	depends on MACH_OMAP343xSDP
+	default n
+	help
+	  Say Y here if you would like to have complete pin muxing to be
+	  done at boot time
+
+endmenu

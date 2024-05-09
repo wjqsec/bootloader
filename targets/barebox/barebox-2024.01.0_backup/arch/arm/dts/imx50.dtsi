@@ -1,0 +1,29 @@
+#include <arm/nxp/imx/imx50.dtsi>
+
+&aips1 {
+	usbphy1: usbphy@1 {
+		compatible = "usb-nop-xceiv";
+		clocks = <&clks IMX5_CLK_USB_PHY2_GATE>;
+		clock-names = "main_clk";
+		status = "okay";
+	};
+
+	usbmisc: usbmisc@53f80800 {
+		#index-cells = <1>;
+		compatible = "fsl,imx53-usbmisc";
+		reg = <0x53f80800 0x200>;
+		clocks = <&clks IMX5_CLK_USBOH3_GATE>;
+	};
+};
+
+&usbotg {
+	clocks = <&clks IMX5_CLK_USBOH3_GATE>;
+	fsl,usbmisc = <&usbmisc 0>;
+	fsl,usbphy = <&usbphy0>;
+};
+
+&usbh1 {
+	clocks = <&clks IMX5_CLK_USBOH3_GATE>;
+	fsl,usbmisc = <&usbmisc 0>;
+	fsl,usbphy = <&usbphy0>;
+};

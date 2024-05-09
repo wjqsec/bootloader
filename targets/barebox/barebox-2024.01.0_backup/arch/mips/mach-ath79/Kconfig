@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if MACH_MIPS_ATH79
+
+config SOC_QCA_AR9331
+	bool
+
+config SOC_QCA_AR9344
+	bool
+
+config SOC_QCA_QCA4531
+	bool
+
+if DEBUG_LL
+choice
+	prompt "DEBUG_LL driver"
+
+config DEBUG_AR9331_UART
+	bool "AR9331 Debug UART"
+
+config DEBUG_AR9344_UART
+	bool "AR9344 Debug UART"
+
+endchoice
+endif # DEBUG_LL
+
+config BOARD_8DEVICES_LIMA
+	bool "8devices LIMA"
+	select SOC_QCA_QCA4531
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+config BOARD_DPTECHNICS_DPT_MODULE
+	bool "DPTechnics DPT-Module"
+	select SOC_QCA_AR9331
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+config BOARD_OPENEMBEDED_SOM9331
+	bool "OpenEmbed SOM9331"
+	select SOC_QCA_AR9331
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+config BOARD_OKUD_MAX9331
+	bool "The Useless Board Max9331"
+	select SOC_QCA_AR9331
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+config BOARD_TPLINK_MR3020
+	bool "TP-LINK MR3020"
+	select SOC_QCA_AR9331
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+config BOARD_TPLINK_WDR4300
+	bool "TP-LINK WDR4300"
+	select SOC_QCA_AR9344
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+config BOARD_BLACK_SWIFT
+	bool "Black Swift"
+	select SOC_QCA_AR9331
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+
+endif

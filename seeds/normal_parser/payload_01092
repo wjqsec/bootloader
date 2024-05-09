@@ -1,0 +1,5 @@
+ [ C"Ð"
+='D'
+if [ ]; then
+search -t --hint='D' --no-floppy --fs-uuid -0
+fi

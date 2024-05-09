@@ -1,0 +1,10 @@
+if [ "${initrdfail}" = 2 ]; then
+   set initrdfail=
+elif [ "${initrdfail}" = 1 ]; then
+   set next_entry="${prev_entry}"
+   set prev_entry=
+   save_env prev_entry
+   if [ "${next_entry}" ]; then
+      set initrdfail=2
+   fi
+fi

@@ -1,0 +1,30 @@
+---
+# vi: ts=2 sw=2 et:
+# SPDX-License-Identifier: LGPL-2.1-or-later
+#
+name: Coverity
+
+on:
+  schedule:
+    # Run Coverity daily at midnight
+    - cron:  '0 0 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    if: github.repository == 'systemd/systemd'
+    env:
+      # Set in repo settings -> secrets -> actions
+      COVERITY_SCAN_TOKEN:              "${{ secrets.COVERITY_SCAN_TOKEN }}"
+      COVERITY_SCAN_NOTIFICATION_EMAIL: "${{ secrets.COVERITY_SCAN_NOTIFICATION_EMAIL }}"
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      # Reuse the setup phase of the unit test script to avoid code duplication
+      - name: Install build dependencies
+        run: sudo -E .github/workflows/unit_tests.sh SETUP
+      - name: Build & upload the results
+        run: tools/coverity.sh

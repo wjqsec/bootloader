@@ -1,0 +1,129 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if ARCH_MVEBU
+
+config ARCH_TEXT_BASE
+	hex
+	default 0x2000000 if ARCH_ARMADA_370
+	default 0x2000000 if ARCH_ARMADA_XP
+	default 0x2000000 if ARCH_DOVE
+	default 0x2000000 if ARCH_KIRKWOOD
+
+config ARCH_ARMADA_370
+	bool
+	select CPU_V7
+	select CLOCKSOURCE_MVEBU
+
+config ARCH_ARMADA_XP
+	bool
+	select CPU_V7
+	select CLOCKSOURCE_MVEBU
+
+config ARCH_ARMADA_38X
+	bool
+	select CPU_V7
+	select CLOCKSOURCE_MVEBU
+
+config ARCH_DOVE
+	bool
+	select CPU_V7
+	select CLOCKSOURCE_ORION
+
+config ARCH_KIRKWOOD
+	bool
+	select CPU_FEROCEON
+	select CLOCKSOURCE_ORION
+
+#
+# Armada 370 SoC boards
+#
+
+comment "Armada 370 based boards"
+
+config MACH_GLOBALSCALE_MIRABOX
+	bool "Globalscale Mirabox"
+	select ARCH_ARMADA_370
+
+config MACH_NETGEAR_RN104
+	bool "Netgear ReadyNAS 104"
+	select ARCH_ARMADA_370
+
+#
+# Armada XP SoC boards
+#
+
+comment "Armada XP based boards"
+
+config MACH_LENOVO_IX4_300D
+	bool "Lenovo Iomega ix4-300d"
+	select ARCH_ARMADA_XP
+
+config MACH_MARVELL_ARMADA_XP_DB
+	bool "Marvell Armada XP DB"
+	select ARCH_ARMADA_XP
+
+config MACH_MARVELL_ARMADA_XP_GP
+	bool "Marvell Armada XP GP"
+	select ARCH_ARMADA_XP
+
+config MACH_NETGEAR_RN2120
+	bool "Netgear ReadyNAS 2120"
+	select ARCH_ARMADA_XP
+
+config MACH_PLATHOME_OPENBLOCKS_AX3
+	bool "PlatHome OpenBlocks AX3"
+	select ARCH_ARMADA_XP
+
+#
+# Armada 38x SoC boards
+#
+
+comment "Armada 38x based boards"
+
+config MACH_TURRIS_OMNIA
+	bool "Turris Omnia"
+	select ARCH_ARMADA_38X
+
+#
+# Dove 88AP510 SoC boards
+#
+
+comment "Dove based boards"
+
+config MACH_SOLIDRUN_CUBOX
+	bool "SolidRun CuBox"
+	select ARCH_DOVE
+
+#
+# Kirkwood SoC boards
+#
+
+comment "Kirkwood based boards"
+
+config MACH_GLOBALSCALE_GURUPLUG
+	bool "Guruplug"
+	select ARCH_KIRKWOOD
+
+config MACH_PLATHOME_OPENBLOCKS_A6
+	bool "PlatHome OpenBlocks A6"
+	select ARCH_KIRKWOOD
+
+config MACH_USI_TOPKICK
+	bool "Topkick"
+	select ARCH_KIRKWOOD
+
+#
+# Common options
+#
+
+config MVEBU_CONSOLE_UART
+	int "UART number for console"
+	default 0
+	range 0 1 if ARCH_ARMADA_370
+	range 0 1 if ARCH_ARMADA_XP
+	range 0 3 if ARCH_DOVE
+	range 0 1 if ARCH_KIRKWOOD
+	help
+	  Select the UART number the barebox console will sit on.
+
+endif # ARCH_MVEBU

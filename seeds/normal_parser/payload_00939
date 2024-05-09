@@ -1,0 +1,5 @@
+submenu "I" s x {
+for le in g; do
+le
+  done
+}

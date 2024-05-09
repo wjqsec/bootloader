@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+pblb-$(CONFIG_SOC_QCA_AR9331) += start_ar9331_spi_trap
+FILE_barebox-ar9331-spi-trap.img = start_ar9331_spi_trap.pblb
+image-$(CONFIG_SOC_QCA_AR9331) += barebox-ar9331-spi-trap.img
+
+pblb-$(CONFIG_SOC_QCA_AR9331) += start_ar9331_sram
+FILE_barebox-ar9331-sram.img = start_ar9331_sram.pblb
+image-$(CONFIG_SOC_QCA_AR9331) += barebox-ar9331-sram.img
+
+pblb-$(CONFIG_BOARD_8DEVICES_LIMA) += start_8devices_lima
+FILE_barebox-8devices-lima.img = start_8devices_lima.pblb
+image-$(CONFIG_BOARD_8DEVICES_LIMA) += barebox-8devices-lima.img
+
+pblb-$(CONFIG_BLACK_SWIFT) += start_black_swift
+FILE_barebox-black-swift.img = start_black_swift.pblb
+image-$(CONFIG_BOARD_BLACK_SWIFT) += barebox-black-swift.img
+
+pblb-$(CONFIG_BOARD_DPTECHNICS_DPT_MODULE) += start_dptechnics_dpt_module
+FILE_barebox-dptechnics-dpt-module.img = start_dptechnics_dpt_module.pblb
+image-$(CONFIG_BOARD_DPTECHNICS_DPT_MODULE) += barebox-dptechnics-dpt-module.img
+
+pblb-$(CONFIG_BOARD_OPENEMBEDED_SOM9331) += start_openembed_som9331_board
+FILE_barebox-openembed-som9331-board.img = start_openembed_som9331_board.pblb
+image-$(CONFIG_BOARD_OPENEMBEDED_SOM9331) += barebox-openembed-som9331-board.img
+
+pblb-$(CONFIG_BOARD_OKUD_MAX9331) += start_okud_max9331
+FILE_barebox-okud-max9331.img = start_okud_max9331.pblb
+image-$(CONFIG_BOARD_OKUD_MAX9331) += barebox-okud-max9331.img
+
+pblb-$(CONFIG_BOARD_OKUD_MAX9331) += start_okud_max9331_boot0
+FILE_barebox-okud-max9331-boot0.img = start_okud_max9331_boot0.pblb
+image-$(CONFIG_BOARD_OKUD_MAX9331) += barebox-okud-max9331-boot0.img
+
+pblb-$(CONFIG_BOARD_TPLINK_MR3020) += start_tplink_mr3020
+FILE_barebox-tplink-mr3020.img = start_tplink_mr3020.pblb
+image-$(CONFIG_BOARD_TPLINK_MR3020) += barebox-tplink-mr3020.img
+
+pblb-$(CONFIG_BOARD_TPLINK_WDR4300) += start_tplink_wdr4300
+FILE_barebox-tplink-wdr4300.img = start_tplink_wdr4300.pblb
+image-$(CONFIG_BOARD_TPLINK_WDR4300) += barebox-tplink-wdr4300.img
+

@@ -1,0 +1,88 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
+
+#ifndef _IMX1_REGS_H
+#define _IMX1_REGS_H
+
+#define MX1_IO_BASE_ADDR	0x00200000
+#define MX1_IO_SIZE		SZ_1M
+
+#define MX1_CSD0_BASE_ADDR	0x08000000
+#define MX1_CSD1_BASE_ADDR	0x0c000000
+
+#define MX1_CS0_PHYS		0x10000000
+#define MX1_CS0_SIZE		0x02000000
+
+#define MX1_CS1_PHYS		0x12000000
+#define MX1_CS1_SIZE		0x01000000
+
+#define MX1_CS2_PHYS		0x13000000
+#define MX1_CS2_SIZE		0x01000000
+
+#define MX1_CS3_PHYS		0x14000000
+#define MX1_CS3_SIZE		0x01000000
+
+#define MX1_CS4_PHYS		0x15000000
+#define MX1_CS4_SIZE		0x01000000
+
+#define MX1_CS5_PHYS		0x16000000
+#define MX1_CS5_SIZE		0x01000000
+
+/*
+ *  Register BASEs, based on OFFSETs
+ */
+#define MX1_AIPI1_BASE_ADDR		(0x00000 + MX1_IO_BASE_ADDR)
+#define MX1_WDT_BASE_ADDR		(0x01000 + MX1_IO_BASE_ADDR)
+#define MX1_TIM1_BASE_ADDR		(0x02000 + MX1_IO_BASE_ADDR)
+#define MX1_TIM2_BASE_ADDR		(0x03000 + MX1_IO_BASE_ADDR)
+#define MX1_RTC_BASE_ADDR		(0x04000 + MX1_IO_BASE_ADDR)
+#define MX1_LCDC_BASE_ADDR		(0x05000 + MX1_IO_BASE_ADDR)
+#define MX1_UART1_BASE_ADDR		(0x06000 + MX1_IO_BASE_ADDR)
+#define MX1_UART2_BASE_ADDR		(0x07000 + MX1_IO_BASE_ADDR)
+#define MX1_PWM_BASE_ADDR		(0x08000 + MX1_IO_BASE_ADDR)
+#define MX1_DMA_BASE_ADDR		(0x09000 + MX1_IO_BASE_ADDR)
+#define MX1_AIPI2_BASE_ADDR		(0x10000 + MX1_IO_BASE_ADDR)
+#define MX1_SIM_BASE_ADDR		(0x11000 + MX1_IO_BASE_ADDR)
+#define MX1_USBD_BASE_ADDR		(0x12000 + MX1_IO_BASE_ADDR)
+#define MX1_CSPI1_BASE_ADDR		(0x13000 + MX1_IO_BASE_ADDR)
+#define MX1_MMC_BASE_ADDR		(0x14000 + MX1_IO_BASE_ADDR)
+#define MX1_ASP_BASE_ADDR		(0x15000 + MX1_IO_BASE_ADDR)
+#define MX1_BTA_BASE_ADDR		(0x16000 + MX1_IO_BASE_ADDR)
+#define MX1_I2C_BASE_ADDR		(0x17000 + MX1_IO_BASE_ADDR)
+#define MX1_SSI_BASE_ADDR		(0x18000 + MX1_IO_BASE_ADDR)
+#define MX1_CSPI2_BASE_ADDR		(0x19000 + MX1_IO_BASE_ADDR)
+#define MX1_MSHC_BASE_ADDR		(0x1A000 + MX1_IO_BASE_ADDR)
+#define MX1_CCM_BASE_ADDR		(0x1B000 + MX1_IO_BASE_ADDR)
+#define MX1_SCM_BASE_ADDR		(0x1B800 + MX1_IO_BASE_ADDR)
+#define MX1_GPIO_BASE_ADDR		(0x1C000 + MX1_IO_BASE_ADDR)
+#define MX1_GPIO1_BASE_ADDR		(0x1C000 + MX1_IO_BASE_ADDR)
+#define MX1_GPIO2_BASE_ADDR		(0x1C100 + MX1_IO_BASE_ADDR)
+#define MX1_GPIO3_BASE_ADDR		(0x1C200 + MX1_IO_BASE_ADDR)
+#define MX1_GPIO4_BASE_ADDR		(0x1C300 + MX1_IO_BASE_ADDR)
+#define MX1_EIM_BASE_ADDR		(0x20000 + MX1_IO_BASE_ADDR)
+#define MX1_SDRAMC_BASE_ADDR		(0x21000 + MX1_IO_BASE_ADDR)
+#define MX1_MMA_BASE_ADDR		(0x22000 + MX1_IO_BASE_ADDR)
+#define MX1_AVIC_BASE_ADDR		(0x23000 + MX1_IO_BASE_ADDR)
+#define MX1_CSI_BASE_ADDR		(0x24000 + MX1_IO_BASE_ADDR)
+
+/* SYSCTRL Registers (base MX1_SCM_BASE_ADDR) */
+#define MX1_SIDR   0x4 /* Silicon ID Register		    */
+#define MX1_FMCR   0x8 /* Function Multiplex Control Register */
+#define MX1_GPCR   0xC /* Function Multiplex Control Register */
+
+/* SDRAM controller registers (base MX1_SDRAMC_BASE_ADDR) */
+#define MX1_SDCTL0 0x0	/* SDRAM 0 Control Register */
+#define MX1_SDCTL1 0x4	/* SDRAM 1 Control Register */
+#define MX1_SDMISC 0x14	/* Miscellaneous Register */
+#define MX1_SDRST  0x18	/* SDRAM Reset Register */
+
+/* PLL registers (base MX1_CCM_BASE_ADDR) */
+#define MX1_CSCR   0x0	/* Clock Source Control Register */
+#define MX1_MPCTL0 0x4	/* MCU PLL Control Register 0 */
+#define MX1_MPCTL1 0x8	/* MCU PLL and System Clock Register 1 */
+#define MX1_SPCTL0 0xc	/* System PLL Control Register 0 */
+#define MX1_SPCTL1 0x10	/* System PLL Control Register 1 */
+#define MX1_PCDR   0x20	/* Peripheral Clock Divider Register */
+
+#define MX1_CSCR_MPLL_RESTART (1<<21)
+
+#endif /* _IMX1_REGS_H */

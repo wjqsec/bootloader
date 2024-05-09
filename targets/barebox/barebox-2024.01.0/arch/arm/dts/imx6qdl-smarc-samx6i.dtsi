@@ -1,0 +1,90 @@
+// SPDX-License-Identifier: GPL-2.0 OR X11
+/*
+ * Copyright 2017 (C) Priit Laes <plaes@plaes.org>
+ * Copyright 2018 (C) Pengutronix, Michael Grzeschik <mgr@pengutronix.de>
+ * Copyright 2019 (C) Pengutronix, Marco Felsch <kernel@pengutronix.de>
+ *
+ * Based on initial work by Nikita Yushchenko <nyushchenko at dev.rtsoft.ru>
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	chosen {
+		stdout-path = &uart2;
+
+		environment-spinor {
+			compatible = "barebox,environment";
+			device-path = &flash_bareboxenv;
+			status = "disabled";
+		};
+
+		environment-sd4 {
+			compatible = "barebox,environment";
+			device-path = &usdhc4_bareboxenv;
+			status = "disabled";
+		};
+	};
+};
+
+&gpio2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gpio2_hog>;
+};
+
+&gpio6 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gpio6_hog>;
+};
+
+&smarc_flash {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		reg = <0x0 0x0c0000>;
+		label = "bootloader";
+	};
+
+	flash_bareboxenv: partition@c0000 {
+		reg = <0x0c0000 0x010000>;
+		label = "environment";
+	};
+
+	partition@d0000 {
+		reg = <0x0d0000 0x130000>;
+		label = "user";
+	};
+};
+
+&usdhc4 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "bootloader";
+		reg = <0x0 0xe0000>;
+	};
+
+	usdhc4_bareboxenv: partition@e0000 {
+		label = "environment";
+		reg = <0xe0000 0x20000>;
+	};
+};
+
+&iomuxc {
+	pinctrl_gpio2_hog: gpio2-hog {
+		fsl,pins = <
+			/* GPIO for version detection */
+			MX6QDL_PAD_NANDF_D2__GPIO2_IO02		0xb0b0
+		>;
+	};
+
+	pinctrl_gpio6_hog: gpio6-hog {
+		fsl,pins = <
+			/* GPIOs for ddr3 size detection */
+			MX6QDL_PAD_NANDF_CLE__GPIO6_IO07	0xb0b0
+			MX6QDL_PAD_NANDF_WP_B__GPIO6_IO09	0xb0b0
+		>;
+	};
+};

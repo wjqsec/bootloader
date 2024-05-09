@@ -1,0 +1,345 @@
+/*
+Clover.app
+language code: ru
+
+Copyright © 2019-2020 CloverHackyColor. All rights reserved.
+*/
+// Globals
+"Unsupported" = "Unsupported";
+"N/A" = "Н/Д"; // not available (please be short)
+
+// Mount / unmount
+"Clover wants to mount %@" = "Clover желает смонтировать %@";
+"Clover wants to umount %@" = "Clover желает размонтировать %@";
+"Mount" = "Смонтировать";
+"umount" = "Размонтировать";
+"mount point" = "название тома";
+"*auto mount" = "*auto mount";
+
+// Info
+"System Serial Number:" = "System Serial Number:";
+"Model:" = "Model:";
+"board-id:" = "board-id:";
+"OEM Vendor:" = "OEM Vendor:";
+"OEM Product:" = "OEM Product:";
+"OEM Board:" = "OEM Board:";
+"NVRAM is native:" = "NVRAM встроенный:";
+"unknown" = "неизвестно";
+"Yes" = "Да"; // first char upper case
+"No" = "Нет"; // first char upper case
+
+// Sound
+"Startup Sound" = "Гимн";
+"Device:" = "Устройство:";
+"Volume level:" = "Громкость:";
+"LineOut" = "Линейный выход";
+"Speaker" = "Пищалка";
+"Headphones" = "Наушники";
+"Garniture" = "Гарнитура";
+"Other" = "Другое";
+
+"true" = "истина";
+"false" = "ложь";
+
+// Theme
+"Theme:" = "Тема:";
+"Themes" = "Темы"; // window title
+"No themes found" = "Темы не найдены";
+"Manager" = "Менеджер";
+"Can't remove the theme" = "Не возможно удалить тему";
+"Show installed" = "Показать установленные";
+"Optimize" = "Ужать иконки";
+"Sound:" = "Звук:";
+// Main view (pop over)
+"*Make filesystem read-write" = "*Открыть файловую систему на запись";
+"*Disable Sleep Proxy Client" = "*Отключение Sleep Proxy Client";
+"*Require CloverDaemon" = "*Требуется CloverDaemon";
+"Read daemon log" = "Прочитать служебный лог";
+"Read bdmesg" = "Прочитать лог загрузчика";
+
+"Install CloverDaemonNew" = "Установить CloverDaemonNew";
+"Uninstall CloverDaemonNew" = "Удалить CloverDaemonNew";
+
+"Update" = "Oбновление";
+"Download" = "Скачать";
+"Update to r%d" = "Обновление до r%d"; // Update to r5101
+"Check update:" = "Проверить обновления:";
+"Check now" = "Проверь сейчас";
+
+"never" = "никогда";
+"daily" = "ежедневно";
+"weekly" = "еженедельно";
+"monthly" = "ежемесячно";
+"last checked:" = "последняя проверка:"; // last date update was checked
+
+"Run at login" = "Запустить Clover.app при входе в систему";
+"Close" = "Закрыть";
+
+// Installer
+"Install Clover" = "Установить Clover";
+"Current Clover revision" = "Текущая ревизия Clover";
+"Boot Device:" = "Загрузочное устройство:";
+"config path:" = "путь к файлу config:";
+"Installation succeded" = "Установка успешна";
+"Installation failed" = "Не удалось установить";
+"Clover Installer" = "Clover установщик";
+"Select a disk.." = "Выбор диска..";
+"Install" = "Установить";
+"Uninstall" = "Удаление";
+"AltBoot" = "PBR с выбором";
+
+// Clover Bootloader and drivers
+"UEFI only" = "Устанавливает Clover только для UEFI-загрузки (BIOS-загрузка не возможна) на выбранный том или на раздел EFI, если выбран вариант Установить Clover на разделе EFI (ESP).";
+
+"Install alternative booting PBR" = "Устанавливает альтернативный сектор boot1, позволяющий выбрать разные загрузчики (boot1, boot3, boot7) нажатием клавиши в паузе 2 секунды.
+Для выбора загрузчика нажмите клавишу с соответствующей цифрой.";
+
+"Don't install any bootloader (boot0X, boot1X)" = "Не устанавливать секторы для BIOS-загрузки (boot0X, boot1X).
+Выберите этот пункт если используете UEFI-загрузку или не хотите заменять установленные ранее секторы.";
+
+"Clover legacy BIOS boot sectors" = "Clover EFI требует наличия трех основных файлов (упрощенно):
+• boot0 (главная загрузочная запись) отвечает за загрузку boot1;
+• boot1 (загрузочная запись раздела) для загрузки boot;
+• boot  (в корне выбранного раздела) для поиска /EFI/CLOVER/CLOVERIA32.efi или CLOVERX64.efi.";
+
+"boot0af" = "Используется для BIOS-загрузки.
+boot0af (boot0 Active First) ищет активный раздел в таблице MBR. Если такого раздела нет, будет загружен первый из разделов EFI/FAT32/HFS с загрузочной сигнатурой и этот раздел будет помечен как активный.";
+
+"boot0ss" = "Используется для BIOS-загрузки.
+boot0ss (boot0 Signature Scanning) ищет первый раздел типа EFI/FAT32/HFS с правильной сигнатурой сначала в таблице MBR, затем в GPT. Если таковых не найдено, будет пытаться загрузить активный раздел из MBR.
+Этот вариант является хорошим выбором, если Windows установлен на том же диске, поскольку Windows требует, чтобы раздел был активным (при этом Установщик не активирует выбранный раздел).";
+
+"boot6" = "Clover EFI с драйвером SATA.";
+"boot7" = "Clover EFI с драйвером Bios Block I/O.";
+
+"UEFI mandatory" = "UEFI, Рекомендуемые драйвера";
+"BIOS mandatory" = "BIOS, Рекомендуемые драйвера";
+
+"UEFI/Other" = "UEFI/Other, Дополнительные драйвера";
+"BIOS/Other" = "BIOS/Other, Дополнительные драйвера";
+
+"UEFI, but not from this installer" = "UEFI, но не из этого пакета";
+"BIOS, but not from this installer" = "BIOS, но не из этого пакета";
+
+"UEFI/FileSystem" = "UEFI, Драйвера файловых систем";
+"BIOS/FileSystem" = "BIOS, Драйвера файловых систем";
+
+"UEFI/HID" = "UEFI, Драйвера устройств ввода";
+"BIOS/HID" = "BIOS, Драйвера устройств ввода";
+
+"UEFI/FileVault2" = "UEFI, Драйверы для FileVault 2 UEFI-загрузки";
+"BIOS/FileVault2" = "BIOS, Драйверы для FileVault 2 BIOS-загрузки";
+
+"UEFI/MemoryFix" = "UEFI, Драйвера исправляющие ошибки выделения памяти";
+
+"ApfsDriverLoader.efi" = "Поддержка загрузки оригинального драйвера файловой системы APFS из контейнера. Необходим для macOS 10.13 и выше.";
+
+"AppleImageCodec.efi" = "Декодер изображений в форматах PNG и BMP. Необходим для работы FileVault 2.";
+
+"AppleImageLoader.efi" = "Драйвер, реализующий поддержку протокола AppleLoadImage с верификацией исполняемых бинарных модулей Apple.";
+
+"AppleKeyAggregator.efi" = "Поддержка протокола авторизации пользователя для FileVault 2.";
+
+"AppleKeyFeeder.efi" = "Поддержка клавиатур PS/2 для использования с FileVault 2.";
+
+"AppleUISupport.efi" = "Поддержка EFI Login UI для FileVault. Функционально заменяет собой драйверы AppleKeyMapAggregator, AppleEvent, AppleUITheme, FirmwareVolume и AppleImageCodec.";
+
+"AppleUITheme.efi" = "Поддержка протокола для отображения фонового изображения при использовании FileVault 2.";
+
+"AptioInputFix.efi" = "Исправляет ошибки UEFI при работе с устройствами ввода.";
+
+"AptioMemoryFix.efi" = "Исправляет ошибки памяти, имеющиеся в AMI Aptio и некоторых других UEFI.
+Можно ставить совместно с другими AptioFix, работает более приоритетный";
+
+"OcQuirks.efi" = "A drop in replacement EFI driver for Clover that replaces AptioMemoryFix and all OsxAptioFix variants.";
+
+"OpenRuntime.efi" = "Runtime dependency for OcQuirks.efi.";
+
+"AudioDxe.efi" = "Звуковой драйвер для исполнения гимна при запуске Кловера";
+
+"FirmwareVolume.efi" = "Поддержка протокола FirmwareVolume для FileVault 2.";
+
+"FSInject.efi" = "Поддержка загрузки расширений ядра из папок, расположенных вне папки EFI.";
+
+"GrubEXFAT.efi" = "Поддержка файловой системы ExFAT.";
+
+"GrubISO9660.efi" = "Поддержка файловой системы ISO 9600.";
+
+"GrubNTFS.efi" = "Поддержка файловой системы NTFS.";
+
+"GrubUDF.efi" = "Поддержка файловой системы UDF.";
+
+"SMCHelper.efi" = "Восстанавливает значения SMC ключей, выставленных FakeSMC в NVRAM при перезагрузке системы.";
+
+"XhciDxe.efi" = "Поддержка USB 3.0 для сторонних контроллеров";
+
+"AppleEvent.uefi" = "Поддержка протокола AppleEvent для FileVault 2.";
+
+"AppleGraphicsConfig.uefi" = "Поддержка протокола AppleGraphicsConfig.";
+
+"CsmVideoDxe.efi" = "Позволяет использовать большие разрешения экрана в графическом интерфейсе Clover-а.
+Драйвер основан на модуле CSM в BIOS и требует, чтобы CSM был включен. На некоторых конфигурациях Clover может не запуститься с этим драйвером или система не будет пробуждаться после сна, поэтому используйте с осторожностью.";
+
+"DataHubDxe.efi" = "Поддержка протокола DataHub, который строго необходим для запуска macOS. Обычно он присутствует (если нет, на экран будет выведено сообщение).";
+
+"EmuVariableUefi.efi" = "Драйвер для поддержки переменных NVRAM, необходимых macOS.
+Современные системы обычно имеют встроенный NVRAM. Используйте этот драйвер, если вы уверены, что встроенный NVRAM отсутствует или не работает. Либо встроенный, либо эмулируемый NVRAM строго необходимы для системы.";
+
+"EnglishDxe.efi" = "Поддержка протокола UnicodeCollation, необходимого для EFI Shell, если он отсутствует в UEFI BIOS, например H61, H67";
+
+"Fat.efi" = "Поддержка файловой системы FAT32, более корректный, чем поставляемый в некоторых UEFI BIOS";
+
+"HashServiceFix.efi" = "Функционал хеширования для тех UEFI-систем, где он отсутствует";
+
+"HFSPlus.efi" = "Поддержка файловой системы HFS+ (альтернативный драйвер).";
+
+"NvmExpressDxe.efi" = "Поддержка протоколов NVM Express для твердотельных накопителей, если отсутствует в БИОС";
+
+"OsxAptioFix3Drv.efi" = "Альтернативный драйвер (3) коррекции ошибок памяти UEFI.
+Исправляет работу с NVRAM.";
+
+"OsxAptioFixDrv.efi" = "Старый вариант коррекции ошибок памяти для AMI Aptio и некоторымх других UEFI.
+Не использовать совместно с другими AptioFix. Не поддерживает работу встроенного NVRAM.";
+
+"OsxFatBinaryDrv.efi" = "Поддержка формата FAT Binary для систем 10.9 и более ранних.";
+
+"OsxLowMemFixDrv.efi" = "Упрощенный вариант драйвера OsxAptioFix.
+Не использовать совместно с другими AptioFix.";
+
+"PartitionDxe.efi" = "Поддержка необычных схем разделов: гибрид GPT/MBR, Apple Partition Map и др.";
+
+"Ps2MouseDxe.efi" = "Драйвер для мыши PS/2.";
+
+"UsbKbDxe.efi" = "Драйвер клавиатуры USB поддержкой протокола шифрования, нужен для FileVault2, если у вас USB клавиатура.";
+
+"UsbMouseDxe.efi" = "Драйвер для мыши USB.";
+
+"VBoxExt2.efi" = "Поддержка файловых систем EXT2 и EXT3 (Linux).";
+
+"VBoxExt4.efi" = "Поддержка файловой системы EXT4 (Linux).";
+
+"VBoxHfs.efi" = "Поддержка файловой системы HFS+.";
+
+"VBoxIso9600.efi" = "Поддержка файловой системы ISO 9600 (CD-ROM).";
+
+// Plist Editor Menu
+// Clover.app Menu
+"About Clover" = "Об Утилите Clover";
+"Preferences…" = "Настройки…";
+"Services" = "Службы";
+"Hide Clover" = "Скрыть Утилиту Clover";
+"Hide Others" = "Скрыть остальные";
+"Show All" = "Показать все";
+"Quit Clover" = "Завершить Утилиту Clover";
+// File
+"New" = "New";
+"Open…" = "Открыть…";
+"Open Recent" = "Open Recent";
+"Close" = "Закрыть";
+"Page Setup…" = "Page Setup…";
+"Print…" = "Print…";
+// Edit
+"Undo" = "Отменить";
+"Redo" = "Повторить";
+"Cut" = "Вырезать";
+"Copy" = "Скопировать";
+"Paste" = "Вставить";
+"Paste and Match Style" = "Вставить и согласовать стиль";
+"Delete" = "Удалить";
+"Select All" = "Выбрать все";
+// Edit->Find
+"Edit" = "Правка";
+"File" = "Файл";
+"Find" = "Найти";
+"Find…" = "Найти…";
+"Find and Replace…" = "Найти и заменить…";
+"Find Next" = "Найти далее";
+"Find Previous" = "Найти ранее";
+"Use Selection for Find" = "Найти выбранное";
+"Use Selection for Replace" = "Использовать выделенное для замены";
+"Jump to Selection" = "Перейти к выбранному";
+// Edit->Spelling and Grammar
+"Spelling" = "Правописание";
+"Spelling and Grammar" = "Правописание и грамматика";
+"Show Spelling and Grammar" = "Показать правописание и грамматику";
+"Check Document Now" = "Проверить документ";
+"Check Spelling While Typing" = "Проверять правописание при вводе";
+"Check Grammar With Spelling" = "Проверять грамматику и правописание";
+"Correct Spelling Automatically" = "Автоматически исправлять ошибки";
+// Edit->Substitutions
+"Substitutions" = "Замены";
+"Show Substitutions" = "Показать замены";
+"Smart Copy/Paste" = "Смарт-копирование/вставка";
+"Smart Quotes" = "Смарт-кавычки";
+"Smart Dashes" = "Смарт-тире";
+"Smart Links" = "Смарт-ссылки";
+"Text Replacement" = "Замена текста";
+// Edit->Transformations
+"Transformations" = "Преобразования";
+"Make Upper Case" = "Верхний регистр";
+"Make Lower Case" = "Нижний регистр";
+"Capitalize" = "С заглавной буквы";
+// Edit->Speech
+"Speech" = "Речь";
+"Start Speaking" = "Начать";
+"Stop Speaking" = "Остановить";
+// View
+"View" = "Вид";
+"Show Toolbar" = "Показать панель инструментов";
+"Customize Toolbar…" = "Настрока панели…";
+"Show Sidebar" = "Показать боковую панель";
+// Window
+"Window" = "Окно";
+"Minimize" = "Убрать в Dock";
+"Zoom" = "Изменить масштаб";
+"Bring Clover Window to Front" = "<null>";
+"Bring All to Front" = "Все окна — на передний план";
+// Help
+"Clover Help" = "Помощь по Clover";
+
+// Plist Editor document
+"Search" = "Поиск";
+"Replace" = "Замена";
+"All" = "Все";
+"Item" = "Элемент";
+"Items" = "Элементы";
+"Untiteled" = "Без названия";
+"New Item" = "Новый элемент";
+"bytes" = "байты";
+"typing" = "ввод";
+"change type" = "сменить тип";
+"change bool value" = "сменить логическое значение";
+"replace duplicate key" = "заменить дубликат";
+"move item" = "переместить";
+"paste Item" = "вставить";
+"remove Item" = "заменить";
+"cut Item" = "вырезать";
+"add new Item" = "add new Item";
+"No data" = "Нет данных";
+"missing '<' at the beginning" = "отсутствует '<' в начале";
+"missing '>' at the end" = "отсутствует '>' в конце";
+"Your data contains illegal characters" = "Данные содержат недопустимый символ";
+"bytes count is odd, must be even" = "нечетное число байтов";
+"Keep editing" = "Продолжить";
+"Duplicate key in the Dictionary!" = "Дубликат ключа в словаре!";
+"'%@' is already present in the Dictionary. Do you want to undo the editing or replace the existing key?" = "'%@' уже присутствует в словаре. Отменить редактирование или заменить существующий ключ?";
+"Replace existing key" = "Заменить существующий";
+"Invalid value detected!" = "Неверное значение!";
+"Your edit is not valid. Do you want to restore last valid value or keep editing?" = "Ваша правка неверна. Восстановить предыдущее значение или продолжить правку?";
+
+// Plist Editor header
+"Key" = "Key";
+"Type" = "Type";
+"Value" = "Value";
+// Plist Editor tags
+"Dictionary" = "Dictionary";
+"Array" = "Array";
+"String" = "String";
+"Number" = "Number";
+"Bool" = "Bool";
+"Date" = "Date";
+"Data" = "Data";
+
+// Plist Editor Boolean values
+"YES" = "YES";
+"NO" = "NO";

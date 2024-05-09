@@ -1,0 +1,7 @@
+set lang=en =e
+search -t--inh --label -h -. ""
+submenu'{if;thefi U''' {i; then o;fi}
+smenu  'U'  {	if  ]; then o;fi}
+bmenu'U'' {	if  ]; then o;fubmenu  'U'' {	if  ]; then o;fi}
+subnu  'U' '' {	if  ]; then o;fi}
+submenu  ' '' {	i ]; the=search -int=hd2247483687, --=hd2 --ht=

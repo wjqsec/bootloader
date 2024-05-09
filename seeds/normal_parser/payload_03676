@@ -1,0 +1,3 @@
+lang=en ""
+root=hd2echo
+rmmod part_gpt

@@ -1,0 +1,4 @@
+. ""
+submenu ''{if ];then o;fi}
+submenu  'U' '' {	if  ]; then o;fi}
+u  '½°' '' {	if  ]; then o;fi}

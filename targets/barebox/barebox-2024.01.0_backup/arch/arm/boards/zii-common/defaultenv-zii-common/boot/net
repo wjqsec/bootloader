@@ -1,0 +1,29 @@
+#!/bin/sh
+
+path="/mnt/tftp"
+
+#
+# Clear seat network config. Some boards don't have that config, so
+# check that it is set first
+#
+if [ -n ${global.linux.bootargs.rdu_network} ]; then
+    global.linux.bootargs.rdu_network=
+fi
+
+global.bootm.image="${path}/${global.user}-linux-${global.hostname}"
+
+oftree="${path}/${global.user}-oftree-${global.hostname}"
+if [ -f "${oftree}" ]; then
+	global.bootm.oftree="$oftree"
+fi
+
+nfsroot="/home/${global.user}/nfsroot/${global.hostname}"
+
+ip_route_get -b ${global.net.server} global.linux.bootargs.dyn.ip
+
+initramfs="${path}/${global.user}-initramfs-${global.hostname}"
+if [ -f "${initramfs}" ]; then
+	global.bootm.initrd="$initramfs"
+else
+	global.linux.bootargs.dyn.root="root=/dev/nfs nfsroot=$nfsroot,v3,tcp"
+fi

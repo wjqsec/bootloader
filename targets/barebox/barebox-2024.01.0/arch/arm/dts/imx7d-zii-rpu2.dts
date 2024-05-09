@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+
+/*
+ * Copyright (C) 2018 Zodiac Inflight Innovations
+ */
+#include <arm/nxp/imx/imx7d-zii-rpu2.dts>
+
+#include "imx7d-ddrc.dtsi"
+
+/ {
+	aliases {
+		/*
+		 * NVMEM device corresponding to EEPROM attached to
+                 * the switch shared DT node with it, so we use that
+                 * fact to create a desirable naming
+		 */
+		switch-eeprom = &switch;
+	};
+};
+
+/* FIXME: barebox serial is broken when barebox applies requested reparenting */
+&uart2 {
+	/delete-property/ assigned-clocks;
+	/delete-property/ assigned-clock-parents;
+};
+
+&uart4 {
+	/delete-property/ assigned-clocks;
+	/delete-property/ assigned-clock-parents;
+};

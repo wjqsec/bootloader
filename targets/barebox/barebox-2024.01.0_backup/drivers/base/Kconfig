@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config PM_GENERIC_DOMAINS
+	bool
+
+config FEATURE_CONTROLLER
+	bool "Feature controller support" if COMPILE_TEST || SANDBOX
+
+source "drivers/base/regmap/Kconfig"

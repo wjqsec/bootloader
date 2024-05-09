@@ -1,0 +1,17 @@
+/ {
+	aliases {
+		mmc0 = &mmc;
+	};
+};
+
+&mmc {
+	reset-names = "reset";
+};
+
+&watchdog0 {
+	resets = <&rst L4WD0_RESET>;
+};
+
+&watchdog1 {
+	resets = <&rst L4WD1_RESET>;
+};

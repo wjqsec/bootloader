@@ -1,0 +1,126 @@
+/dts-v1/;
+
+/ {
+	model = "Sandbox";
+	compatible = "barebox,sandbox";
+
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	aliases {
+		bmode = &bmode;
+		state = &state;
+	};
+
+	chosen {
+		environment {
+			compatible = "barebox,environment";
+			device-path = &part_env;
+		};
+	};
+
+	memory {
+		device_type = "memory";
+		reg = <0 0 0 0>;
+	};
+
+	state: state {
+		magic = <0xaa3b86a6>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&part_state>;
+		backend-storage-type = "direct";
+		backend-stridesize = <64>;
+		/* suppres sandbox warnings when stickypage is missing */
+		barebox,feature-gates = <&stickypage>;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		vars {
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			x {
+				reg = <0x0 0x4>;
+				type = "uint32";
+				default = <1>;
+			};
+
+			y {
+				reg = <0x4 0x4>;
+				type = "uint32";
+				default = <3>;
+			};
+		};
+	};
+
+	stickypage: stickypage {
+		compatible = "barebox,stickypage", "syscon";
+		reg = <0 0 0 4096>;
+		barebox,cdev; /* no caching allowed */
+		barebox,feature-controller;
+		#feature-cells = <0>;
+
+		bmode: reboot-mode {
+			compatible = "nvmem-reboot-mode";
+			nvmem-cells = <&reboot_mode>;
+			nvmem-cell-names = "reboot-mode";
+
+			mode-normal = <0x000000>;
+			mode-loader = <0xbbbbbb>;
+		};
+
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			part_nvmem: nvmem@300 {
+				compatible = "nvmem-cells";
+				reg = <0x300 0x100>;
+				label = "nvmem";
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				reset_source: reset-source@0 {
+					reg = <0x0 0x1>;
+				};
+
+				reboot_mode: reboot-mode@1 {
+					reg = <0x1 0x4>;
+				};
+			};
+
+			part_env: env@400 {
+				reg = <0x400 0x800>;
+				label = "env";
+			};
+
+			part_state: state@c00 {
+				reg = <0xC00 0x400>;
+				label = "state";
+			};
+		};
+	};
+
+	power {
+		compatible = "barebox,sandbox-power";
+		nvmem-cell-names = "reset-source";
+		nvmem-cells = <&reset_source>;
+	};
+
+	watchdog {
+		compatible = "barebox,sandbox-watchdog";
+		nvmem-cell-names = "reset-source";
+		nvmem-cells = <&reset_source>;
+	};
+
+	sound {
+		compatible = "barebox,sandbox-sound";
+	};
+
+	led {
+		compatible = "barebox,sandbox-led";
+	};
+};

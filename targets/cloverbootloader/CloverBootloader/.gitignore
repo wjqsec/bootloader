@@ -1,0 +1,65 @@
+# OS X temporary files that should never be committed
+.vs
+.DS_Store
+.project
+.cproject
+.settings
+*.swp
+*.lock
+*.bak
+*~
+.cache
+/Conf
+/ConfJief
+/toolchain/
+
+
+# /FileSystems/HFSPlus/
+/FileSystems/HFSPlus/Ia32/
+/FileSystems/HFSPlus/X64/
+
+# /
+/Version.h
+
+# XCode files/directories
+*~.nib
+DerivedData/
+build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+xcuserdata/
+project.xcworkspace/
+
+# Translation files
+CloverUpdater.strings
+#CloverPackage/CloverUpdater/src/*.lproj
+CloverPrefpane.strings
+#CloverPackage/CloverPrefpane/src/*.lproj
+
+BaseTools/Source/Python/build/BuildReport.pyc
+
+CloverPackage/revision
+CloverPackage/version
+tools
+
+
+#EdkII build folder
+/Build
+
+#Eclipse build folder
+DEBUG-*/
+DEBUG_*/
+RELEASE_*/
+
+#copy I make sometimes
+*copy
+*copy [0-9]*
+
+#work in progress
+*_wip

@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if ARCH_VERSATILE
+
+config ARCH_TEXT_BASE
+	default 0x02000000
+
+config MACH_VERSATILEPB
+	bool
+	default y
+	select ARM_AMBA
+	select CLKDEV_LOOKUP
+	select CPU_ARM926T
+	select CPU_ARM1176
+
+source "arch/arm/boards/versatile/Kconfig"
+
+endif

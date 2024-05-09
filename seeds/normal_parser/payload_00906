@@ -1,0 +1,6 @@
+if [ -f ${y}v;then ""
+fi
+function t{if "$@";then i
+fi
+}
+t k 4 [ k t- [ k -1 [ k t2 [ k - [ k -1 [ k t- [ k -- [ k t1 [ k -2 [ k 6 

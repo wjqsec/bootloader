@@ -1,0 +1,33 @@
+#include <mips/qca/ar9331_tl_mr3020.dts>
+#include "ar9331.dtsi"
+
+/ {
+	aliases {
+		spiflash = &spiflash;
+	};
+
+	chosen {
+		stdout-path = &uart;
+
+		environment {
+			compatible = "barebox,environment";
+			device-path = &env_nor;
+		};
+	};
+};
+
+&spiflash {
+	partition@0 {
+		label = "barebox";
+		reg = <0 0x80000>;
+	};
+
+	env_nor: partition@80000 {
+		label = "barebox-environment";
+		reg = <0x80000 0x10000>;
+	};
+};
+
+&eth0 {
+	status = "okay";
+};

@@ -1,0 +1,206 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+ * Copyright 2010-2011 Picochip Ltd., Jamie Iles
+ * http://www.picochip.com
+ *
+ * This file implements a driver for the Synopsys DesignWare watchdog device
+ * in the many subsystems. The watchdog has 16 different timeout periods
+ * and these are a function of the input clock frequency.
+ *
+ * The DesignWare watchdog cannot be stopped once it has been started so we
+ * do not implement a stop function. The watchdog core will continue to send
+ * heartbeat requests after the watchdog device has been closed.
+ */
+
+#include <common.h>
+#include <init.h>
+#include <io.h>
+#include <of.h>
+#include <restart.h>
+#include <watchdog.h>
+#include <linux/clk.h>
+#include <linux/err.h>
+#include <linux/reset.h>
+
+#define WDOG_CONTROL_REG_OFFSET		    0x00
+#define WDOG_CONTROL_REG_WDT_EN_MASK	    0x01
+#define WDOG_TIMEOUT_RANGE_REG_OFFSET	    0x04
+#define WDOG_TIMEOUT_RANGE_TOPINIT_SHIFT    4
+#define WDOG_CURRENT_COUNT_REG_OFFSET	    0x08
+#define WDOG_COUNTER_RESTART_REG_OFFSET     0x0c
+#define WDOG_COUNTER_RESTART_KICK_VALUE	    0x76
+
+/* The maximum TOP (timeout period) value that can be set in the watchdog. */
+#define DW_WDT_MAX_TOP		15
+
+#define DW_WDT_DEFAULT_SECONDS	30
+
+struct dw_wdt {
+	void __iomem		*regs;
+	struct restart_handler	restart;
+	struct watchdog		wdd;
+	struct reset_control	*rst;
+	unsigned int		rate;
+};
+
+#define to_dw_wdt(wdd)	container_of(wdd, struct dw_wdt, wdd)
+
+static inline int dw_wdt_top_in_seconds(struct dw_wdt *dw_wdt, unsigned top)
+{
+	/*
+	 * There are 16 possible timeout values in 0..15 where the number of
+	 * cycles is 2 ^ (16 + i) and the watchdog counts down.
+	 */
+	return (1U << (16 + top)) / dw_wdt->rate;
+}
+
+static int dw_wdt_start(struct watchdog *wdd)
+{
+	struct dw_wdt *dw_wdt = to_dw_wdt(wdd);
+
+	writel(WDOG_CONTROL_REG_WDT_EN_MASK,
+	       dw_wdt->regs + WDOG_CONTROL_REG_OFFSET);
+
+	return 0;
+}
+
+static int dw_wdt_stop(struct watchdog *wdd)
+{
+	struct dw_wdt *dw_wdt = to_dw_wdt(wdd);
+
+	if (!dw_wdt->rst) {
+		dev_warn(dw_wdt->wdd.hwdev, "No reset line\n");
+		return -ENOSYS;
+	}
+
+	reset_control_assert(dw_wdt->rst);
+	reset_control_deassert(dw_wdt->rst);
+
+	return 0;
+}
+
+static int dw_wdt_set_timeout(struct watchdog *wdd, unsigned int top_s)
+{
+	struct dw_wdt *dw_wdt = to_dw_wdt(wdd);
+	int i, top_val = DW_WDT_MAX_TOP;
+
+	if (top_s == 0)
+		return dw_wdt_stop(wdd);
+
+	/*
+	 * Iterate over the timeout values until we find the closest match. We
+	 * always look for >=.
+	 */
+	for (i = 0; i <= DW_WDT_MAX_TOP; ++i) {
+		if (dw_wdt_top_in_seconds(dw_wdt, i) >= top_s) {
+			top_val = i;
+			break;
+		}
+	}
+
+	/*
+	 * Set the new value in the watchdog.  Some versions of dw_wdt
+	 * have have TOPINIT in the TIMEOUT_RANGE register (as per
+	 * CP_WDT_DUAL_TOP in WDT_COMP_PARAMS_1).  On those we
+	 * effectively get a pat of the watchdog right here.
+	 */
+	writel(top_val | top_val << WDOG_TIMEOUT_RANGE_TOPINIT_SHIFT,
+	       dw_wdt->regs + WDOG_TIMEOUT_RANGE_REG_OFFSET);
+
+	writel(WDOG_COUNTER_RESTART_KICK_VALUE,
+	       dw_wdt->regs + WDOG_COUNTER_RESTART_REG_OFFSET);
+
+	dw_wdt_start(wdd);
+
+	return 0;
+}
+
+static void __noreturn dw_wdt_restart_handle(struct restart_handler *rst)
+{
+	struct dw_wdt *dw_wdt;
+
+	dw_wdt = container_of(rst, struct dw_wdt, restart);
+
+	dw_wdt->wdd.set_timeout(&dw_wdt->wdd, -1);
+
+	mdelay(1000);
+
+	hang();
+}
+
+static int dw_wdt_drv_probe(struct device *dev)
+{
+	struct watchdog *wdd;
+	struct dw_wdt *dw_wdt;
+	struct resource *mem;
+	struct clk *clk;
+	int ret;
+
+	dw_wdt = xzalloc(sizeof(*dw_wdt));
+
+	mem = dev_request_mem_resource(dev, 0);
+	if (IS_ERR(mem))
+		return PTR_ERR(mem);
+
+	dw_wdt->regs = IOMEM(mem->start);
+
+	clk = clk_get(dev, NULL);
+	if (IS_ERR(clk))
+		return PTR_ERR(clk);
+
+	ret = clk_enable(clk);
+	if (ret)
+		return ret;
+
+	dw_wdt->rst = reset_control_get(dev, NULL);
+	if (IS_ERR(dw_wdt->rst))
+		return PTR_ERR(dw_wdt->rst);
+
+	dw_wdt->rate = clk_get_rate(clk);
+	if (dw_wdt->rate == 0)
+		return -EINVAL;
+
+	wdd = &dw_wdt->wdd;
+	wdd->name = "dw_wdt";
+	wdd->hwdev = dev;
+	wdd->set_timeout = dw_wdt_set_timeout;
+	wdd->timeout_max = dw_wdt_top_in_seconds(dw_wdt, DW_WDT_MAX_TOP);
+
+	wdd->running = readl(dw_wdt->regs + WDOG_CONTROL_REG_OFFSET) &
+		WDOG_CONTROL_REG_WDT_EN_MASK ? WDOG_HW_RUNNING : WDOG_HW_NOT_RUNNING;
+
+	ret = watchdog_register(wdd);
+	if (ret)
+		goto out_disable_clk;
+
+	dw_wdt->restart.name = "dw_wdt";
+	dw_wdt->restart.restart = dw_wdt_restart_handle;
+
+	ret = restart_handler_register(&dw_wdt->restart);
+	if (ret)
+		dev_warn(dev, "cannot register restart handler\n");
+
+	if (dw_wdt->rst)
+		reset_control_deassert(dw_wdt->rst);
+	else
+		dev_dbg(dev, "No reset lines. Will not be able to stop once started.\n");
+
+	return 0;
+
+out_disable_clk:
+	clk_disable(clk);
+	return ret;
+}
+
+static struct of_device_id dw_wdt_of_match[] = {
+	{ .compatible = "snps,dw-wdt", },
+	{ /* sentinel */ }
+};
+MODULE_DEVICE_TABLE(of, dw_wdt_of_match);
+
+static struct driver dw_wdt_driver = {
+	.name		= "dw-wdt",
+	.probe		= dw_wdt_drv_probe,
+	.of_compatible	= DRV_OF_COMPAT(dw_wdt_of_match),
+};
+device_platform_driver(dw_wdt_driver);

@@ -1,0 +1,3 @@
+set lang=en 
+terminal_output console nsmod
+!

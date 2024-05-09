@@ -1,0 +1,16 @@
+function X{if "";then
+6
+fi
+}
+function f{if "";then if "";then if "";then if "";then
+""
+fi
+fi
+fi;fi
+}
+function r{if "";then if "";then s;fi;fi
+}
+function s{if "";then
+""
+fi
+}

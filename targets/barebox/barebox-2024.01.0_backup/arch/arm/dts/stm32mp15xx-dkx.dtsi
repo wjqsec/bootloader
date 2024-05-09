@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2018 - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com>.
+ */
+
+#include "stm32mp151.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	chosen {
+		environment {
+			compatible = "barebox,environment";
+			device-path = &sdmmc1, "partname:barebox-environment";
+		};
+	};
+};
+
+&{/led} {
+	led-red {
+		label = "error";
+		gpios = <&gpioa 13 GPIO_ACTIVE_LOW>;
+		default-state = "off";
+		status = "okay";
+	};
+};
+
+&{/led/led-blue} {
+	default-state = "on";
+};

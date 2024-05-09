@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+obj-y	+= clk.o
+obj-y	+= clk-divider.o
+obj-y	+= clk-periph.o
+obj-y	+= clk-pll.o
+obj-y	+= clk-pll-out.o
+
+obj-$(CONFIG_ARCH_TEGRA_2x_SOC)		+= clk-tegra20.o
+obj-$(CONFIG_ARCH_TEGRA_3x_SOC)		+= clk-tegra30.o
+obj-$(CONFIG_ARCH_TEGRA_124_SOC)	+= clk-tegra124.o

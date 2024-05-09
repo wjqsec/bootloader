@@ -1,0 +1,28 @@
+# visual
+insmod font
+if loadfont unicode ; then
+    if keystatus --shift ; then true ; else
+        if [ "${grub_platform}" == "efi" ]; then
+            insmod efi_gop
+            insmod efi_uga
+        else
+            insmod vbe
+            insmod vga
+        fi
+        insmod gfxterm
+        set gfxmode=1024x768
+        set gfxpayload=auto
+        terminal_output gfxterm
+        if terminal_output gfxterm ; then true ; else
+            terminal gfxterm
+        fi
+        insmod gfxmenu
+        loadfont ${prefix}/themes/${theme_name}/Sans-10.pf2
+        loadfont ${prefix}/themes/${theme_name}/Sans-12.pf2
+        loadfont ${prefix}/themes/${theme_name}/Sans-14.pf2
+        insmod png
+
+        set theme=${prefix}/themes/${theme_name}/theme.txt
+        export theme
+    fi
+fi

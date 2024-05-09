@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+barebox_default_env*
+barebox_zero_env
+defaultenv-2-ikconfig/

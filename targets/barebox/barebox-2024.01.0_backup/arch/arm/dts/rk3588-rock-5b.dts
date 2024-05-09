@@ -1,0 +1,93 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+
+/dts-v1/;
+
+#include <arm64/rockchip/rk3588-rock-5b.dts>
+#include "rk3588.dtsi"
+#include <dt-bindings/pinctrl/rockchip.h>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	aliases {
+		mmc1 = &sdmmc;
+	};
+
+	chosen: chosen {
+		environment-emmc {
+			compatible = "barebox,environment";
+			device-path = &environment_emmc;
+			status = "disabled";
+		};
+
+		environment-sd {
+			compatible = "barebox,environment";
+			device-path = &environment_sd;
+			status = "disabled";
+		};
+	};
+};
+
+&sdhci {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <2>;
+		#size-cells = <2>;
+
+		environment_emmc: partition@408000 {
+			label = "barebox-environment";
+			reg = <0x0 0x408000 0x0 0x8000>;
+		};
+	};
+};
+
+&sdmmc {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <2>;
+		#size-cells = <2>;
+
+		environment_sd: partition@408000 {
+			label = "barebox-environment";
+			reg = <0x0 0x408000 0x0 0x8000>;
+		};
+	};
+};
+
+&pcie3x4 {
+	/* Does not work in barebox (missing phy driver) */
+	status = "disabled";
+};
+
+&pcie30phy {
+	status = "disabled";
+};
+
+&pcie2x1l2 {
+	/*
+	 * Originally in upstream dts this is:
+	 * ranges = <0x01000000 0x0 0xf4100000 0x0 0xf4100000 0x0 0x00100000>,
+	 *          <0x02000000 0x0 0xf4200000 0x0 0xf4200000 0x0 0x00e00000>,
+	 *          <0x03000000 0x0 0x40000000 0xa 0x00000000 0x0 0x40000000>;
+	 *
+	 * Overwriting this shouldn't be necessary, but without it PCI doesn't
+	 * work. We have some deficiency in the PCI driver that causes this.
+	 */
+	ranges = <0x01000000 0x0 0xf4100000 0x0 0xf4100000 0x0 0x00100000>,
+		 <0x02000000 0x0 0xf4200000 0x0 0xf4200000 0x0 0x00e00000>,
+		 <0x03000000 0xa 0x00000000 0xa 0x00000000 0x0 0x40000000>;
+};
+
+&pcie2x1l0 {
+	/* Does not work in barebox */
+	status = "disabled";
+};
+
+&usb_host0_ehci {
+	/* Does not work in barebox (missing phy driver) */
+	status = "disabled";
+};
+
+&usb_host1_ehci {
+	/* Does not work in barebox (missing phy driver) */
+	status = "disabled";
+};

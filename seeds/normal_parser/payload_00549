@@ -1,0 +1,12 @@
+if [ ${y};then ${y}
+elif g;then v
+fi
+if [ "${y}";then ""
+fi
+if [ "";then
+""
+fi
+export n
+if [ "";then ""
+fi
+u

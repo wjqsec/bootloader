@@ -1,0 +1,9 @@
+*.o
+*.img
+*.bin
+*.efi
+src/boot
+src/mnt
+src/easyboot
+src/misc/plgld
+src/misc/testfs

@@ -1,0 +1,7 @@
+if [ -f ${y}v;then ""
+fi
+function t{if lang=en ""
+s g$*;then i
+fi
+}
+t [ lang=en[ x -ne 

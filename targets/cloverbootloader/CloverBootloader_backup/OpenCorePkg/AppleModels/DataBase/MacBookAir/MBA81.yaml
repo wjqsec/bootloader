@@ -1,0 +1,139 @@
+BIOSVendor: "Apple Inc."
+BIOSVersion: "2020.41.1.0.0"
+BIOSLegacyVersion: "MBA81.88Z.F000.B00.2310052024"
+BIOSReleaseDate: "10/05/2023"
+SystemManufacturer: "Apple Inc."
+SystemProductName: "MacBookAir8,1"
+SystemVersion: "1.0"
+# Note, this one is used by macserial
+SystemSerialNumber: "C02XG1D8JK78"
+SystemSKUNumber: ""
+SystemFamily: "MacBook Air"
+BoardManufacturer: "Apple Inc."
+# This and similar ones can be an array itself, like this:
+# BoardProduct:
+#  "Mac-827FAC58A8FDFA22"
+#  "Mac-smthelse"
+BoardProduct: "Mac-827FAC58A8FDFA22"
+BoardVersion: "MacBookAir8,1"
+BoardRevision: 0x3
+BoardAssetTag: ""
+BoardType: 0xA
+BoardLocationInChassis: ""
+ChassisManufacturer: "Apple Inc."
+ChassisType: 0x9
+ChassisVersion: "Mac-827FAC58A8FDFA22"
+ChassisAssetTag: ""
+PlatformFeature: 0x3A
+FirmwareFeatures: 0xFD8FF42E
+FirmwareFeaturesMask: 0xFF9FFF3F
+ExtendedFirmwareFeatures: 0x00000008FD8FF42E
+ExtendedFirmwareFeaturesMask: 0x00000008FF9FFF3F
+MemoryFormFactor: 0xD
+# FIXME: Correct this one
+ProcessorType:
+  - 0x0601
+# FIXME: Correct this one
+ProcessorBusSpeed:
+  - 12345
+SmcGeneration: 3
+SmcPlatform:
+  - 0x6a
+  - 0x31
+  - 0x34
+  - 0x30
+  - 0x6b
+  - 0x00
+  - 0x00
+  - 0x00
+OEMStrings: |-
+  Apple ROM Version
+    BIOS ID:      MBA81.88Z.F000.B00.2310052024
+    Model:        MBA81
+    EFI Version:  2020.41.1.0.0
+    Built by:     root@jn5v5
+    Date:         Thu Oct  5 20:24:11 2023
+    Revision:     2020.41.1 (B&I)
+    ROM Version:  F000_B00
+    Build Type:   Official Build, RELEASE
+    Compiler:     clang-1500.0.37.1
+    UUID:         B0E02EA2-9239-3CFB-B7EA-CD2E0161D5E3
+    UUID:         D6252674-B768-3F51-A15E-0D4789F1E909
+Specifications:
+  CPUCodename:
+    - "Amber Lake Y"
+  CPU:
+    - "Intel Core i5-8210Y @ 1.60 GHz"
+  GPU:
+    - "Intel UHD 617"
+  RAM:
+    - "8GB 2133 MHz LPDDR3 SDRAM"
+  SystemReportName:
+    - "MacBook Air (Retina, 13-inch, 2018)"
+  MarketingName:
+    # FIXME
+    - "MacBook Air (Retina, 13-inch, 2018)"
+# Note, first model code is used by macserial
+AppleModelCode:
+  - "JK78"
+  - "JK77"
+  - "JK7C"
+  - "JK7D"
+  - "JK7F"
+  - "JK7G"
+  - "JK7L"
+  - "JK7M"
+  - "JK7P"
+  - "JK7Q"
+  - "JK7R"
+  - "JK7T"
+  - "LQDD"
+  - "LR0X"
+  - "LLDP"
+  - "LR0Y"
+  - "LLDQ"
+  - "LLDN"
+  - "MCKR"
+  - "MCKT"
+  - "LK88"
+  - "LK87"
+  - "LK86"
+  - "MCKP"
+  - "MCKQ"
+  - "LQDC"
+# Note, first board code is used by macserial
+AppleBoardCode:
+  - "KN2R"
+  - "KN7H"
+  - "KN7V"
+  - "KN86"
+  - "KN8M"
+  - "KN34"
+  - "KN3J"
+  - "KN3Y"
+  - "KMXD"
+  - "KMXQ"
+  - "KMY4"
+  - "KMYH"
+  - "KNDX"
+  - "KNF8"
+  - "KN9P"
+  - "KNC2"
+  - "KNCF"
+  - "KNCR"
+  - "KN5C"
+  - "KN5P"
+  - "KN62"
+  - "KN6F"
+  - "KN0L"
+  - "KN0Y"
+  - "KN19"
+  - "KN1N"
+  - "KNGC"
+# Note, first year is used by macserial
+AppleModelYear:
+  - 2018
+  - 2019
+MinimumOSVersion: "10.14.1"
+MaximumOSVersion: null
+AppleModelId: "J140K"

@@ -1,0 +1,4 @@
+set lang=en [ + lt eo	od gset ngn $em
+$ense
+terminal_output console
+rmmod geexebug=a $Z $Q $3debug=smodset lang=en

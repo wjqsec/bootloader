@@ -1,0 +1,730 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if ARCH_AT91
+
+config HAVE_AT91_UTMI
+	bool
+
+config HAVE_AT91_USB_CLK
+	bool
+
+config COMMON_CLK_AT91
+	bool
+	select COMMON_CLK
+	select MFD_SYSCON
+
+config MACH_AT91SAM9263EK_DT
+	def_bool y
+	depends on MACH_AT91SAM9263EK && OFDEVICE
+	help
+	  Enabled for at91sam9263ek - evaluation kit.
+	  But only if we need the device tree (bootstrap do not use DT)
+
+config HAVE_AT91_SMD
+	bool
+
+config HAVE_AT91_H32MX
+	bool
+
+config HAVE_AT91_GENERATED_CLK
+	bool
+
+# Select if board support bootstrap
+config HAVE_AT91_BOOTSTRAP
+	bool
+
+config HAVE_AT91_AUDIO_PLL
+	bool
+
+config HAVE_AT91_I2S_MUX_CLK
+	bool
+
+config HAVE_AT91_SAM9X60_PLL
+	bool
+
+config HAVE_AT91_SDRAMC
+	bool
+
+config HAVE_AT91_DDRAMC
+	bool
+
+config AT91_MCI_PBL
+	def_bool MCI_ATMEL_PBL || MCI_ATMEL_SDHCI_PBL
+
+# Select if board uses the common at91sam926x_board_init
+config AT91SAM926X_BOARD_INIT
+	bool
+
+config AT91SAM9_SMC
+	bool
+
+config HAVE_AT91SAM9_RST
+	bool
+
+config SOC_AT91SAM9
+	bool
+	select CPU_ARM926T
+	select AT91SAM9_SMC
+	select CLOCKSOURCE_ATMEL_PIT
+	select PINCTRL
+	select HAVE_AT91SAM9_RST
+	select HAVE_AT91_SMD
+	select HAVE_AT91_USB_CLK
+	select HAVE_AT91_UTMI
+	select PINCTRL_AT91
+
+config SOC_SAMA5
+	bool
+	select HAVE_AT91SAM9_RST
+	select CPU_V7
+
+config SOC_SAMA5_MULTI
+	def_bool SOC_SAMA5 && AT91_MULTI_BOARDS
+
+config SOC_SAMA5D2
+	bool
+	select SOC_SAMA5
+	select AT91SAM9_SMC
+	select CLOCKSOURCE_ATMEL_PIT
+	select HAVE_AT91_H32MX
+	select HAVE_AT91_UTMI
+	select HAVE_AT91_USB_CLK
+	select HAVE_AT91_GENERATED_CLK
+	select PINCTRL
+	select HAVE_AT91_AUDIO_PLL
+	select HAVE_AT91_I2S_MUX_CLK
+	select PINCTRL_AT91PIO4
+	select HAS_MACB
+	select HAVE_AT91_DDRAMC
+
+config SOC_SAMA5D3
+	bool
+	select SOC_SAMA5
+	select AT91SAM9_SMC
+	select CLOCKSOURCE_ATMEL_PIT
+	select HAVE_AT91_SMD
+	select HAVE_AT91_USB_CLK
+	select HAVE_AT91_UTMI
+	select PINCTRL_AT91
+	select HAS_MACB
+	select HAVE_AT91_DDRAMC
+
+config SOC_SAMA5D4
+	bool
+	select SOC_SAMA5
+	select AT91SAM9_SMC
+	select CLOCKSOURCE_ATMEL_PIT
+	select HAVE_AT91_H32MX
+	select HAVE_AT91_SMD
+	select HAVE_AT91_USB_CLK
+	select HAVE_AT91_UTMI
+	select PINCTRL_AT91
+	select HAS_MACB
+	select HAVE_AT91_DDRAMC
+
+config SOC_SAM9X60
+	bool
+	select CPU_ARM926T
+	select HAVE_AT91_USB_CLK
+	select HAVE_AT91_GENERATED_CLK
+	select HAVE_AT91_SAM9X60_PLL
+	select PINCTRL_AT91
+
+config ARCH_TEXT_BASE
+	hex
+	default 0x73f00000 if SOC_AT91SAM9G45
+	default 0x26f00000 if SOC_AT91SAM9X5
+	default 0x20f00000 if SOC_AT91RM9200
+	default 0x21f00000 if MACH_ANIMEO_IP
+	default 0x23f00000
+
+config HAVE_NAND_ATMEL_BUSWIDTH_16
+	bool
+
+config HAVE_AT91_DATAFLASH_CARD
+	bool
+
+config HAVE_AT91_LOAD_BAREBOX_SRAM
+	bool
+
+comment "Atmel AT91 System-on-Chip"
+
+config SOC_AT91RM9200
+	bool
+	select CPU_ARM920T
+	select HAS_AT91_ETHER
+	select HAVE_AT91_USB_CLK
+	select PINCTRL_AT91
+
+config SOC_AT91SAM9260
+	bool
+	select SOC_AT91SAM9
+	select HAS_MACB
+	select PINCTRL_AT91
+	help
+	  Select this if you are using one of Atmel's AT91SAM9260, AT91SAM9XE
+	  or AT91SAM9G20 SoC.
+
+config SOC_AT91SAM9261
+	bool
+	select SOC_AT91SAM9
+	select PINCTRL_AT91
+	select HAVE_AT91_LOAD_BAREBOX_SRAM
+	help
+	  Select this if you are using one of Atmel's AT91SAM9261 or AT91SAM9G10 SoC.
+
+config SOC_AT91SAM9263
+	bool
+	select SOC_AT91SAM9
+	select HAS_MACB
+	select HAVE_AT91_LOAD_BAREBOX_SRAM
+	select PINCTRL_AT91
+
+config SOC_AT91SAM9G45
+	bool
+	select SOC_AT91SAM9
+	select HAS_MACB
+	select PINCTRL_AT91
+	help
+	  Select this if you are using one of Atmel's AT91SAM9G45 family SoC.
+	  This support covers AT91SAM9G45, AT91SAM9G46, AT91SAM9M10 and AT91SAM9M11.
+
+config SOC_AT91SAM9X5
+	bool
+	select SOC_AT91SAM9
+	select HAS_MACB
+	select COMMON_CLK_OF_PROVIDER
+	select PINCTRL_AT91
+	select OFDEVICE
+	help
+	  Select this if you are using one of Atmel's AT91SAM9x5 family SoC.
+	  This means that your SAM9 name finishes with a '5' (except if it is
+	  AT91SAM9G45!).
+	  This support covers AT91SAM9G15, AT91SAM9G25, AT91SAM9X25, AT91SAM9G35
+	  and AT91SAM9X35.
+
+config SOC_AT91SAM9N12
+	bool
+	select SOC_AT91SAM9
+	select PINCTRL_AT91
+	help
+	  Select this if you are using Atmel's AT91SAM9N12 SoC.
+
+config SUPPORT_CALAO_DAB_MMX
+	bool
+
+config SUPPORT_CALAO_MOB_TNY_MD2
+	bool
+
+if !AT91_MULTI_BOARDS
+
+# ----------------------------------------------------------
+
+choice
+	prompt "Atmel AT91 Processor"
+	help
+	  Select here which SoC to support in non-multi-image configurations
+
+config ARCH_AT91RM9200
+	bool "AT91RM9200"
+	select SOC_AT91RM9200
+
+config ARCH_AT91SAM9260
+	bool "AT91SAM9260"
+	select SOC_AT91SAM9260
+
+config ARCH_AT91SAM9261
+	bool "AT91SAM9261"
+	select SOC_AT91SAM9261
+
+config ARCH_AT91SAM9263
+	bool "AT91SAM9263"
+	select SOC_AT91SAM9263
+
+config ARCH_AT91SAM9G10
+	bool "AT91SAM9G10"
+	select SOC_AT91SAM9261
+
+config ARCH_AT91SAM9G20
+	bool "AT91SAM9G20"
+	select SOC_AT91SAM9260
+
+config ARCH_AT91SAM9G45
+	bool "AT91SAM9G45 or AT91SAM9M10"
+	select SOC_AT91SAM9G45
+
+config ARCH_AT91SAM9X5
+	bool "AT91SAM9X5"
+	select SOC_AT91SAM9X5
+
+config ARCH_AT91SAM9N12
+	bool "AT91SAM9N12"
+	select SOC_AT91SAM9N12
+
+config ARCH_SAMA5D3
+	bool "SAMA5D3x"
+	select SOC_SAMA5D3
+
+config ARCH_SAMA5D4
+	bool "SAMA5D4"
+	select SOC_SAMA5D4
+
+endchoice
+
+config ARCH_BAREBOX_MAX_BARE_INIT_SIZE
+	hex
+	default 0x1000 if ARCH_AT91SAM9260
+	default 0x27000 if ARCH_AT91SAM9261
+	default 0x12000 if ARCH_AT91SAM9263
+	default 0x4000 if ARCH_AT91SAM9G20
+	default 0x3000 if ARCH_AT91SAM9G10
+	default 0xF000 if ARCH_AT91SAM9G45
+	default 0x6000 if ARCH_AT91SAM9X5
+	default 0x6000 if ARCH_AT91SAM9N12
+	default 0x6000 if ARCH_SAMA5D3
+	default 0xffffffff
+
+if ARCH_AT91RM9200
+
+choice
+	prompt "AT91RM9200 Board Type"
+
+config MACH_AT91RM9200EK
+	bool "Atmel AT91RM9200-EK Evaluation Kit"
+	select HAVE_AT91_DATAFLASH_CARD
+	help
+	  Select this if you are using Atmel's AT91RM9200-EK Evaluation Kit.
+	  <http://www.atmel.com/dyn/products/tools_card.asp?tool_id=3507>
+
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_AT91SAM9260
+
+choice
+	prompt "AT91SAM9260 Board Type"
+
+config MACH_ANIMEO_IP
+	bool "Somfy Animeo IP"
+	depends on !CONSOLE_NONE
+
+config MACH_AT91SAM9260EK
+	bool "Atmel AT91SAM9260-EK"
+	select HAVE_NAND_ATMEL_BUSWIDTH_16
+	help
+	  Say y here if you are using Atmel's AT91SAM9260-EK Evaluation board
+
+config MACH_QIL_A9260
+	bool "CALAO QIL-A9260 board"
+	help
+	  Select this if you are using a Calao Systems QIL-A9260 Board.
+	  <http://www.calao-systems.com>
+
+config MACH_TNY_A9260
+	bool "CALAO TNY-A9260"
+	select SUPPORT_CALAO_MOB_TNY_MD2
+	help
+	  Select this if you are using a Calao Systems TNY-A9260.
+	  <http://www.calao-systems.com>
+
+config MACH_USB_A9260
+	bool "CALAO USB-A9260"
+	select SUPPORT_CALAO_DAB_MMX
+	help
+	  Select this if you are using a Calao Systems USB-A9260.
+	  <http://www.calao-systems.com>
+
+config MACH_GE863
+	bool "Telit EVK-PRO3"
+	help
+	  Say y here if you are using Telit EVK-PRO3 with GE863-PRO3
+	  <http://www.telit.com>
+
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_AT91SAM9261
+
+choice
+	prompt "AT91SAM9261 Board Type"
+
+config MACH_AT91SAM9261EK
+	bool "Atmel AT91SAM9261-EK Evaluation Kit"
+	select HAS_DM9000
+	select HAVE_AT91_DATAFLASH_CARD
+	select HAVE_NAND_ATMEL_BUSWIDTH_16
+	select HAVE_AT91_BOOTSTRAP
+	select AT91SAM926X_BOARD_INIT
+	help
+	  Select this if you are using Atmel's AT91SAM9261-EK Evaluation Kit.
+	  <http://www.atmel.com/dyn/products/tools_card.asp?tool_id=3820>
+
+config MACH_PM9261
+	bool "Ronetix PM9261"
+	select HAS_DM9000
+	select HAVE_AT91_BOOTSTRAP
+	select AT91SAM926X_BOARD_INIT
+	help
+	  Say y here if you are using the Ronetix PM9261 Board
+
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_AT91SAM9G10
+
+choice
+	prompt "AT91SAM9G10 Board Type"
+
+config MACH_AT91SAM9G10EK
+	bool "Atmel AT91SAM9G10-EK Evaluation Kit"
+	select HAVE_NAND_ATMEL_BUSWIDTH_16
+	select HAS_DM9000
+	help
+	  Select this if you are using Atmel's AT91SAM9G10-EK Evaluation Kit.
+	  <http://www.atmel.com/dyn/products/tools_card.asp?tool_id=4588>
+
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_AT91SAM9G20
+
+choice
+	prompt "AT91SAM9G20 Board Type"
+
+config MACH_AT91SAM9G20EK
+	bool "Atmel AT91SAM9G20-EK Evaluation Kit"
+	select HAVE_NAND_ATMEL_BUSWIDTH_16
+	help
+	  Select this if you are using Atmel's AT91SAM9G20-EK Evaluation Kit
+	  that embeds only one SD/MMC slot.
+
+config MACH_TNY_A9G20
+	select SUPPORT_CALAO_MOB_TNY_MD2
+	bool "CALAO TNY-A9G20"
+	help
+	  Select this if you are using a Calao Systems TNY-A9G20.
+	  <http://www.calao-systems.com>
+
+config MACH_USB_A9G20
+	bool "CALAO USB-A9G20"
+	select SUPPORT_CALAO_DAB_MMX
+	help
+	  Select this if you are using a Calao Systems USB-A9G20.
+	  <http://www.calao-systems.com>
+
+config MACH_DSS11
+	bool "aizo dSS11"
+	select HAVE_NAND_ATMEL_BUSWIDTH_16
+	help
+	  Select this if you are using aizo dSS11
+	  that embeds only one SD/MMC slot.
+
+config MACH_QIL_A9G20
+	bool "CALAO QIL-A9G20 board"
+	help
+	  Select this if you are using a Calao Systems QIL-A9G20 Board.
+	  <http://www.calao-systems.com>
+
+config MACH_HABA_KNX_LITE
+	bool "CALAO HABA-KNX-LITE"
+	help
+	  Select this if you are using a Calao Systems HABA-KNX-LITE.
+	  <http://www.calao-systems.com>
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_AT91SAM9263
+
+choice
+	prompt "AT91SAM9263 Board Type"
+
+config MACH_PM9263
+	bool "Ronetix PM9263"
+	select HAVE_AT91_BOOTSTRAP
+	select AT91SAM926X_BOARD_INIT
+	help
+	  Say y here if you are using the Ronetix PM9263 Board
+
+config MACH_TNY_A9263
+	bool "CALAO TNY-A9263"
+	select SUPPORT_CALAO_MOB_TNY_MD2
+	select HAVE_AT91_BOOTSTRAP
+	select AT91SAM926X_BOARD_INIT
+	help
+	  Select this if you are using a Calao Systems TNY-A9263.
+	  <http://www.calao-systems.com>
+
+config MACH_USB_A9263
+	bool "CALAO USB-A9263"
+	select HAVE_AT91_BOOTSTRAP
+	select AT91SAM926X_BOARD_INIT
+	help
+	  Select this if you are using a Calao Systems USB-A9263.
+	  <http://www.calao-systems.com>
+
+endchoice
+
+endif
+
+if ARCH_AT91SAM9G45
+
+choice
+	prompt "AT91SAM9G45 or AT91SAM9M10 Board Type"
+
+config MACH_AT91SAM9M10IHD
+	bool "Atmel AT91SAM9M10IDH Tablet"
+	help
+	  Select this if you are using Atmel's AT91SAM9M10IHD Tablet
+
+config MACH_AT91SAM9M10G45EK
+	bool "Atmel AT91SAM9M10G45-EK Evaluation Kit"
+	select HAVE_NAND_ATMEL_BUSWIDTH_16
+	help
+	  Select this if you are using Atmel's AT91SAM9M10G45-EK Evaluation Kit
+	  or AT91SAM9G45-EKES or AT91SAM9M10-EKES (for those 2 select the LG LCD)
+	  <http://atmel.com/dyn/products/tools_card_v2.asp?tool_id=4735>
+
+config MACH_PM9G45
+	bool "Ronetix PM9G45"
+	help
+	  Say y here if you are using the Ronetix PM9G45 Board
+
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_AT91SAM9N12
+
+choice
+	prompt "AT91SAM9N12 Board Type"
+
+config MACH_AT91SAM9N12EK
+	bool "Atmel AT91SAM9N12 Evaluation Kit"
+	help
+	  Select this if you are using Atmel's AT91SAM9N12-EK Evaluation Kit.
+
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_SAMA5D3
+
+choice
+	prompt "SAMA5D3 Board Type"
+
+config MACH_SAMA5D3XEK
+	bool "Atmel SAMA5D3X Evaluation Kit"
+	help
+	  Select this if you are using Atmel's SAMA5D3X-EK Evaluation Kit.
+
+endchoice
+
+endif
+
+# ----------------------------------------------------------
+
+if ARCH_SAMA5D4
+
+choice
+	prompt "SAMA5D4 Board Type"
+
+config MACH_SAMA5D4EK
+	bool "Atmel SAMA5D4 Evaluation Kit"
+	help
+	  Select this if you are using Atmel's SAMA5D4-EK Evaluation Kit.
+
+config MACH_SAMA5D4_XPLAINED
+	bool "Atmel SAMA5D4 XPLAINED ULTRA Evaluation Kit"
+	help
+	  Select this if you are using Atmel's SAMA5D4_XPLAINED ULTRA Evaluation Kit.
+
+endchoice
+
+endif
+endif
+
+# ----------------------------------------------------------
+
+
+config AT91_MULTI_BOARDS
+	bool "Allow multiple boards to be selected"
+	select ARM_USE_COMPRESSED_DTB
+
+if AT91_MULTI_BOARDS
+
+config MACH_CALAO
+	bool "CALAO DT-enabled boards (TNY/USB-A9260/A9G20)"
+	select SOC_AT91SAM9260
+	select OFDEVICE
+	select COMMON_CLK_OF_PROVIDER
+	select HAVE_AT91_SDRAMC
+	help
+	  Select this if you are using a device tree enabled board
+	  from Calao Systems: TNY-A9260, TNY-A9G20, USB-A9260 or USB-A9G20.
+
+config MACH_SKOV_ARM9CPU
+	bool "SKOV ARM9 CPU"
+	select SOC_AT91SAM9263
+	select OFDEVICE
+	select COMMON_CLK_OF_PROVIDER
+	select HAVE_AT91_USB_CLK
+	select HAVE_AT91_BOOTSTRAP
+	select AT91SAM926X_BOARD_INIT
+	help
+	  Say y here if you are using SKOV's ARM9 CPU board
+
+config MACH_AT91SAM9263EK
+	bool "Atmel AT91SAM9263-EK"
+	select SOC_AT91SAM9263
+	select OFDEVICE
+	select COMMON_CLK_OF_PROVIDER
+	select HAVE_NAND_ATMEL_BUSWIDTH_16
+	select HAVE_AT91_BOOTSTRAP
+	select AT91SAM926X_BOARD_INIT
+	help
+	  Say y here if you are using Atmel's AT91SAM9263-EK Evaluation board
+
+config MACH_AT91SAM9X5EK
+	bool "Atmel AT91SAM9x5 Series Evaluation Kit"
+	select SOC_AT91SAM9X5
+	help
+	  Select this if you re using Atmel's AT91SAM9x5-EK Evaluation Kit.
+	  Supported chips are sam9g15, sam9g25, sam9x25, sam9g35 and sam9x35.
+
+config MACH_MICROCHIP_KSZ9477_EVB
+	bool "Microchip EVB-KSZ9477 Evaluation Kit"
+	select SOC_SAMA5D3
+	select OFDEVICE
+	select MCI_ATMEL_PBL
+	select COMMON_CLK_OF_PROVIDER
+	help
+	  Select this if you are using Microchip's EVB-KSZ9477 Evaluation Kit.
+
+config MACH_MICROCHIP_SAMA5D3_EDS
+	bool "Microchip SAMA5D3 Ethernet Development System"
+	select SOC_SAMA5D3
+	select OFDEVICE
+	select MCI_ATMEL_PBL
+	select COMMON_CLK_OF_PROVIDER
+	help
+	  Select this if you are using Microchip's SAMA5D3 Ethernet Development
+	  System.
+
+config MACH_SAMA5D3_XPLAINED
+	bool "Atmel SAMA5D3_XPLAINED Evaluation Kit"
+	select SOC_SAMA5D3
+	select OFDEVICE
+	select MCI_ATMEL_PBL
+	select COMMON_CLK_OF_PROVIDER
+	help
+	  Select this if you are using Atmel's SAMA5D3_XPLAINED Evaluation Kit.
+
+config MACH_SAMA5D27_SOM1
+	bool "Microchip SAMA5D27 SoM-1 Evaluation Kit"
+	select SOC_SAMA5D2
+	select OFDEVICE
+	select MCI_ATMEL_SDHCI_PBL
+	select COMMON_CLK_OF_PROVIDER
+	select FS_FAT_WRITE if MCI_ATMEL_SDHCI && FS_FAT && ENV_HANDLING
+	help
+	  Select this if you are using Microchip's sama5d27 SoM evaluation kit
+
+config MACH_SAMA5D27_GIANTBOARD
+	bool "Groboards SAMA5D27 Giant Board"
+	select SOC_SAMA5D2
+	select OFDEVICE
+	select COMMON_CLK_OF_PROVIDER
+	help
+	  Select this if you are using the Groboards sama5d27 Giantboard
+
+config MACH_SAMA5D4_WIFX
+	bool "Wifx L1 LoRaWAN base station"
+	select SOC_SAMA5D4
+	select OFDEVICE
+	select COMMON_CLK_OF_PROVIDER
+	help
+	  Select this if you are using the SAMA5D4-based Wifx L1.
+
+endif
+
+comment "AT91 Board Options"
+
+config MTD_AT91_DATAFLASH_CARD
+	bool "Enable DataFlash Card support"
+	depends on HAVE_AT91_DATAFLASH_CARD
+	help
+	  Enable support for the DataFlash card.
+
+config MTD_NAND_ATMEL_BUSWIDTH_16
+	bool "Enable 16-bit data bus interface to NAND flash"
+	depends on HAVE_NAND_ATMEL_BUSWIDTH_16
+	help
+	  On AT91SAM926x boards both types of NAND flash can be present
+	  (8 and 16 bit data bus width).
+
+config AT91_HAVE_2MMC
+	bool "Have 2 MMC"
+	depends on MACH_AT91SAM9G20EK
+	help
+	  Select this if you are using an Atmel AT91SAM9G20-EK Evaluation Kit
+	  with 2 SD/MMC Slots. This is the case for AT91SAM9G20-EK rev. C and
+	  onwards.
+
+choice
+	prompt "LCD type"
+	depends on MACH_AT91SAM9M10G45EK
+
+config LCD_TRULY_TFT1N4633E
+	bool "truly TFT1N4633-E"
+	help
+	  Found on AT91SAM9M10G45-EK
+
+config LCD_LG_LB043WQ1
+	bool "LG philips LB043WQ1"
+	help
+	  Found on AT91SAM9G45-EKES and AT91SAM9M10-EKES
+
+endchoice
+
+config CALAO_DAB_MMX
+	bool "DAB MMX Daughter Board support"
+	depends on SUPPORT_CALAO_DAB_MMX
+
+config CALAO_MOB_TNY_MD2
+	bool "MOB TNY MD2 Motherboard Daughter Board support"
+	depends on SUPPORT_CALAO_MOB_TNY_MD2
+
+config CALAO_MB_QIL_A9260
+	bool "MB-QIL A9260 Motherboard Board support"
+	depends on MACH_QIL_A9260 || MACH_QIL_A9G20
+
+config AT91_BOOTSTRAP
+	bool "at91 bootstrap"
+	depends on HAVE_AT91_BOOTSTRAP
+	select BOOTSTRAP
+
+config AT91_LOAD_BAREBOX_SRAM
+	bool "at91 load barebox in sram"
+	depends on SHELL_NONE || HAVE_AT91_LOAD_BAREBOX_SRAM
+	default y if SHELL_NONE
+
+endif

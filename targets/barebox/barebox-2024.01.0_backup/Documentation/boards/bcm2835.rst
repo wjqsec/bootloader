@@ -1,0 +1,69 @@
+Broadcom BCM283x
+================
+
+Raspberry Pi
+------------
+
+barebox has support for BCM283x-based Raspberry Pi single board computers.
+Support is most extensive for BCM283[567], but barebox can also boot Linux
+over SD or Ethernet on the Raspberry Pi 4.
+
+  1. Prepare an SD or microSD card with a FAT filesystem of at least 30 MB in size.
+
+  2. Download the `Raspberry Pi firmware`_ (195 MB), unzip it, and copy the
+     contents of the ``boot/`` folder to your card.
+
+  3. Use ``make rpi_defconfig; make`` to build barebox for 32-bit boards or
+     ``make rpi_v8a_defconfig; make`` to build barebox for 64-bit.
+
+     ``rpi_defconfig`` will build at least following images:
+
+     - ``images/barebox-raspberry-pi-1.img`` for the BCM2835/ARM1176JZF-S (Raspberry Pi 1, Raspberry Pi Zero)
+     - ``images/barebox-raspberry-pi-2.img`` for the BCM2836/CORTEX-A7 (Raspberry Pi 2)
+     - ``images/barebox-raspberry-pi-3.img`` for the BCM2837/CORTEX-A53 (Raspberry Pi 3)
+     - ``images/barebox-raspberry-pi-cm3.img`` for the BCM2837/CORTEX-A53 (Raspberry Pi CM3)
+     - ``images/barebox-raspberry-pi.img``, which is a super set of all the other images,
+       including Raspberry Pi 4 32-bit support.
+
+     Copy the respective image for your model to your SD card and name it
+     ``barebox.img``.
+
+     For 64-bit, only ``images/barebox-raspberry-pi.img`` will be created, which is usable
+     for both Raspberry Pi 3 and Raspberry Pi 4 in 64-bit mode. No support for the Raspberry
+     Pi 5 has been contributed yet.
+
+     The ``images/barebox-raspberry-pi.img`` is expected to be the sole image for 32-bit
+     also in the future. It contains the device trees of all supported (and enabled) variants
+     and determines at runtime what board it runs on and does the right thing.
+
+  4. Create a text file ``config.txt`` on the SD card with the following content::
+
+         kernel=barebox.img
+         enable_uart=1
+
+     If you want to use the mini-uart instead of the PL011, you may need to additionally set::
+
+         uart_2ndstage=1
+
+     This is required on boards, like the Raspberry Pi Zero W, that use the mini-uart as the
+     primary UART. It is needed on boards like the CM3 as well if the mini-uart is to be used.
+
+     (For more information, refer to the `documentation for config.txt`_.)
+
+  5. Connect to board's UART (115200 8N1);
+     Use PIN6 (GND), PIN8 (UART_TX), PIN10 (UART_RX) pins.
+
+  6. Turn board's power on.
+
+VideoCore firmware creates a device tree based on the entries in ``config.txt``. This file is available to the Barebox environment in the file ``/vc.dtb``. For example, to boot a kernel shipped with Raspbian::
+
+    bootm -o /vc.dtb /boot/kernel7.img
+
+VideoCore device tree also contains the kernel command-line that is constructed from ``cmdline.txt`` and other parameters internally determined by the VideoCore firmware. Normally in Barebox this command-line gets overwritten on boot by the Linux bootargs (see :ref:`booting_linux`).
+
+The original command-line from VideoCore device tree is available to the Barebox environment in the ``vc.bootargs`` global variable. For example, to append it to the Linux bootargs::
+
+    global linux.bootargs.vc="$global.vc.bootargs"
+
+.. _Raspberry Pi firmware: https://github.com/raspberrypi/firmware/archive/refs/tags/1.20220331.zip
+.. _documentation for config.txt: https://www.raspberrypi.org/documentation/configuration/config-txt/

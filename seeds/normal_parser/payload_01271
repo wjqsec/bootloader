@@ -1,0 +1,11 @@
+l="/"
+h="/"
+=""
+export u m
+ unset u
+export  ut
+ unset m
+export  m u
+ unset u
+export t
+ unset m

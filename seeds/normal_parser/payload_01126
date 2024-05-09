@@ -1,0 +1,1 @@
+search -t --hint='f' --no-floppy --fs-uuid --hint='f'

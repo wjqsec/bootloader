@@ -1,0 +1,7 @@
+. ""
+submenu ''{if ];then o;fi}
+' '' {	if  ]; then o; then o;fi}
+s'U' ;fi}
+submenu  'U' '' {	if  ]; then o;fi}
+submenu  'U' '' {f  ]; then o;fi}
+submenu  'U'

@@ -1,0 +1,26 @@
+#include <arm/nxp/imx/imx6qdl-dfi-fs700-m60.dtsi>
+
+/ {
+	chosen {
+		stdout-path = &uart1;
+
+		environment-emmc {
+			compatible = "barebox,environment";
+			device-path = &usdhc4, "partname:boot1";
+		};
+	};
+};
+
+&ocotp {
+	barebox,provide-mac-address = <&fec 0x620>;
+};
+
+&usbh1 {
+	phy_type = "utmi";
+	dr_mode = "host";
+};
+
+&usbotg {
+	phy_type = "utmi";
+	dr_mode = "host";
+};

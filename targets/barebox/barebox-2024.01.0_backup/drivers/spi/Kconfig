@@ -1,0 +1,131 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menu "SPI drivers"
+
+config SPI
+	bool "Enable SPI driver support"
+	default y
+
+if SPI
+
+config SPI_MEM
+	bool "SPI memory extension"
+	help
+	  Enable this option if you want to enable the SPI memory extension.
+	  This extension is meant to simplify interaction with SPI memories
+	  by providing a high-level interface to send memory-like commands.
+
+config DRIVER_SPI_ATH79
+	bool "Atheros AR71XX/AR724X/AR913X/AR933X SPI controller driver"
+	depends on MACH_MIPS_ATH79
+
+config DRIVER_SPI_ATMEL
+	bool "Atmel (AT91) SPI Master driver"
+	depends on ARCH_AT91
+
+config SPI_ATMEL_QUADSPI
+	tristate "Atmel Quad SPI Controller"
+	depends on ARCH_AT91
+	depends on SPI_MEM
+	help
+	  This enables support for the Quad SPI controller in master mode.
+	  This driver does not support generic SPI. The implementation only
+	  supports spi-mem interface.
+
+config DRIVER_SPI_FSL_QUADSPI
+	bool "Freescale QSPI controller"
+	depends on SPI_MEM
+	help
+	  This enables support for the Quad SPI controller in master mode.
+          Up to four flash chips can be connected on two buses with two
+          chipselects each.
+          This controller does not support generic SPI messages. It only
+          supports the high-level SPI memory interface.
+
+config SPI_FSL_DSPI
+	bool "Freescale DSPI controller"
+	depends on ARCH_LAYERSCAPE
+	help
+	  This enables support for the Freescale DSPI controller in master
+	  mode. LS1021A and ColdFire platforms use the controller.
+
+config DRIVER_SPI_GPIO
+	bool "GPIO SPI Master driver"
+	depends on GPIOLIB
+
+config DRIVER_SPI_IMX
+	bool "i.MX SPI Master driver"
+	depends on ARCH_IMX
+
+config DRIVER_SPI_IMX_0_0
+	bool
+	depends on ARCH_IMX27
+	default y
+
+config DRIVER_SPI_IMX_0_7
+	bool
+	depends on ARCH_IMX25 || ARCH_IMX31 || ARCH_IMX35 || ARCH_IMX50 || ARCH_IMX53
+	default y
+
+config DRIVER_SPI_IMX_2_3
+	bool
+	depends on ARCH_IMX50 || ARCH_IMX51 || ARCH_IMX53 || ARCH_IMX6 || ARCH_IMX7 || ARCH_IMX8M
+	default y
+
+config DRIVER_SPI_LITEX_SPIFLASH
+	bool "Litex SPIFLASH bitbang master driver"
+
+config DRIVER_SPI_MXS
+	bool "i.MX (23,28) SPI Master driver"
+	depends on ARCH_IMX28
+	select STMP_DEVICE
+
+config DRIVER_SPI_MVEBU
+	bool "Marvell MVEBU SoC SPI master driver"
+	depends on ARCH_ARMADA_370 || ARCH_ARMADA_XP || ARCH_DOVE || ARCH_KIRKWOOD
+
+config DRIVER_SPI_OMAP3
+	bool "OMAP3 McSPI Master driver"
+	depends on ARCH_OMAP3 || ARCH_AM33XX
+
+config DRIVER_SPI_DSPI
+	tristate "Freescale DSPI SPI Master driver"
+	depends on ARCH_VF610
+	default y
+	help
+	  This enables support for the Freescale DSPI controller in master
+	  mode. VF610 platform uses the controller.
+
+config SPI_ZYNQ_QSPI
+	tristate "Xilinx Zynq QSPI controller"
+	depends on ARCH_ZYNQ
+	depends on SPI_MEM
+	help
+	  This enables support for the Zynq Quad SPI controller in master mode.
+	  This controller only supports SPI memory interface.
+
+config DRIVER_SPI_STM32
+	bool "STM32 SPI driver"
+	depends on ARCH_STM32MP || COMPILE_TEST
+	help
+	  Enable the STM32 Serial Peripheral Interface (SPI) driver for STM32MP
+	  SoCs.
+
+config SPI_NXP_FLEXSPI
+	tristate "NXP Flex SPI controller"
+	depends on ARCH_IMX8M || ARCH_IMX93 || COMPILE_TEST
+	help
+	  This enables support for the Flex SPI controller in master mode.
+	  Up to four slave devices can be connected on two buses with two
+	  chipselects each.
+	  This controller does not support generic SPI messages and only
+	  supports the high-level SPI memory interface.
+
+config SPI_SIFIVE
+	tristate "SiFive SPI controller"
+	depends on SOC_SIFIVE || COMPILE_TEST
+	help
+	  This exposes the SPI controller IP from SiFive.
+
+endif
+
+endmenu

@@ -1,0 +1,9 @@
+set lang=en $ermmogfxterm
+selang=en $em
+rmmod font
+rmmod gfxterm
+rmmod font
+rmmod font
+rmmod gfxterm
+rmmod font
+rmmod ext--1

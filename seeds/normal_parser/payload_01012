@@ -1,0 +1,2 @@
+insmod ext2
+search -ss -ss -ss

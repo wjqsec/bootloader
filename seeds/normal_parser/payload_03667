@@ -1,0 +1,5 @@
+set lang=en . 05
+terminal_output console
+terminal_output console
+terminal_output console
+t

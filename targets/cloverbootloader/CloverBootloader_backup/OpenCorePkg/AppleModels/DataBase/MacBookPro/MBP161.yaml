@@ -1,0 +1,108 @@
+BIOSVendor: "Apple Inc."
+BIOSVersion: "2020.41.1.0.0"
+BIOSLegacyVersion: "MBP161.88Z.F000.B00.2310052037"
+BIOSReleaseDate: "10/05/2023"
+SystemManufacturer: "Apple Inc."
+SystemProductName: "MacBookPro16,1"
+SystemVersion: "1.0"
+# Note, this one is used by macserial
+SystemSerialNumber: "C02ZKJWAMD6N"
+SystemSKUNumber: ""
+SystemFamily: "MacBook Pro"
+BoardManufacturer: "Apple Inc."
+# This and similar ones can be an array itself, like this:
+# BoardProduct:
+#  "Mac-E1008331FDC96864"
+#  "Mac-smthelse"
+BoardProduct: "Mac-E1008331FDC96864"
+BoardVersion: "MacBookPro16,1"
+BoardRevision: 0x3
+BoardAssetTag: ""
+BoardType: 0xA
+BoardLocationInChassis: ""
+ChassisManufacturer: "Apple Inc."
+ChassisType: 0x9
+ChassisVersion: "Mac-E1008331FDC96864"
+ChassisAssetTag: ""
+PlatformFeature: 0x32
+FirmwareFeatures: 0xFDAFF066
+FirmwareFeaturesMask: 0xFFFFFF7F
+ExtendedFirmwareFeatures: 0x00000008FDAFF066
+ExtendedFirmwareFeaturesMask: 0x00000008FFFFFF7F
+MemoryFormFactor: 0xD
+# FIXME: Correct this one
+ProcessorType:
+  - 0x0701
+  - 0x1001
+# FIXME: Correct this one
+ProcessorBusSpeed:
+  - 12345
+SmcGeneration: 3
+SmcPlatform:
+  - 0x6a
+  - 0x31
+  - 0x35
+  - 0x32
+  - 0x66
+  - 0x00
+  - 0x00
+  - 0x00
+OEMStrings: |-
+  Apple ROM Version
+    BIOS ID:      MBP161.88Z.F000.B00.2310052037
+    Model:        MBP161
+    EFI Version:  2020.41.1.0.0
+    Built by:     root@bcvfm
+    Date:         Thu Oct  5 20:37:08 2023
+    Revision:     2020.41.1 (B&I)
+    ROM Version:  F000_B00
+    Build Type:   Official Build, RELEASE
+    Compiler:     clang-1500.0.37.1
+    UUID:         8C275A88-DA74-3A11-B14B-52BE1E9E3CD6
+    UUID:         B3866747-A385-35F1-9D28-C54FF7CF024F
+Specifications:
+  CPUCodename:
+    - "Coffee Lake"
+    - "Coffee Lake"
+    - "Coffee Lake"
+  CPU:
+    - "Intel Core i7-9750H @ 2.60 GHz"
+    - "Intel Core i9-9880H @ 2.30 GHz"
+    - "Intel Core i9-9980HK @ 2.40 GHz"
+  GPU:
+    - "AMD Radeon Pro 5300M"
+    - "AMD Radeon Pro 5500M"
+  RAM:
+    - "16GB 2666 MHz LPDDR4 SDRAM"
+  SystemReportName:
+    - "MacBook Pro (16-inch, 2019)"
+  MarketingName:
+    - "MacBook Pro (16-inch, 2019)"
+# Note, first model code is used by macserial
+AppleModelCode:
+  - "MD6N"
+  - "MD6M"
+  - "MD6X"
+  - "MD6Q"
+  - "MD6P"
+  - "MD6R"
+  - "MD6W"
+  - "MD6V"
+  - "PG8W"
+  - "PG8V"
+  - "PG8Y"
+  - "PG8X"
+  - "PG8T"
+  - "PG90"
+  - "PG91"
+# Note, first board code is used by macserial
+AppleBoardCode:
+  - "N9PR"
+# Note, first year is used by macserial
+AppleModelYear:
+  - 2019
+  - 2020
+  - 2021
+MinimumOSVersion: "10.15.1"
+MaximumOSVersion: null
+AppleModelId: "J152F"

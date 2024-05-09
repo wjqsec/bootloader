@@ -1,0 +1,4 @@
+set lang=en m
+
+terminal_output console
+search --=h --h --h {y}

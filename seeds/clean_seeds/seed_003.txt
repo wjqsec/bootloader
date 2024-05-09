@@ -1,0 +1,141 @@
+
+
+
+submenu "iPXE installers ->" --class gnu-linux {
+    for configfile in /boot/grub/grub.d/*-ipxe.cfg; do
+        source $configfile
+    done
+}
+
+submenu "Other ->" --class arrow {
+    # memtest86+ (http://www.memtest.org/)
+    menuentry "Test memory with Memtest86+" --class arrow {
+        linux16 $binpath/memtest86+-5.01.bin
+    }
+}
+
+# grub options
+submenu "GRUB2 options ->" --class arrow {
+    menuentry "List devices/partitions" --class arrow {
+        ls -l
+        sleep --interruptible 9999
+    }
+
+    menuentry "Enable GRUB2's LVM support" --class arrow {
+        insmod lvm
+    }
+
+    menuentry "Enable GRUB2's RAID support" --class arrow {
+        insmod dm_nv
+        insmod mdraid09_be
+        insmod mdraid09
+        insmod mdraid1x
+        insmod raid5rec
+        insmod raid6rec
+    }
+
+    menuentry "Enable GRUB2's PATA support (to work around BIOS bugs/limitations)" --class arrow {
+        insmod ata
+        update_paths
+    }
+
+    menuentry "Enable GRUB2's USB support *experimental*" --class arrow {
+        insmod ohci
+        insmod uhci
+        insmod usbms
+        update_paths
+    }
+
+    menuentry "Mount encrypted volumes (LUKS and geli)" --class arrow {
+        insmod uks
+        insmod geli
+        cryptomount -a
+    }
+
+    menuentry "Enable serial terminal" --class arrow {
+        serial
+        terminal_input --append serial
+        terminal_output --append serial
+    }
+    menuentry {
+        menuentry {
+            menuentry {
+                menuentry {
+                }       
+                menuentry {
+                }
+                menuentry {
+                }
+                menuentry {
+                }
+                menuentry {
+                }
+                menuentry {
+                }
+                menuentry {
+                }
+                menuentry {
+                }
+                menuentry {
+                }
+                menuentry {
+                }
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+            menuentry {
+            }
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+        menuentry {
+        }
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    menuentry {
+    }
+    
+}

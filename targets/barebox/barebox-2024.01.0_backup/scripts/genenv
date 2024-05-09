@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Generate the default environment file from a list of directories
+# usage: genenv <basedir> <objdir> <target> <dir>...
+# where <basedir> is the base directory for relative paths in <dir>
+# where <objdir> is the base directory for relative paths for result
+# and <target> is the resulting binary environment
+objtree=$2
+basedir=$1
+target=$3
+shift 3
+
+abspath() {
+	local fn dn
+	if [ $# -ne 1 ]; then
+		echo "usage: ptxd_abspath <path>"
+		exit 1
+	fi
+	if [ -d "${1}" ]; then
+		fn=""
+		dn="${1}"
+	else
+		fn="/$(basename "${1}")"
+		dn="$(dirname "${1}")"
+	fi
+
+	[ ! -d "${dn}" ] && exit 1
+	echo "$(cd "${dn}" && pwd)${fn}"
+}
+export -f abspath
+
+tempdir=$(abspath "${target}.genenv.tmp")
+tmpfile="$(mktemp)"
+
+mkdir -p "$tempdir"
+
+(cd $basedir
+for i in $*; do
+	if [ -d $i ]; then
+		cp -r $i/* $tempdir
+	else
+		cp -a $i $tempdir
+	fi
+done
+)
+
+find $tempdir -name '.svn' -o -name '*~' -delete
+
+$objtree/scripts/bareboxenv -s $tempdir ${tmpfile}
+
+diff "${tmpfile}" "${target}" >/dev/null 2>/dev/null
+if [ $? != 0 ]; then
+	mv "${tmpfile}" "${target}"
+else
+	rm ${tmpfile}
+fi
+
+rm -r $tempdir

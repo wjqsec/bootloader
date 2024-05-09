@@ -1,0 +1,79 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+
+#include <dt-bindings/features/imx8m.h>
+
+/ {
+	remoteproc_cm7: remoteproc-cm7 {
+		compatible = "fsl,imx8mp-cm7";
+		clocks = <&clk IMX8MP_CLK_M7_CORE>;
+		syscon = <&src>;
+	};
+
+	aliases {
+		pwm0 = &pwm1;
+		pwm1 = &pwm2;
+		pwm2 = &pwm3;
+		pwm3 = &pwm4;
+	};
+};
+
+/* Temporary workaround until snps,gfladj-refclk-lpm-sel-quirk is supported */
+&usb_dwc3_0 {
+	snps,dis-u2-freeclk-exists-quirk;
+};
+
+&usb_dwc3_1 {
+	snps,dis-u2-freeclk-exists-quirk;
+};
+
+/*
+ * The DSP reserved memory will collide with the Barebox malloc area for some
+ * DRAM sizes, even though the DSP itself is disabled in most configurations.
+ */
+/delete-node/ &dsp;
+/delete-node/ &dsp_reserved;
+
+&edacmc {
+	compatible = "fsl,imx8mp-ddrc", "fsl,imx8m-ddrc", "snps,ddrc-3.80a";
+};
+
+feat: &ocotp {
+	#feature-cells = <1>;
+	barebox,feature-controller;
+};
+
+&pgc_mipi_phy1 {
+	barebox,feature-gates = <&feat IMX8M_FEAT_MIPI_DSI>;
+};
+
+&pgc_gpu2d {
+	barebox,feature-gates = <&feat IMX8M_FEAT_GPU>;
+};
+
+&pgc_gpu3d {
+	barebox,feature-gates = <&feat IMX8M_FEAT_GPU>;
+};
+
+&pgc_gpumix {
+	barebox,feature-gates = <&feat IMX8M_FEAT_GPU>;
+};
+
+&pgc_mipi_phy2 {
+	barebox,feature-gates = <&feat IMX8M_FEAT_MIPI_DSI>;
+};
+
+&pgc_ispdwp {
+	barebox,feature-gates = <&feat IMX8M_FEAT_ISP>;
+};
+
+&gpu3d {
+	barebox,feature-gates = <&feat IMX8M_FEAT_GPU>;
+};
+
+&gpu2d {
+	barebox,feature-gates = <&feat IMX8M_FEAT_GPU>;
+};
+
+&hsio_blk_ctrl {
+	barebox,allow-dummy;
+};

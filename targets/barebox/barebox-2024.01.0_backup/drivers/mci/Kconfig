@@ -1,0 +1,236 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config MCI_SDHCI
+	bool
+
+menuconfig MCI
+	bool "MCI drivers"
+	select DISK
+	help
+	  Add support for MCI drivers, used to handle MMC and SD cards
+
+if MCI
+
+comment "--- Feature list ---"
+
+config MCI_STARTUP
+	bool "Force probe on system start"
+	help
+	  Say 'y' here if the MCI framework should always probe for all attached
+	  MCI cards on system start up. This may required for some legacy boards.
+	  When this is 'n', probing happens on demand either with "mci*.probe=1"
+	  or with driver/board code calling device_detect.
+
+config MCI_INFO
+	bool "MCI Info"
+	depends on CMD_DEVINFO
+	default y
+	help
+	  This entry adds more info about the attached MCI card, when the
+	  'devinfo' command is used on the mci device.
+
+config MCI_WRITE
+	bool "Support writing to MCI cards"
+	default y
+	select DISK_WRITE
+
+config MCI_MMC_BOOT_PARTITIONS
+	bool "support MMC boot partitions"
+	help
+	  Provide access to the 'boot partitions' of devices of type 'MMC'.
+	  These so called 'hardware partitions' act like an independent memory
+	  device and thus, need special handling.
+
+	  Note: only 'MMC' have 'boot partitions'. So, if you don't use an
+	  'MMC' device, you don't need this support.
+
+config MCI_MMC_GPP_PARTITIONS
+	bool "support MMC general purpose partitions (GPP)"
+	help
+	  Provide access to the 'general purpose partitions' of devices of type
+	  'MMC'. These so called 'hardware partitions' act like an independent
+	  memory device and thus, need special handling.
+
+	  Note: only 'MMC' devices have 'general purpose partitions'. So, if
+	  you don't use an 'MMC' device, you don't need this support.
+
+	  Note: by default, 'MMC' devices have no 'general purpose partitions',
+	  it requires a special one-time configuration step to enable them.
+
+comment "--- MCI host drivers ---"
+
+config MCI_DWC_MSHC
+	bool "Synopsys DesignWare Cores MSHC"
+	depends on HAS_DMA
+	select MCI_SDHCI
+	help
+	  This selects support for the Synopsys DesignWare Mobile Storage Host Controller
+	  block (DWC_mshc), this provides host support for SD/eMMC interfaces, in SDMA mode.
+
+config MCI_DW
+	bool "Synopsys DesignWare Memory Card Interface"
+	depends on HAS_DMA
+	help
+	  This selects support for the Synopsys DesignWare Mobile Storage IP
+	  block, this provides host support for SD and MMC interfaces, in both
+	  PIO and external DMA modes.
+
+config MCI_DW_PIO
+	bool "Use PIO mode on Synopsys DesignWare MCI"
+	depends on MCI_DW
+	help
+	  Use PIO mode (instead of IDMAC) in DW MMC driver.
+
+config MCI_MXS
+	bool "i.MX23/i.MX28"
+	depends on ARCH_MXS
+	select STMP_DEVICE
+	help
+	  Enable this entry to add support to read and write SD cards on a
+	  i.MX23/i.MX28 based system.
+
+config MCI_ROCKCHIP_DWCMSHC
+	bool "MCI sdhc support for Rockchip SoCs"
+	select MCI_SDHCI
+	help
+	  Enable this entry to add support for a Rockchip derivation of the
+	  DWCMSHC controller found on some Rockchip SoCs like the RK3568.
+
+config MCI_BCM283X
+	bool "MCI support for BCM283X"
+	depends on ARCH_BCM283X || COMPILE_TEST
+	select MCI_SDHCI
+
+config MCI_BCM283X_SDHOST
+	bool "BCM283X sdhost"
+	depends on ARCH_BCM283X || COMPILE_TEST
+	select MCI_SDHCI
+
+config MCI_DOVE
+	bool "Marvell Dove SDHCI"
+	depends on ARCH_DOVE || COMPILE_TEST
+	select MCI_SDHCI
+	help
+	  Enable this entry to add support to read and write SD cards on a
+	  Marvell Dove SoC based system.
+
+config MCI_IMX
+	bool "i.MX"
+	depends on ARCH_IMX27 || ARCH_IMX31 || COMPILE_TEST
+	help
+	  Enable this entry to add support to read and write SD cards on a
+	  Freescale i.MX based system.
+
+config MCI_IMX_ESDHC
+	bool "i.MX esdhc"
+	depends on ARCH_IMX || ARCH_LAYERSCAPE || COMPILE_TEST
+	select MCI_SDHCI
+	help
+	  Enable this entry to add support to read and write SD cards on a
+	  Freescale i.MX25/35/51 based system.
+
+config MCI_IMX_ESDHC_PIO
+	bool "use PIO mode"
+	depends on MCI_IMX_ESDHC
+	help
+	  mostly useful for debugging. Normally you should use DMA.
+
+config MCI_OMAP_HSMMC
+	bool "OMAP HSMMC"
+	depends on ARCH_OMAP4 || ARCH_OMAP3 || ARCH_AM33XX
+	help
+	  Enable this entry to add support to read and write SD cards on
+	  both OMAP3 and OMAP4 based systems.
+
+config MCI_PXA
+	bool "PXA"
+	depends on ARCH_PXA2XX
+	help
+	  Enable this entry to add support to read and write SD cards on a
+	  XScale PXA25x / PXA27x based system.
+
+config MCI_ATMEL
+	bool "ATMEL (AT91)"
+	depends on ARCH_AT91 || COMPILE_TEST
+	help
+	  Enable this entry to add support to read and write SD cards on a
+	  Atmel AT91.
+
+config MCI_ATMEL_SDHCI
+	bool "ATMEL SDHCI (sama5d2)"
+	select MCI_SDHCI
+	depends on ARCH_AT91
+	help
+	  Enable this entry to add support to read and write SD cards on an
+	  Atmel sama5d2
+
+config MCI_MMCI
+	bool "ARM PL180 MMCI"
+	depends on ARM_AMBA
+	help
+	  Enable this entry to add support to read and write SD cards on a
+	  ARM AMBA PL180.
+
+config MCI_TEGRA
+	bool "Tegra SD/MMC"
+	depends on ARCH_TEGRA || COMPILE_TEST
+	select MCI_SDHCI
+	help
+	  Enable this to support SD and MMC card read/write on a Tegra based
+	  systems.
+
+config MCI_ARASAN
+	bool "Arasan SDHCI Controller"
+	select MCI_SDHCI
+	help
+	  Enable this to support SD and MMC card read/write on systems with
+	  the Arasan SD3.0 / SDIO3.0 / eMMC4.51 host controller.
+
+config MCI_AM654
+	bool "Support for the SDHCI Controller in TI's AM654 SOCs"
+	select MCI_SDHCI
+	help
+	  This selects the Secure Digital Host Controller Interface (SDHCI)
+	  support present in TI's AM654 SOCs. The controller supports
+	  SD/MMC/SDIO devices.
+
+config MCI_SPI
+	bool "MMC/SD over SPI"
+	select CRC7
+	depends on SPI
+	help
+	  Some systems access MMC/SD/SDIO cards using a SPI controller
+	  instead of using a "native" MMC/SD/SDIO controller. This has a
+	  disadvantage of being relatively high overhead, but a compensating
+	  advantage of working on many systems without dedicated MMC/SD/SDIO
+	  controllers.
+
+config MMC_SPI_CRC_ON
+	bool "Enable CRC protection for transfers"
+	select CRC_ITU_T
+	depends on MCI_SPI
+	help
+	  Enable CRC protection for transfers
+
+config MCI_STM32_SDMMC2
+	bool "STMicroelectronics STM32H7 SD/MMC Host Controller support"
+	depends on ARM_AMBA
+	depends on RESET_CONTROLLER
+	depends on ARCH_STM32 || COMPILE_TEST
+	help
+	  This selects support for the SD/MMC controller on STM32H7 SoCs.
+	  If you have a board based on such a SoC and with a SD/MMC slot,
+	  say Y or M here.
+
+endif
+
+config MCI_IMX_ESDHC_PBL
+	bool
+	select MCI_SDHCI
+
+config MCI_ATMEL_PBL
+	bool
+	select MCI_ATMEL
+
+config MCI_ATMEL_SDHCI_PBL
+	bool
+	select MCI_SDHCI

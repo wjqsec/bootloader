@@ -1,0 +1,4 @@
+set lang=en m
+
+terminal_output console
+search --hi=h --h --hin[ -f ${y}

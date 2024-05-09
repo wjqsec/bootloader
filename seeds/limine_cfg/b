@@ -1,0 +1,5 @@
+:Jobo Linux
+PROTOCOL=linux
+KERNEL_PATH=boot:///vmlinuz-linux
+CMDLINE=root=/dev/sda1
+MODULE_PATH=boot:///initramfs-linux.img

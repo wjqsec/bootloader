@@ -1,0 +1,17 @@
+/*
+ * Include file to switch board DTS form using hardcoded memory node
+ * (if specified) to dynamic memory size detection based on DDR
+ * controller settings
+ */
+
+/ {
+	/delete-node/ memory;
+	/delete-node/ memory@80000000;
+};
+
+&aips1 {
+	ddrmc@400ae000 {
+		compatible = "fsl,vf610-ddrmc";
+		reg = <0x400ae000 0x1000>;
+	};
+};

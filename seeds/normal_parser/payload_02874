@@ -1,0 +1,11 @@
+set lang=en t=
+set color_normal=cyan/black
+set color_highlight=white/black
+
+=12
+#s
+menuentry "ch Linux" {
+ init=/usr/lib/systemd/systemd rw quiet
+initrd /boot/initramfs-linux.img
+initrd /boot/intel-ucode.img /boot/initramfs-linux.img
+}

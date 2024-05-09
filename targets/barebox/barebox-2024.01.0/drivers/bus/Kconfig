@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menu "Bus devices"
+
+config BUS_OMAP_GPMC
+	depends on ARCH_OMAP
+	depends on OFDEVICE
+	depends on OMAP_GPMC
+	bool "TI OMAP/AM33xx GPMC support"
+
+config TI_SYSC
+	depends on ARCH_OMAP || COMPILE_TEST
+	bool "TI sysc interconnect target module driver"
+	default y
+	help
+	  Generic driver for Texas Instruments interconnect target module
+	  found on many TI SoCs.
+
+config IMX_WEIM
+	depends on ARCH_IMX || COMPILE_TEST
+	bool "i.MX WEIM driver"
+
+config MVEBU_MBUS
+	bool
+	depends on ARCH_MVEBU
+	help
+	  Driver needed for the MBus configuration on Marvell EBU SoCs
+	  (Kirkwood, Dove, Orion5x, MV78XX0 and Armada 370/XP).
+
+config ACPI
+	bool "Advanced Configuration and Power Interface (ACPI)"
+	default y
+	depends on EFI_BOOTUP
+	help
+	  Driver needed for supporting drivers probed from ACPI tables.
+	  The root SDT is found via UEFI.
+
+endmenu

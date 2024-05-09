@@ -1,0 +1,7 @@
+#include "arm/marvell/armada-385-turris-omnia.dts"
+
+/ {
+	chosen {
+		stdout-path = &uart0;
+	};
+};

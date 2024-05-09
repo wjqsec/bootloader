@@ -1,0 +1,3 @@
+set lang=en 
+set loc=-f ${y}--nt ${y}--ht= ${y}-f ${y}--hint=f ${y}--hf ${y}v nt ${y}--ht=f --hi=f ${y}-int=f ${y}--hint=f ${y}--ht=f ${y}--hint=f ${y}--hint=f ${y}--hint=f ${y}--hint=-f '' - . "÷"
+submenu '' -  ''-${y} ${y} --ht=v =f$v --hint=f${y} --hint=f${y} --hint=f${y} --nt=f${y} --ht=f${y} --hint=f ${y}--h

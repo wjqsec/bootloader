@@ -1,0 +1,24 @@
+insmod ext2
+#insmod reiserfs
+insmod part_gpt
+insmod part_msdos
+insmod ntfs
+
+set timeout=1
+
+set default=0
+set fallback=5
+
+set color_normal=cyan/black
+set color_highlight=white/black
+
+gfxpayload=1680x1050x32
+#set gfxmode=1680x1050x32
+
+menuentry "Arch Linux" {
+set root=(hd1,3)
+search --label --no-floppy --set=root p_arch3
+linux /boot/vmlinuz-linux root=/dev/disk/by-label/p_arch3 init=/usr/lib/systemd/systemd rw quiet
+initrd /boot/initramfs-linux.img
+initrd /boot/intel-ucode.img /boot/initramfs-linux.img
+}

@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+obj-y	+= squashfs.o
+obj-y	+= block.o
+obj-y	+= cache.o
+obj-y	+= decompressor.o
+obj-y	+= decompressor_single.o
+obj-y	+= file.o
+obj-y	+= file_cache.o
+obj-y	+= fragment.o
+obj-y	+= id.o
+obj-y	+= inode.o
+obj-y	+= namei.o
+obj-y	+= super.o
+obj-y	+= symlink.o
+obj-y	+= dir.o
+obj-$(CONFIG_SQUASHFS_XZ) += xz_wrapper.o
+obj-$(CONFIG_SQUASHFS_LZO) += lzo_wrapper.o
+obj-$(CONFIG_SQUASHFS_LZ4) += lz4_wrapper.o
+obj-$(CONFIG_SQUASHFS_ZLIB) += zlib_wrapper.o
+obj-$(CONFIG_SQUASHFS_ZSTD) += zstd_wrapper.o

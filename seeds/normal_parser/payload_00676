@@ -1,0 +1,3 @@
+insmod ext2
+insmod ext2
+search -ss -–u -ss -nus  -ss -–u -ss -nus  -ss -–u -ss -nu

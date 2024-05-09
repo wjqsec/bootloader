@@ -1,0 +1,5 @@
+set lang=en m
+$esole
+terminal_output console
+if loadfont;then t
+fi

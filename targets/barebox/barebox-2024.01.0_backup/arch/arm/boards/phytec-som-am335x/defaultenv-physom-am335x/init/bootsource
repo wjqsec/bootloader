@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ -n "$nv.boot.default" ]; then
+	exit
+fi
+
+if [ -e /dev/mmc1.0 ]; then
+	nvmem="emmc"
+else
+	nvmem="nand"
+fi
+
+if [ $bootsource = mmc -a $bootsource_instance = 1 ]; then
+	global.boot.default="bootchooser emmc mmc spi net"
+elif [ $bootsource = mmc -a $bootsource_instance = 0 ]; then
+	global.boot.default="mmc $nvmem spi net"
+elif [ $bootsource = nand ]; then
+	global.boot.default="bootchooser nand spi mmc net"
+elif [ $bootsource = spi ]; then
+	global.boot.default="spi bootchooser $nvmem mmc net"
+elif [ $bootsource = net ]; then
+	global.boot.default="net bootchooser $nvmem spi mmc"
+fi

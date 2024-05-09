@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+quiet_cmd_erizo_nmon_image = MKIMAGE $@
+      cmd_erizo_nmon_image = $(srctree)/scripts/erizo-nmon-image $< $@ || \
+	echo "WARNING: Couldn't create erizo nmon image due to previous errors."
+
+$(obj)/%.nmon: $(obj)/%.img FORCE
+	$(call if_changed,erizo_nmon_image)
+
+pblb-$(CONFIG_BOARD_ERIZO_GENERIC) += start_erizo_generic
+FILE_barebox-erizo-generic.img = start_erizo_generic.pblb
+image-$(CONFIG_BOARD_ERIZO_GENERIC) += barebox-erizo-generic.img barebox-erizo-generic.nmon
+
+pblb-$(CONFIG_BOARD_HIFIVE) += start_hifive_unmatched start_hifive_unleashed
+FILE_barebox-hifive-unmatched.img = start_hifive_unmatched.pblb
+FILE_barebox-hifive-unleashed.img = start_hifive_unleashed.pblb
+image-$(CONFIG_BOARD_HIFIVE) += barebox-hifive-unmatched.img barebox-hifive-unleashed.img
+
+pblb-$(CONFIG_BOARD_BEAGLEV) += start_beaglev_starlight
+FILE_barebox-beaglev-starlight.img = start_beaglev_starlight.pblb
+image-$(CONFIG_BOARD_BEAGLEV) += barebox-beaglev-starlight.img
+
+pblb-$(CONFIG_BOARD_LITEX_LINUX) += start_litex_linux
+FILE_barebox-litex-linux.img = start_litex_linux.pblb
+image-$(CONFIG_BOARD_LITEX_LINUX) += barebox-litex-linux.img
+
+pblb-$(CONFIG_BOARD_ALLWINNER_D1) += start_allwinner_d1
+FILE_barebox-allwinner-d1.img = start_allwinner_d1.pblb
+image-$(CONFIG_BOARD_ALLWINNER_D1) += barebox-allwinner-d1.img

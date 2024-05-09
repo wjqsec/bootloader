@@ -1,0 +1,27 @@
+/dts-v1/;
+
+#include "jz4755.dtsi"
+
+/ {
+	model = "Ritmix RZX-50";
+	compatible = "ritmix,rzx50";
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x00000000 0x4000000>;
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+
+		lcd-backlight-enable {
+			label = "lcd backlight";
+			gpios = <&gpio4 22 0>;
+			linux,default-trigger = "default-on";
+		};
+	};
+};
+
+&serial1 {
+	status = "okay";
+};

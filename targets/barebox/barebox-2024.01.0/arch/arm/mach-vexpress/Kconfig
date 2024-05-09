@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+if ARCH_VEXPRESS
+
+config ARCH_TEXT_BASE
+	hex
+	default 0x0
+
+config MACH_VEXPRESS
+	bool "ARM Vexpress"
+
+config MACH_VIRT
+	bool "QEMU virt"
+	select BOARD_ARM_VIRT
+	select ARM_PSCI_CLIENT
+
+endif

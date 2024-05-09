@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menuconfig NET_USB
+	depends on USB_HOST
+	select PHYLIB
+	bool "USB network support"
+
+if NET_USB
+
+config NET_USB_ASIX
+	bool "Asix compatible"
+
+config USB_NET_AX88179_178A
+	tristate "ASIX AX88179/178A USB 3.0/2.0 to Gigabit Ethernet"
+	help
+	  This option adds support for ASIX AX88179 based USB 3.0/2.0
+	  to Gigabit Ethernet adapters.
+
+	  This driver should work with at least the following devices:
+	    * ASIX AX88179
+	    * ASIX AX88178A
+	    * Sitcomm LN-032
+
+config NET_USB_SMSC95XX
+	bool "SMSC95xx"
+
+config NET_USB_RTL8152
+	bool "Realtek RTL8152B/RTL8153 support"
+	help
+	  Say Y here if you would like to support Realtek RTL8152B/RTL8153 base
+	  USB Ethernet Devices. This driver also supports compatible devices
+	  from Samsung, Lenovo, TP-LINK and Nvidia.
+
+endif

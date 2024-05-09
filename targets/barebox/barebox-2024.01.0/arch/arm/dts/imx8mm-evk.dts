@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright 2017 NXP
+ * Copyright (C) 2017 Pengutronix, Lucas Stach <kernel@pengutronix.de>
+ */
+
+/dts-v1/;
+
+#include <arm64/freescale/imx8mm-evk.dts>
+#include "imx8mm.dtsi"
+#include "imx8mm-evk.dtsi"

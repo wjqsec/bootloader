@@ -1,0 +1,23 @@
+/*
+ * Copyright (C) 2015 PHYTEC Messtechnik GmbH,
+ * Author: Stefan Christ <s.christ@phytec.de>
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+#ifdef CONFIG_BOOTM_FITIMAGE_PUBKEY
+#include CONFIG_BOOTM_FITIMAGE_PUBKEY
+#endif
+#include "imx6q-phytec-pfla02.dtsi"
+#include "imx6qdl-phytec-phyboard-subra.dtsi"
+
+/ {
+	model = "Phytec phyBOARD SUBRA";
+	compatible = "phytec,imx6q-pbab05", "phytec,imx6q-pfla02", "fsl,imx6q";
+};

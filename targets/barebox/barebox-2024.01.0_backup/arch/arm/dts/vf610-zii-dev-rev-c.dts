@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+
+/*
+ * Copyright (C) 2015, 2016 Zodiac Inflight Innovations
+ */
+
+#include <arm/nxp/vf/vf610-zii-dev-rev-c.dts>
+
+#include "vf610-zii-dev.dtsi"
+
+/ {
+	aliases {
+		/*
+		 * NVMEM device corresponding to EEPROM attached to
+                 * the switch shared DT node with it, so we use that
+                 * fact to create a desirable naming
+		 */
+		switch0-eeprom = &switch0;
+		switch1-eeprom = &switch1;
+		fiber-eeprom0 = &fiber_eeprom0;
+		fiber-eeprom1 = &fiber_eeprom1;
+	};
+};
+
+&dspi0 {
+	flash@0 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		partition@0 {
+			label = "bootloader";
+			reg = <0x0 0x100000>;
+		};
+	};
+};
+
+&sff2_i2c {
+       fiber_eeprom0: eeprom@50 {
+               compatible = "atmel,24c04";
+               reg = <0x50>;
+               label = "fiber0";
+       };
+};
+
+&sff3_i2c {
+       fiber_eeprom1: eeprom@50 {
+               compatible = "atmel,24c04";
+               reg = <0x50>;
+               label = "fiber1";
+       };
+};

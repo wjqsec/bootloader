@@ -1,0 +1,156 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "Crypto support"
+
+config CRC32
+	bool
+
+config CRC_ITU_T
+	bool
+
+config CRC7
+	bool
+
+menuconfig DIGEST
+	bool "Digest"
+
+if DIGEST
+
+config HAVE_DIGEST_MD5
+	bool
+
+config HAVE_DIGEST_SHA1
+	bool
+
+config HAVE_DIGEST_SHA224
+	bool
+
+config HAVE_DIGEST_SHA256
+	bool
+
+config HAVE_DIGEST_SHA384
+	bool
+
+config HAVE_DIGEST_SHA512
+	bool
+
+config HAVE_DIGEST_HMAC
+	bool
+
+config DIGEST_CRC32_GENERIC
+	bool "CRC32"
+	select CRC32
+
+config DIGEST_MD5_GENERIC
+	bool "MD5"
+	select HAVE_DIGEST_MD5
+
+config DIGEST_SHA1_GENERIC
+	bool "SHA1"
+	select HAVE_DIGEST_SHA1
+
+config DIGEST_SHA224_GENERIC
+	bool "SHA224"
+	select HAVE_DIGEST_SHA224
+
+config DIGEST_SHA256_GENERIC
+	bool "SHA256"
+	select HAVE_DIGEST_SHA256
+
+config DIGEST_SHA384_GENERIC
+	bool "SHA384"
+	select HAVE_DIGEST_SHA384
+
+config DIGEST_SHA512_GENERIC
+	bool "SHA512"
+	select HAVE_DIGEST_SHA512
+
+config DIGEST_HMAC_GENERIC
+	bool "HMAC"
+	select HAVE_DIGEST_HMAC
+
+config DIGEST_SHA1_ARM
+	tristate "SHA1 digest algorithm (ARM-asm)"
+	depends on ARM && !CPU_V8
+	select HAVE_DIGEST_SHA1
+	help
+	  SHA-1 secure hash standard (FIPS 180-1/DFIPS 180-2) implemented
+	  using optimized ARM assembler.
+
+config DIGEST_SHA256_ARM
+	tristate "SHA-224/256 digest algorithm (ARM-asm and NEON)"
+	depends on ARM && !CPU_V8
+	select HAVE_DIGEST_SHA256
+	select HAVE_DIGEST_SHA224
+	help
+	  SHA-256 secure hash standard (DFIPS 180-2) implemented
+	  using optimized ARM assembler and NEON, when available.
+
+config DIGEST_SHA1_ARM64_CE
+	tristate "SHA-1 digest algorithm (ARMv8 Crypto Extensions)"
+	depends on CPU_V8
+	select HAVE_DIGEST_SHA1
+	help
+	  SHA-1 secure hash algorithm (FIPS 180)
+
+	  Architecture: arm64 using:
+	  - ARMv8 Crypto Extensions
+
+config DIGEST_SHA256_ARM64_CE
+	tristate "SHA-224/256 digest algorithm (ARMv8 Crypto Extensions)"
+	depends on CPU_V8
+	select HAVE_DIGEST_SHA256
+	select HAVE_DIGEST_SHA224
+	help
+	  SHA-224 and SHA-256 secure hash algorithms (FIPS 180)
+
+	  Architecture: arm64 using:
+	  - ARMv8 Crypto Extensions
+
+endif
+
+config CRYPTO_PBKDF2
+	select DIGEST
+	select DIGEST_SHA1_GENERIC
+	select DIGEST_HMAC_GENERIC
+	bool
+
+config CRYPTO_RSA
+	bool
+
+config CRYPTO_RSA_BUILTIN_KEYS
+	bool
+	default y if CRYPTO_RSA_KEY != ""
+	select RSATOC
+
+config CRYPTO_RSA_KEY
+	depends on CRYPTO_RSA
+	string "RSA key to compile in"
+	help
+	  This option should be a filename of a PEM-formatted file containing
+	  X.509 certificates to be included into barebox. If the string starts
+	  with "pkcs11:" it is interpreted as a PKCS#11 URI rather than a file.
+
+	  This avoids the mkimage dependency of CONFIG_BOOTM_FITIMAGE_PUBKEY
+	  at the cost of an openssl build-time dependency.
+
+config CRYPTO_RSA_KEY_NAME_HINT
+	depends on CRYPTO_RSA
+	string "FIT image key name hint"
+	help
+	  In FIT images keys are identified by a key name hint string. Provide
+	  the key name hint here.
+
+config CRYPTO_KEYSTORE
+	bool "Keystore"
+	help
+	  This is a simple keystore, which can be used to pass keys
+	  between several components via simple interface.
+
+config JWT
+	bool "JSON Web Token support" if COMPILE_TEST
+	select JSMN
+	select BASE64
+	select CRYPTO_RSA
+
+endmenu

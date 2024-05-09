@@ -1,0 +1,13 @@
+ s { if  "" "$n}"
+l {
+if -"$v}" ]; then if -"$d}" ]; then
+if -z "${initrdfail}" ]; then
+        set initrdfail=1
+        if [ -n "${boot_once}" ]; then
+          set prev_entry="${default}"
+          save_env prev_entry
+        fi
+      fi
+      save_env initrdfail
+    fi; fi
+}

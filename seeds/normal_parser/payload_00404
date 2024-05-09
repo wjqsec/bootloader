@@ -1,0 +1,3 @@
+if [ -f ${y}D;then ${_}
+elif sleep --interruptible ;${y}v;then ""
+fi

@@ -1,0 +1,6 @@
+set lang=en m
+$esole
+terminal_output console
+set lg=en m
+$se
+terminal_output console

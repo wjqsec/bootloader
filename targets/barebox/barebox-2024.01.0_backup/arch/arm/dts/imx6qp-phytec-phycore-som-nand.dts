@@ -1,0 +1,50 @@
+// SPDX-License-Identifier: (GPL-2.0-or-later)
+/*
+ * Copyright (C) 2016 PHYTEC Messtechnik GmbH
+ * Author: Christian Hemp <c.hemp@phytec.de>
+ */
+
+/dts-v1/;
+#ifdef CONFIG_BOOTM_FITIMAGE_PUBKEY
+#include CONFIG_BOOTM_FITIMAGE_PUBKEY
+#endif
+#include <arm/nxp/imx/imx6qp.dtsi>
+#include "imx6qdl-phytec-phycore-som.dtsi"
+#include "imx6qdl-phytec-mira.dtsi"
+
+/ {
+	model = "PHYTEC phyCORE-i.MX6 QuadPlus with NAND";
+	compatible = "phytec,imx6qp-pcm058-nand", "fsl,imx6qp";
+};
+
+&eeprom {
+	status = "okay";
+};
+
+&ethphy {
+	max-speed = <1000>;
+};
+
+&fec {
+	status = "okay";
+};
+
+&m25p80 {
+	status = "okay";
+};
+
+&gpmi {
+	status = "okay";
+};
+
+&usbh1 {
+	status = "okay";
+};
+
+&usbotg {
+	status = "okay";
+};
+
+&usdhc1 {
+	status = "okay";
+};

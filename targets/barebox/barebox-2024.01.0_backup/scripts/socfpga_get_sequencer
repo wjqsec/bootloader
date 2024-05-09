@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+if [ "$#" -lt "2" ]
+then
+	echo "USAGE: $0 <UBOOT-SRC> <SEQUENCER_DEFINES>"
+	exit 1
+fi
+
+ubootsrc=$1
+sequencer_defines=$2
+bareboxsrc=.
+
+cd ${bareboxsrc}
+
+copy_source() {
+	local src
+	local tgt
+	src=$1
+	tgt=$2
+
+	echo "Merging source code $src to $tgt"
+
+	cp $src $tgt
+
+	unifdef -f ${sequencer_defines} $tgt -o $tgt
+
+	dos2unix $tgt
+
+	echo "	Fixing extern/static keywords..."
+	# Statify all global variables with missing static keyword
+	sed -i 's/^\(extern \|static \|\)\([^*#\/ 	][^(]* [^( ]*\((.*).*$\|=.*;.*$\)\)/static \2/g' $tgt
+	sed -i 's/^extern /static /g' $tgt
+
+	echo "	Translating altera int types..."
+	# Replace altera types
+	sed -i 's/alt_u32/uint32_t/g' $tgt
+	sed -i 's/alt_u16/uint16_t/g' $tgt
+	sed -i 's/alt_16/int16_t/g' $tgt
+	sed -i 's/alt_32/int32_t/g' $tgt
+	sed -i 's/alt_u8/uint8_t/g' $tgt
+	sed -i 's/alt_8/int8_t/g' $tgt
+	sed -i 's/#include "alt_types.h"//g' $tgt
+
+	echo "	Fixing include paths..."
+	# Fix include pathes
+	sed -i 's/#include <sdram.h>/#include <mach\/socfpga\/cyclone5-sdram.h>/g' $tgt
+	sed -i 's/#include "sequencer_auto.h"//g' $tgt
+	sed -i 's/#include "sequencer.h"/#include "cyclone5-sequencer.h"/g' $tgt
+
+	echo "	Automated readability fixup..."
+	indent -npro -kr -i8 -ts8 -sob -l100 -ss -ncs -cp1 -il0 $tgt
+
+	echo "  Whitespace cleanup..."
+	sed -i 's/[ \t]\+$//' $tgt
+
+	echo "  Running coccinelle cleanups..."
+	spatch -sp_file scripts/coccinelle/misc/altera_sequencer.cocci -in_place include/mach/socfpga
+
+	echo "  Cleanup header..."
+	sed -i 's/^static void rw_mgr_mem_calibrate_eye_diag_aid(void);$//g' $tgt
+	sed -i 's/^static void rw_mgr_load_mrs_calib(void);$//g' $tgt
+	sed -i 's/^static void rw_mgr_load_mrs_exec(void);$//g' $tgt
+	sed -i 's/^static void scc_mgr_set_group_dqs_io_and_oct_out2_gradual(uint32_t write_group, uint32_t delay);$//g' $tgt
+	sed -i 's/^static void rw_mgr_incr_vfifo_auto(uint32_t grp);$//g' $tgt
+	sed -i 's/^static void rw_mgr_decr_vfifo_auto(uint32_t grp);$//g' $tgt
+}
+
+copy_source ${ubootsrc}/board/altera/socfpga/sdram/sequencer.c include/mach/socfpga/cyclone5-sequencer.c
+sed -i 's/static int sdram_calibration(void)/static int socfpga_mem_calibration(void)/g' include/mach/socfpga/cyclone5-sequencer.c
+
+copy_source ${ubootsrc}/board/altera/socfpga/sdram/sequencer.h include/mach/socfpga/cyclone5-sequencer.h
+copy_source ${ubootsrc}/board/altera/socfpga/sdram/tclrpt.h include/mach/socfpga/tclrpt.h
+copy_source ${ubootsrc}/board/altera/socfpga/sdram/sdram_io.h include/mach/socfpga/sdram_io.h
+cat <<'EOF' >> include/mach/socfpga/sdram_io.h
+	#define write_register(BASE, OFFSET, DATA) \
+		writel(DATA, ((BASE) + (OFFSET)))
+	#define read_register(BASE, OFFSET) \
+		readl((BASE) + (OFFSET))
+	#define HPS_SDR_BASE 0xffc20000
+EOF
+copy_source ${ubootsrc}/board/altera/socfpga/sdram/system.h include/mach/socfpga/system.h
+
+echo "DONE"
+

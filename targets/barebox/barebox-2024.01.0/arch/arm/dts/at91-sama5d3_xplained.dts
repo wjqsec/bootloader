@@ -1,0 +1,21 @@
+/* SPDX-License-Identifier: GPL-2.0 OR X11 */
+/*
+ *  Copyright (C) 2021 Ahmad Fatoum <a.fatoum@pengutronix.de>
+ */
+
+/dts-v1/;
+
+#include <arm/microchip/at91-sama5d3_xplained.dts>
+#include "sama5d3.dtsi"
+
+/ {
+	model = "Atmel sama5d3_xplained";
+
+	chosen {
+		environment {
+			compatible = "barebox,environment";
+			device-path = &mmc0, "partname:0";
+			file-path = "barebox.env";
+		};
+	};
+};

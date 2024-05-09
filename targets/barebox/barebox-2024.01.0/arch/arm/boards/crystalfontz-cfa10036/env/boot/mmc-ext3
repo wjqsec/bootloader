@@ -1,0 +1,5 @@
+#!/bin/sh
+
+global.bootm.image="/mnt/disk0.2/boot/zImage-${global.hostname}"
+global.bootm.oftree="/mnt/disk0.2/boot/oftree-${global.board.variant}"
+global.linux.bootargs.dyn.root="root=/dev/mmcblk0p3 rootfstype=ext3 rootwait"

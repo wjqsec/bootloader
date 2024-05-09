@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menuconfig MTD
+	bool "Memory Technology Device (MTD) support"
+
+if MTD
+
+config MTD_WRITE
+	bool
+	default y
+	prompt "Support writing to MTD devices"
+
+config MTD_OOB_DEVICE
+	bool
+	default y
+	prompt "Create a device for reading the OOB data"
+
+config MTD_RAW_DEVICE
+	bool
+	default n
+	prompt "mtdraw device to read/write both data+oob"
+
+config MTD_CONCAT
+	bool
+	prompt "MTD concatenating support"
+	help
+	  Support for concatenating several MTD devices into a single
+	  (virtual) one. This allows you to have -for example- a JFFS(2)
+	  file system spanning multiple physical flash chips. This option
+	  needs driver support, currently only the cfi-flash driver supports
+	  concatenating MTD devices.
+
+comment "MTD debug options"
+
+config MTD_PEB_DEBUG
+	bool "MTD PEB debug"
+	help
+	  When enabled the MTD PEB API will emulate bitflips. Random read
+	  operations will return that bits are flipped. The MTD PEB API
+	  is used by UBI and ubiformat
+
+source "drivers/mtd/devices/Kconfig"
+source "drivers/mtd/nor/Kconfig"
+source "drivers/mtd/nand/Kconfig"
+source "drivers/mtd/spi-nor/Kconfig"
+source "drivers/mtd/ubi/Kconfig"
+
+endif

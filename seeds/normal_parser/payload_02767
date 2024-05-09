@@ -1,0 +1,4 @@
+set lang=en m
+$e
+terminal_output console
+search --hint=cd ""st --hint=cd ""st --hint=cd  --fs-uuid --hint=[ -f ${y}

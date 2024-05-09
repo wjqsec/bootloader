@@ -1,0 +1,64 @@
+/*
+ * Copyright 2012 Freescale Semiconductor, Inc.
+ * Copyright 2011 Linaro Ltd.
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+
+#include <arm/nxp/imx/imx6q.dtsi>
+#include "imx6q.dtsi"
+#include "imx6q-embedsky-e9.dtsi"
+
+/ {
+	chosen {
+		stdout-path = &uart1;
+
+		environment-mmc1 {
+			compatible = "barebox,environment";
+			device-path = &environment_mmc1;
+			status = "disabled";
+		};
+
+		environment-mmc3 {
+			compatible = "barebox,environment";
+			device-path = &environment_mmc3;
+			status = "disabled";
+		};
+
+	};
+};
+
+&usdhc2 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "barebox";
+		reg = <0x0 0xe0000>;
+	};
+	environment_mmc1: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};
+
+&usdhc4 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "barebox";
+		reg = <0x0 0xe0000>;
+	};
+	environment_mmc3: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};

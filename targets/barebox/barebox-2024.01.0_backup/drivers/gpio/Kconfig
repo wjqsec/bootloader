@@ -1,0 +1,224 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config GPIOLIB
+	bool
+	select GENERIC_GPIO
+
+if GPIOLIB
+
+menu "GPIO"
+
+config GPIO_GENERIC
+	bool
+
+config GPIO_DIGIC
+	bool "GPIO support for Canon DIGIC"
+	depends on ARCH_DIGIC || COMPILE_TEST
+
+config GPIO_74164
+	bool "Generic SPI attached shift register"
+	depends on SPI
+	help
+	  Driver for 74x164 compatible serial-in/parallel-out 8-outputs
+	  shift registers. This driver can be used to provide access
+	  to more gpio outputs.
+
+config GPIO_74XX_MMIO
+	tristate "GPIO driver for 74xx-ICs with MMIO access"
+	depends on OFDEVICE
+	select GPIO_GENERIC
+	help
+	  Say yes here to support GPIO functionality for 74xx-compatible ICs
+	  with MMIO access. Compatible models include:
+	    1 bit:	741G125 (Input), 741G74 (Output)
+	    2 bits:	742G125 (Input), 7474 (Output)
+	    4 bits:	74125 (Input), 74175 (Output)
+	    6 bits:	74365 (Input), 74174 (Output)
+	    8 bits:	74244 (Input), 74273 (Output)
+	    16 bits:	741624 (Input), 7416374 (Output)
+
+config GPIO_CLPS711X
+	bool "GPIO support for CLPS711X"
+	depends on ARCH_CLPS711X || COMPILE_TEST
+	select GPIO_GENERIC
+	help
+	  Say yes here to enable the GPIO driver for the CLPS711X CPUs
+
+config GPIO_DAVINCI
+	bool "TI Davinci/Keystone GPIO support"
+	default y if ARCH_DAVINCI || ARCH_K3
+	depends on (ARM && (ARCH_DAVINCI || ARCH_K3)) || COMPILE_TEST
+	help
+	  Say yes here to enable GPIO support for TI Davinci/Keystone SoCs.
+
+config GPIO_GENERIC_PLATFORM
+	bool "Generic memory-mapped GPIO controller support"
+	select GPIO_GENERIC
+	help
+	  Say yes here to support basic platform memory-mapped
+	  GPIO controllers
+
+config GPIO_IMX
+	bool "i.MX GPIO controller" if COMPILE_TEST
+	default y if ARCH_IMX
+
+config GPIO_VF610
+	bool "VF610 GPIO controller" if COMPILE_TEST
+	depends on ARCH_IMX || ARCH_VF610 || COMPILE_TEST
+	default y if ARCH_VF610 || ARCH_IMX93
+
+config GPIO_MXS
+	bool "MXS GPIO controller" if COMPILE_TEST
+	default y if ARCH_MXS
+
+config GPIO_JZ4740
+	bool "GPIO support for Ingenic SoCs"
+	depends on MACH_MIPS_XBURST || COMPILE_TEST
+	help
+	  Say yes here to enable the GPIO driver for the Ingenic SoCs.
+
+config GPIO_MALTA_FPGA_I2C
+	bool "Malta CBUS FPGA I2C GPIO"
+	depends on MACH_MIPS_MALTA || COMPILE_TEST
+	help
+	  Support access to the CBUS FPGA I2C lines through the gpio library.
+
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the
+	  functionality of the device.
+
+config GPIO_MPC8XXX
+	bool "MPC512x/MPC8xxx/QorIQ GPIO support"
+	depends on ARCH_LAYERSCAPE || COMPILE_TEST
+	select GPIO_GENERIC
+	help
+	  Say Y here if you're going to use hardware that connects to the
+	  MPC512x/831x/834x/837x/8572/8610/QorIQ GPIOs.
+
+config GPIO_OMAP
+	bool "OMAP GPIO controller" if COMPILE_TEST
+	default y if ARCH_OMAP
+
+config GPIO_ORION
+	bool "GPIO support for Marvell Orion/MVEBU SoCs"
+	depends on ARCH_MVEBU || COMPILE_TEST
+	help
+	  Say yes here to add the driver for the GPIO controller
+	  found on Marvell Orion and MVEBU SoCs (Armada 370/XP,
+	  Dove, Kirkwood, MV78x00, Orion5x).
+
+config GPIO_PCA953X
+	bool "PCA95[357]x, PCA9698, TCA64xx, and MAX7310 I/O ports"
+	depends on I2C
+	help
+	  Say yes here to provide access to several register-oriented
+	  SMBus I/O expanders, made mostly by NXP or TI.  Compatible
+	  models include:
+
+	  4 bits:  pca9536, pca9537
+
+	  8 bits:  max7310, max7315, pca6107, pca9534, pca9538, pca9554,
+	           pca9556, pca9557, pca9574, tca6408, xra1202
+
+	  16 bits: max7312, max7313, pca9535, pca9539, pca9555, pca9575,
+	           tca6416
+
+	  24 bits: tca6424
+
+	  40 bits: pca9505, pca9698
+
+config GPIO_PCF857X
+	tristate "PCF857x, PCA{85,96}7x, and MAX732[89] I2C GPIO expanders"
+	depends on I2C
+	depends on OFDEVICE
+	help
+	  Say yes here to provide access to most "quasi-bidirectional" I2C
+	  GPIO expanders used for additional digital outputs or inputs.
+	  Most of these parts are from NXP, though TI is a second source for
+	  some of them.  Compatible models include:
+
+	  8 bits:   pcf8574, pcf8574a, pca8574, pca8574a,
+	            pca9670, pca9672, pca9674, pca9674a,
+	  	    max7328, max7329
+
+	  16 bits:  pcf8575, pcf8575c, pca8575,
+	            pca9671, pca9673, pca9675
+
+config GPIO_PL061
+	bool "PrimeCell PL061 GPIO support"
+	depends on ARM_AMBA
+	help
+	  Say yes here to support the PrimeCell PL061 GPIO device
+
+config GPIO_RASPBERRYPI_EXP
+	bool "Raspberry Pi 3 GPIO Expander"
+	depends on ARCH_BCM283X
+	help
+	  Turn on GPIO support for the expander on Raspberry Pi 3 boards, using
+	  the firmware mailbox to communicate with VideoCore on BCM283x chips.
+
+config GPIO_ROCKCHIP
+	bool "Rockchip GPIO support"
+	depends on ARCH_ROCKCHIP
+	help
+	  Say yes here to include the driver for the GPIO controller found on
+	  Rockchip SoCs.
+
+config GPIO_STMPE
+	depends on MFD_STMPE
+	bool "STMPE GPIO Expander"
+
+config GPIO_TEGRA
+	bool "GPIO support for the Tegra SoCs"
+	depends on ARCH_TEGRA || COMPILE_TEST
+	help
+	  Say yes here to include the driver for the GPIO controller found on the
+	  Tegra line of SoCs.
+
+config GPIO_DESIGNWARE
+	tristate "Synopsys DesignWare GPIO driver"
+	help
+	  Say Y or M here to build support for the Synopsys DesignWare APB
+	  GPIO block.
+
+config GPIO_SX150X
+	bool "Semtec SX150x I/O ports"
+	depends on I2C
+	help
+	  Say Y here to build support for the Semtec Sx150x I2C GPIO
+	  expander chip.
+
+config GPIO_SIFIVE
+	bool "SiFive GPIO support"
+	depends on OF_GPIO
+	select GPIO_GENERIC
+	help
+	  Say yes here to support the GPIO device on SiFive SoCs.
+
+config GPIO_STARFIVE
+	bool "StarFive GPIO support"
+	depends on SOC_STARFIVE || CROSS_COMPILE
+	depends on OF_GPIO
+	select GPIO_GENERIC
+	help
+	  Say yes here to support the GPIO device on StarFive SoCs.
+
+config GPIO_LIBFTDI1
+	bool "libftdi1 driver"
+	depends on SANDBOX
+
+config GPIO_ZYNQ
+	tristate "Xilinx Zynq GPIO support"
+	depends on ARCH_ZYNQ || ARCH_ZYNQMP || CROSS_COMPILE
+	depends on OFDEVICE
+	help
+	  Say yes here to support Xilinx Zynq GPIO controller.
+
+config GPIO_LATCH
+	tristate "GPIO latch driver"
+	help
+	  Say yes here to enable a driver for GPIO multiplexers based on latches
+	  connected to other GPIOs.
+
+endmenu
+
+endif

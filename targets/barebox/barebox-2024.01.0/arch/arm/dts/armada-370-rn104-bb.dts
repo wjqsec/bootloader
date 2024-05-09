@@ -1,0 +1,11 @@
+/*
+ * Barebox specific DT overlay for Netgear ReadyNAS 104
+ */
+
+#include "arm/marvell/armada-370-netgear-rn104.dts"
+
+/ {
+	chosen {
+		stdout-path = &uart0;
+	};
+};

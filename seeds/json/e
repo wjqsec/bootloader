@@ -1,0 +1,70 @@
+{
+  "game": {
+    "title": "Space Adventure",
+    "version": "1.0",
+    "developer": "Galactic Studios",
+    "settings": {
+      "graphics": {
+        "resolution": "1920x1080",
+        "quality": "high",
+        "fullscreen": true
+      },
+      "audio": {
+        "volume": 0.8,
+        "music": true,
+        "soundEffects": true
+      },
+      "controls": {
+        "keyboard": {
+          "movement": {
+            "up": "W",
+            "down": "S",
+            "left": "A",
+            "right": "D"
+          },
+          "actions": {
+            "shoot": "Space",
+            "boost": "Shift"
+          }
+        },
+        "gamepad": {
+          "movement": "leftStick",
+          "actions": {
+            "shoot": "A",
+            "boost": "B"
+          }
+        }
+      }
+    },
+    "levels": [
+      {
+        "name": "Level 1",
+        "difficulty": "easy",
+        "objectives": ["Collect 10 stars", "Defeat 5 enemies"]
+      },
+      {
+        "name": "Level 2",
+        "difficulty": "medium",
+        "objectives": ["Explore the asteroid field", "Find the hidden treasure"]
+      },
+      {
+        "name": "Level 3",
+        "difficulty": "hard",
+        "objectives": ["Survive the alien invasion", "Destroy the mothership"]
+      }
+    ],
+    "achievements": [
+      {
+        "name": "Star Collector",
+        "description": "Collect 100 stars in total",
+        "reward": "50 coins"
+      },
+      {
+        "name": "Galactic Hero",
+        "description": "Complete all levels in hard difficulty",
+        "reward": "Legendary weapon"
+      }
+    ]
+  }
+}
+

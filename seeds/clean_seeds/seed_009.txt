@@ -1,0 +1,8 @@
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="gnulinux-advanced-42f132e4-6a94-4e00-9dcb-eed80c375619>gnulinux-6.0.0-nyx+-advanced-42f132e4-6a94-4e00-9dcb-eed80c375619"
+fi

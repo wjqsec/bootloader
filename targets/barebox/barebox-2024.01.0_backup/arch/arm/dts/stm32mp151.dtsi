@@ -1,0 +1,54 @@
+
+/ {
+	aliases {
+		mmc0 = &sdmmc1;
+		mmc1 = &sdmmc2;
+		mmc2 = &sdmmc3;
+		pwm1 = &{/soc/timer@44000000/pwm};
+		pwm2 = &{/soc/timer@40000000/pwm};
+		pwm3 = &{/soc/timer@40001000/pwm};
+		pwm4 = &{/soc/timer@40002000/pwm};
+		pwm5 = &{/soc/timer@40003000/pwm};
+		pwm8 = &{/soc/timer@44001000/pwm};
+		pwm12 = &{/soc/timer@40006000/pwm};
+		pwm13 = &{/soc/timer@40007000/pwm};
+		pwm14 = &{/soc/timer@40008000/pwm};
+		pwm15 = &{/soc/timer@44006000/pwm};
+		pwm16 = &{/soc/timer@44007000/pwm};
+		pwm17 = &{/soc/timer@44008000/pwm};
+		tamp.reboot_mode = &reboot_mode_tamp;
+	};
+
+};
+
+&{/clocks} {
+	/* Needed to let barebox find the clock nodes */
+	compatible = "simple-bus";
+};
+
+&{/soc} {
+	memory-controller@5a003000 {
+		compatible = "st,stm32mp1-ddr";
+		reg = <0x5a003000 0x1000>;
+	};
+};
+
+&bsec {
+	barebox,provide-mac-address = <&ethernet0 0x39>;
+};
+
+&iwdg2 {
+	barebox,restart-warm-bootrom;
+};
+
+&tamp {
+	reboot_mode_tamp: reboot-mode {
+		compatible = "syscon-reboot-mode";
+		offset = <0x150>; /* reg20 */
+		mask = <0xffff>;
+		mode-normal = <0>;
+		mode-loader = <0xBB>;
+		mode-recovery = <0xBC>;
+		barebox,mode-serial = <0xFF>;
+	};
+};

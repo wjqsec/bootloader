@@ -1,0 +1,87 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config HAVE_PBL_IMAGE
+	bool
+
+config HAVE_PBL_MULTI_IMAGES
+	bool
+
+config HAVE_IMAGE_COMPRESSION
+	bool
+
+config PBL_IMAGE
+	bool "Pre-Bootloader image"
+	depends on HAVE_PBL_IMAGE
+
+config PBL_MULTI_IMAGES
+	bool
+	select PBL_IMAGE
+	select PBL_RELOCATABLE
+	depends on HAVE_PBL_MULTI_IMAGES
+	default y
+
+config PBL_SINGLE_IMAGE
+	bool
+	depends on PBL_IMAGE
+	depends on !HAVE_PBL_MULTI_IMAGES
+	default y
+
+if PBL_IMAGE
+
+config USE_COMPRESSED_DTB
+	bool
+	depends on ARM || RISCV
+	select LZ4_DECOMPRESS if IMAGE_COMPRESSION_LZ4
+	select LZO_DECOMPRESS if IMAGE_COMPRESSION_LZO
+	select ZLIB if IMAGE_COMPRESSION_GZIP
+	select XZ_DECOMPRESS if IMAGE_COMPRESSION_XZKERN
+
+config PBL_RELOCATABLE
+	depends on ARM || MIPS || RISCV
+	bool "relocatable pbl image"
+	help
+	  Generate a pbl binary which can relocate itself during startup to run
+	  on different addresses. This is useful if your memory layout is not
+	  known during compile time.
+	  This option only influences the PBL image. See RELOCATABLE to also make
+	  the real image relocatable.
+
+config PBL_VERIFY_PIGGY
+	depends on ARM
+	bool
+
+config BOARD_GENERIC_DT
+	bool
+	select LIBFDT
+
+config IMAGE_COMPRESSION
+	bool
+	depends on HAVE_IMAGE_COMPRESSION
+	default y
+
+if IMAGE_COMPRESSION
+
+choice
+	prompt "Compression"
+	default IMAGE_COMPRESSION_LZ4
+
+config IMAGE_COMPRESSION_LZ4
+	bool "lz4"
+
+config IMAGE_COMPRESSION_LZO
+	bool "lzo"
+
+config IMAGE_COMPRESSION_GZIP
+	bool "gzip"
+
+config IMAGE_COMPRESSION_XZKERN
+	bool "xz"
+
+config IMAGE_COMPRESSION_NONE
+	bool "none"
+
+endchoice
+
+endif
+
+endif

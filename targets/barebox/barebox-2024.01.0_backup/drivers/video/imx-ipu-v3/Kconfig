@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config DRIVER_VIDEO_IMX_IPUV3
+	bool "i.MX IPUv3 driver"
+	depends on ARCH_IMX
+	select VIDEO_VPL
+	select OFTREE
+	help
+	  Support the IPUv3 found on Freescale i.MX51/53/6 SoCs
+
+if DRIVER_VIDEO_IMX_IPUV3
+
+config DRIVER_VIDEO_IMX_IPUV3_LVDS
+	bool "IPUv3 LVDS support"
+	select OFDEVICE
+
+config DRIVER_VIDEO_IMX_IPUV3_HDMI
+	bool "IPUv3 HDMI support"
+	depends on DRIVER_VIDEO_EDID
+	select OFDEVICE
+
+config DRIVER_VIDEO_IMX_IPUV3_PARALLEL
+	bool "IPUv3 parallel display support"
+	select OFDEVICE
+
+endif

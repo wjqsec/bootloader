@@ -1,0 +1,158 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// SPDX-FileCopyrightText: 2012 Jan Luebbe <j.luebbe@pengutronix.de>
+
+/* mk-am35xx-spi-image.c - convert a barebox image for SPI loading on AM35xx */
+
+/**
+ * @file
+ * @brief convert a barebox image for SPI loading on AM35xx
+ *
+ * FileName: scripts/mk-am35xx-spi-image.c
+ *
+ * Booting from SPI on an AM35xx (and possibly other TI SOCs) requires
+ * a special format:
+ *
+ * - 32 bit image size in big-endian
+ * - 32 bit load address in big-endian
+ * - binary image converted from little- to big-endian
+ *
+ * This tool converts barebox.bin to the required format.
+ */
+
+#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdint.h>
+#include <limits.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
+#include <getopt.h>
+#include <endian.h>
+
+static void usage(char *prgname)
+{
+	printf("usage: %s [OPTION] FILE > IMAGE\n"
+	       "\n"
+	       "options:\n"
+	       "  -a <address> memory address for the loaded image in SRAM\n"
+	       "  -s           Write big endian image needed for direct flashing to SPI\n",
+	       prgname);
+}
+
+int main(int argc, char *argv[])
+{
+	FILE *input;
+	int opt;
+	off_t pos;
+	size_t size;
+	uint32_t addr = 0x40200000;
+	uint32_t temp;
+	int chsettings = 0;
+	int swap = 0;
+
+	while((opt = getopt(argc, argv, "a:s")) != -1) {
+		switch (opt) {
+		case 'a':
+			addr = strtoul(optarg, NULL, 0);
+			break;
+		case 's':
+			swap = 1;
+			break;
+		}
+	}
+
+	if (optind >= argc) {
+		usage(argv[0]);
+		exit(1);
+	}
+
+	input = fopen(argv[optind], "r");
+	if (input == NULL) {
+		perror("fopen");
+		exit(EXIT_FAILURE);
+	}
+
+	if (fseeko(input, 0, SEEK_END) == -1) {
+		perror("fseeko");
+		exit(EXIT_FAILURE);
+	}
+
+	pos = ftello(input);
+	if (pos == -1) {
+		perror("ftello");
+		exit(EXIT_FAILURE);
+	}
+	if (pos > 0x100000) {
+		fprintf(stderr, "error: image should be smaller than 1 MiB\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if (fseeko(input, 0x14, SEEK_SET) == -1) {
+		perror("fseeko");
+		exit(EXIT_FAILURE);
+	}
+
+	size = fread(&temp, 1, sizeof(uint32_t), input);
+	if (!size) {
+		perror("fseeko");
+		exit(EXIT_FAILURE);
+	}
+
+	/*
+	 * Test if this is an image generated with omap_signGP. These don't
+	 * need size and load address prepended.
+	 */
+	if (le32toh(temp) == 0x45534843)
+		chsettings = 1;
+
+	if (fseeko(input, 0x0, SEEK_SET) == -1) {
+		perror("fseeko");
+		exit(EXIT_FAILURE);
+	}
+
+	pos = (pos + 3) & ~3;
+
+	if (!chsettings) {
+		/* image size */
+		temp = pos;
+		if (swap)
+			temp = htobe32(temp);
+
+		fwrite(&temp, sizeof(uint32_t), 1, stdout);
+
+		/* memory address */
+		temp = addr;
+		if (swap)
+			temp = htobe32(temp);
+		fwrite(&temp, sizeof(uint32_t), 1, stdout);
+	}
+
+	for (;;) {
+		size = fread(&temp, 1, sizeof(uint32_t), input);
+		if (!size)
+			break;
+		if (size < 4 && !feof(input)) {
+			perror("fread");
+			exit(EXIT_FAILURE);
+		}
+		if (swap)
+			temp = htobe32(le32toh(temp));
+		if (fwrite(&temp, 1, sizeof(uint32_t), stdout) != 4) {
+			perror("fwrite");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (fclose(input) != 0) {
+		perror("fclose");
+		exit(EXIT_FAILURE);
+	}
+
+	exit(EXIT_SUCCESS);
+}

@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menuconfig W1
+	bool "Dallas's 1-wire support"
+	help
+	  Dallas' 1-wire bus is useful to connect slow 1-pin devices
+	  such as iButtons and thermal sensors.
+
+	  If you want W1 support, you should say Y here.
+
+if W1
+
+source "drivers/w1/masters/Kconfig"
+source "drivers/w1/slaves/Kconfig"
+
+config W1_DUAL_SEARCH
+	bool "dual search"
+	help
+	  Some device need to be searched twice to be detected
+
+endif # W1

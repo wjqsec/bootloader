@@ -1,0 +1,9 @@
+if [ -f ${y}v;then ""
+fi
+function t{if $*;then i
+fi
+}
+t n e{
+if "";then	7
+fi
+}

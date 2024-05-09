@@ -1,0 +1,16 @@
+/ {
+	aliases {
+		pwm0 = &pwm1;
+		pwm1 = &pwm2;
+		pwm2 = &pwm3;
+		pwm3 = &pwm4;
+		pwm4 = &pwm5;
+		pwm5 = &pwm6;
+		pwm6 = &pwm7;
+		pwm7 = &pwm8;
+	};
+};
+
+&gpt {
+	clocks = <&clks IMX6SX_CLK_GPT_BUS>, <&clks IMX6SX_CLK_GPT_SERIAL>;
+};

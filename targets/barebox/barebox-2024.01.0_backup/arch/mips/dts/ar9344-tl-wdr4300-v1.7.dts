@@ -1,0 +1,82 @@
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+#include "ar9344.dtsi"
+
+/ {
+	model = "TP-Link WDR4300 v1.7";
+	compatible = "tplink,tl-wdr4300", "tplink,tl-wdr4300-v1.7";
+
+	aliases {
+		serial0 = &uart0;
+		spiflash = &spiflash;
+	};
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x8000000>;
+	};
+
+	chosen {
+		stdout-path = &uart0;
+
+		environment {
+			compatible = "barebox,environment";
+			device-path = &env_nor;
+		};
+
+		art@0 {
+			compatible = "qca,art-ar9344", "qca,art";
+			device-path = &spiflash_art;
+			barebox,provide-mac-address = <&mac0>;
+		};
+	};
+};
+
+&ref {
+	clock-frequency = <40000000>;
+};
+
+&uart0 {
+	status = "okay";
+	clock-frequency = <40000000>;
+};
+
+&wdt0 {
+	status = "okay";
+};
+
+&spi {
+	num-chipselects = <1>;
+	status = "okay";
+
+	/* Winbond W25Q64CV SPI flash */
+	spiflash: w25q64cv@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor", "winbond,w25q64cv";
+		spi-max-frequency = <104000000>;
+		reg = <0>;
+
+		partition@0 {
+			label = "barebox";
+			reg = <0 0x80000>;
+		};
+
+		env_nor: partition@80000 {
+			label = "barebox-environment";
+			reg = <0x80000 0x10000>;
+		};
+
+		spiflash_art: partition@7f0000 {
+			label = "art";
+			reg = <0x7f0000 0x10000>;
+		};
+	};
+};
+
+&mac0 {
+	status = "okay";
+};

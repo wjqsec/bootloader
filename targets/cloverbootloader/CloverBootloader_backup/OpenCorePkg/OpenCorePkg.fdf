@@ -1,0 +1,107 @@
+## @file
+#  Compile standalone firmware filesystem files.
+#
+#  Copyright (C) 2022-2023, Mike Beaton. All rights reserved.<BR>
+#  SPDX-License-Identifier: BSD-3-Clause
+##
+
+#
+# For now disable non-64-bit build; Mac Pro cannot use it, and EDK-II
+# build system does not separate 64 bit and 32 bit .ffs files, which
+# we want to distribute.
+#
+# If we needed all archs in future we could distribute the complete
+# .fv files, from which the .ffs can be re-extracted.
+#
+!if ($(ARCH) == X64)
+
+!if ($(ARCH) == X64)
+  [FV.FfsFilesX64]
+!else
+  [FV.FfsFilesIA32]
+!endif
+
+  BlockSize          = 0x10000
+  NumBlocks          = 8
+  FvAlignment        = 16         #FV alignment and FV attributes setting.
+  ERASE_POLARITY     = 1
+  MEMORY_MAPPED      = TRUE
+  STICKY_WRITE       = TRUE
+  LOCK_CAP           = TRUE
+  LOCK_STATUS        = TRUE
+  WRITE_DISABLED_CAP = TRUE
+  WRITE_ENABLED_CAP  = TRUE
+  WRITE_STATUS       = TRUE
+  WRITE_LOCK_CAP     = TRUE
+  WRITE_LOCK_STATUS  = TRUE
+  READ_DISABLED_CAP  = TRUE
+  READ_ENABLED_CAP   = TRUE
+  READ_STATUS        = TRUE
+  READ_LOCK_CAP      = TRUE
+  READ_LOCK_STATUS   = TRUE
+
+  #
+  # DXE Drivers (other .inf files for conversion to .ffs may be added here)
+  #
+  #INF  OpenCorePkg/Staging/EnableGop/EnableGop.inf
+
+!if ($(ARCH) == X64)
+  [FV.EnableGopDirectX64]
+!else
+  [FV.EnableGopDirectIA32]
+!endif
+
+  BlockSize          = 0x10000
+  NumBlocks          = 8
+  FvAlignment        = 16         #FV alignment and FV attributes setting.
+  ERASE_POLARITY     = 1
+  MEMORY_MAPPED      = TRUE
+  STICKY_WRITE       = TRUE
+  LOCK_CAP           = TRUE
+  LOCK_STATUS        = TRUE
+  WRITE_DISABLED_CAP = TRUE
+  WRITE_ENABLED_CAP  = TRUE
+  WRITE_STATUS       = TRUE
+  WRITE_LOCK_CAP     = TRUE
+  WRITE_LOCK_STATUS  = TRUE
+  READ_DISABLED_CAP  = TRUE
+  READ_ENABLED_CAP   = TRUE
+  READ_STATUS        = TRUE
+  READ_LOCK_CAP      = TRUE
+  READ_LOCK_STATUS   = TRUE
+
+  #
+  # DXE Drivers
+  #
+
+  #
+  # EnableGopDirect intentionally has the same GUID as EnableGop, so it must go in a separate FV.
+  # (We don't care about the FV, rather the intermediate FFS files which are generated during build.)
+  #
+#  INF  OpenCorePkg/Staging/EnableGop/EnableGopDirect.inf
+
+!endif
+
+#
+# Uses patched GenSec to support legacy TianoCompress compression, producing an ffs which matches
+# those found in legacy Mac firmware.
+#
+# Removing the wrapping COMPRESS and GUIDED sections below gives an uncompressed ffs from non-patched
+# tools which Mac legacy firmware can read (at about four times the size of the compressed version).
+#
+# Using standard (PI_STD) COMPRESS produces a compressed ffs which legacy Mac firmware cannot read.
+#
+# Note: `GUIDED A31280AD-481E-41B6-95E8-127F4C984779` with standard tools makes a Tiano compressed
+# GUIDED section, but this is different from a Tiano compressed COMPRESS section and legacy Mac
+# firmware also cannot read it.
+#
+#[Rule.Common.DXE_DRIVER]
+#  FILE DRIVER = $(NAMED_GUID) Checksum {
+#    COMPRESS TIANO {
+#      GUIDED {
+#        DXE_DEPEX    DXE_DEPEX Optional      $(INF_OUTPUT)/$(MODULE_NAME).depex
+#        PE32         PE32                    $(INF_OUTPUT)/$(MODULE_NAME).efi
+#        UI           STRING="$(MODULE_NAME) $(VERSION_STRING)" Optional
+#      }
+#    }
+#  }

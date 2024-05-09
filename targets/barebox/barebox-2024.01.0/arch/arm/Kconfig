@@ -1,0 +1,545 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config ARM
+	bool
+	select HAS_KALLSYMS
+	select HAS_CACHE
+	select HAVE_CONFIGURABLE_TEXT_BASE if !RELOCATABLE
+	select HAVE_IMAGE_COMPRESSION
+	select HAVE_ARCH_KASAN
+	select ARCH_HAS_SJLJ
+	select ARM_OPTIMZED_STRING_FUNCTIONS if KASAN
+	default y
+
+config ARM_LINUX
+	bool
+	default y
+	depends on CMD_BOOTZ || CMD_BOOTU || BOOTM
+
+config ARM_USE_COMPRESSED_DTB
+       bool
+       select USE_COMPRESSED_DTB
+
+config TEXT_BASE
+	hex
+	default 0x0
+
+menu "System Type"
+
+config ARCH_STM32
+	bool
+	help
+	  Selected by both STM32 MCUs and MPUs to restrict driver
+	  visibility.
+
+config ARCH_OMAP
+	bool
+	select HAS_DEBUG_LL
+	select GPIOLIB
+
+choice
+	prompt "ARM system type"
+
+config ARCH_MULTIARCH
+	bool "Allow multiple archs to be selected"
+
+config ARCH_AT91
+	bool "Atmel AT91"
+	depends on 32BIT
+	select GPIOLIB
+	select CLKDEV_LOOKUP
+	select HAVE_PBL_MULTI_IMAGES
+	select HAS_DEBUG_LL
+	select HAVE_CLK
+	select COMMON_CLK_AT91 if COMMON_CLK_OF_PROVIDER
+
+config ARCH_CLPS711X
+	bool "Cirrus Logic EP711x/EP721x/EP731x"
+	depends on 32BIT
+	select CLKDEV_LOOKUP
+	select CLOCKSOURCE_CLPS711X
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CPU_32v4T
+	select GPIOLIB
+	select HAS_DEBUG_LL
+	select HAVE_PBL_MULTI_IMAGES
+	select MFD_SYSCON
+	select RELOCATABLE
+
+config ARCH_DAVINCI
+	bool "TI Davinci"
+	depends on 32BIT
+	select CPU_ARM926T
+	select HAS_DEBUG_LL
+	select GPIOLIB
+
+config ARCH_DIGIC
+	bool "Canon DIGIC-based cameras"
+	depends on 32BIT
+	select CPU_ARM946E
+	select HAS_DEBUG_LL
+	select CLOCKSOURCE_DIGIC
+	select GPIOLIB
+	help
+	  Support for Canon's digital cameras that use the DIGIC4 chip.
+
+config ARCH_EP93XX
+	bool "Cirrus Logic EP93xx"
+	depends on 32BIT
+	select CPU_ARM920T
+	select GENERIC_GPIO
+
+config ARCH_LAYERSCAPE
+	bool "NXP Layerscape based"
+	select GPIOLIB
+	select HAS_DEBUG_LL
+	select HAVE_PBL_MULTI_IMAGES
+	select COMMON_CLK
+	select CLKDEV_LOOKUP
+	select COMMON_CLK_OF_PROVIDER
+	select HW_HAS_PCI
+	select OFTREE
+	select OFDEVICE
+	select ARM_USE_COMPRESSED_DTB
+
+config ARCH_MVEBU
+	bool "Marvell EBU platforms"
+	depends on 32BIT
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CLKDEV_LOOKUP
+	select GPIOLIB
+	select HAS_DEBUG_LL
+	select HAVE_PBL_MULTI_IMAGES
+	select HW_HAS_PCI
+	select MVEBU_MBUS
+	select OFTREE
+	select OF_ADDRESS_PCI
+	select PINCTRL
+
+config ARCH_MXS
+	bool "Freescale i.MX23/28 (mxs) based"
+	depends on 32BIT
+	select GPIOLIB
+	select GENERIC_GPIO
+	select COMMON_CLK
+	select CLKDEV_LOOKUP
+	select HAS_DEBUG_LL
+	select HAVE_PBL_MULTI_IMAGES
+
+config ARCH_NOMADIK
+	bool "STMicroelectronics Nomadik"
+	depends on 32BIT
+	select CPU_ARM926T
+	select CLOCKSOURCE_NOMADIK
+	select HAVE_CLK
+	help
+	  Support for the Nomadik platform by ST-Ericsson
+
+config ARCH_OMAP_SINGLE
+	bool "TI OMAP"
+	depends on 32BIT
+	select ARCH_OMAP
+
+config ARCH_PXA
+	bool "Intel/Marvell PXA based"
+	depends on 32BIT
+	select GENERIC_GPIO
+
+config ARCH_SOCFPGA
+	bool "Altera SOCFPGA"
+	depends on 32BIT
+	select HAS_DEBUG_LL
+	select ARM_SMP_TWD
+	select CPU_V7
+	select COMMON_CLK
+	select CLKDEV_LOOKUP
+
+config ARCH_TEGRA
+	bool "NVIDIA Tegra"
+	depends on 32BIT
+	select CPU_V7
+	select HAS_DEBUG_LL
+	select HW_HAS_PCI
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CLKDEV_LOOKUP
+	select GPIOLIB
+	select GPIO_TEGRA
+	select HAVE_PBL_MULTI_IMAGES
+	select OFDEVICE
+	select OFTREE
+	select RELOCATABLE
+	select RESET_CONTROLLER
+	select PINCTRL
+
+config ARCH_UEMD
+	bool "RC Module UEMD Platform"
+	depends on 32BIT
+	select CPU_ARM1176
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CLKDEV_LOOKUP
+	select OFDEVICE
+	select OFTREE
+	select CLOCKSOURCE_UEMD
+	select HAS_DEBUG_LL
+
+config ARCH_ZYNQ
+	bool "Xilinx Zynq-based boards"
+	depends on 32BIT
+	select HAS_DEBUG_LL
+	select PBL_IMAGE
+	select GPIOLIB
+
+endchoice
+
+config ARCH_ARM64_VIRT
+	bool "ARM64 QEMU Virt board"
+	depends on 64BIT
+	select CPU_V8
+	select HAVE_PBL_MULTI_IMAGES
+	select OFDEVICE
+	select OFTREE
+	select RELOCATABLE
+	select ARM_AMBA
+	select BOARD_ARM_VIRT
+	select HW_HAS_PCI
+	select HAS_DEBUG_LL
+
+config ARCH_BCM283X
+	bool "Broadcom BCM283x based boards"
+	select GPIOLIB
+	select CLKDEV_LOOKUP
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CLOCKSOURCE_BCM283X
+	select ARM_AMBA
+	select HAS_DEBUG_LL
+	select RELOCATABLE
+	select OFTREE
+	select OFDEVICE
+	select HAVE_PBL_MULTI_IMAGES
+
+config ARCH_IMX
+	bool "Freescale iMX-based"
+	depends on ARCH_MULTIARCH
+	select GPIOLIB
+	select COMMON_CLK
+	select CLKDEV_LOOKUP
+	select WATCHDOG_IMX_RESET_SOURCE
+	select HAS_DEBUG_LL
+	select HAVE_PBL_MULTI_IMAGES
+	select RELOCATABLE
+
+config ARCH_K3
+	bool "Texas Instruments Inc. K3 multicore SoC architecture"
+	depends on 64BIT
+	select CPU_V8
+	select GPIOLIB
+	select COMMON_CLK
+	select CLKDEV_LOOKUP
+	select HAVE_PBL_MULTI_IMAGES
+	select HAS_DEBUG_LL
+	select HAVE_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select PM_GENERIC_DOMAINS
+
+config ARCH_OMAP_MULTI
+	bool "TI OMAP"
+	depends on 32BIT
+	depends on ARCH_MULTIARCH
+	select OMAP_MULTI_BOARDS
+	select ARCH_OMAP
+	select HAS_DEBUG_LL
+	select GPIOLIB
+
+config ARCH_ROCKCHIP
+	bool "Rockchip RX3xxx"
+	depends on ARCH_MULTIARCH
+	select COMMON_CLK
+	select CLKDEV_LOOKUP
+	select COMMON_CLK_OF_PROVIDER
+	select GPIOLIB
+	select PINCTRL
+	select PINCTRL_ROCKCHIP
+	select OFTREE
+	select HAVE_PBL_MULTI_IMAGES
+	select HAS_DEBUG_LL
+	imply GPIO_ROCKCHIP
+
+config ARCH_STM32MP
+	bool "STMicroelectronics STM32MP"
+	depends on 32BIT
+	select ARCH_STM32
+	select CPU_V7
+	select HAVE_PBL_MULTI_IMAGES
+	select CLKDEV_LOOKUP
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select HAS_DEBUG_LL
+	select HAVE_CLK
+	select GPIOLIB
+	select ARCH_HAS_RESET_CONTROLLER
+	select ARM_AMBA
+	select ARM_SMCCC
+	select ARM_USE_COMPRESSED_DTB
+
+config ARCH_VERSATILE
+	bool "ARM Versatile boards (ARM926EJ-S)"
+	depends on 32BIT
+	select GPIOLIB
+	select ARM_AMBA
+	select AMBA_SP804
+	select HAVE_CLK
+	select HAS_DEBUG_LL
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select HAVE_PBL_MULTI_IMAGES
+
+config ARCH_VEXPRESS
+	bool "ARM Vexpress & virt boards"
+	depends on 32BIT
+	select HAS_DEBUG_LL
+	select CPU_V7
+	select ARM_AMBA
+	select AMBA_SP804
+	select CLKDEV_LOOKUP
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select OFTREE
+	select OFDEVICE
+	select RELOCATABLE
+	select HAVE_PBL_MULTI_IMAGES
+
+config ARCH_ZYNQMP
+	bool "Xilinx ZynqMP-based boards"
+	depends on 64BIT
+	select CPU_V8
+	select HAS_DEBUG_LL
+	select HAVE_PBL_MULTI_IMAGES
+	select ARM_SMCCC
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CLKDEV_LOOKUP
+	select GPIOLIB
+	select OFDEVICE
+	select OFTREE
+	select RELOCATABLE
+	select HAS_MACB
+
+source "arch/arm/cpu/Kconfig"
+source "arch/arm/mach-at91/Kconfig"
+source "arch/arm/mach-bcm283x/Kconfig"
+source "arch/arm/mach-clps711x/Kconfig"
+source "arch/arm/mach-davinci/Kconfig"
+source "arch/arm/mach-digic/Kconfig"
+source "arch/arm/mach-ep93xx/Kconfig"
+source "arch/arm/mach-imx/Kconfig"
+source "arch/arm/mach-layerscape/Kconfig"
+source "arch/arm/mach-mxs/Kconfig"
+source "arch/arm/mach-mvebu/Kconfig"
+source "arch/arm/mach-nomadik/Kconfig"
+source "arch/arm/mach-k3/Kconfig"
+source "arch/arm/mach-omap/Kconfig"
+source "arch/arm/mach-pxa/Kconfig"
+source "arch/arm/mach-rockchip/Kconfig"
+source "arch/arm/mach-socfpga/Kconfig"
+source "arch/arm/mach-stm32mp/Kconfig"
+source "arch/arm/mach-versatile/Kconfig"
+source "arch/arm/mach-vexpress/Kconfig"
+source "arch/arm/mach-tegra/Kconfig"
+source "arch/arm/mach-uemd/Kconfig"
+source "arch/arm/mach-zynq/Kconfig"
+source "arch/arm/mach-zynqmp/Kconfig"
+
+config BOARD_ARM_VIRT
+	bool
+	select BOARD_ARM_GENERIC_DT
+	select BOARD_QEMU_VIRT
+	select OF_OVERLAY
+
+config BOARD_ARM_GENERIC_DT
+	select BOARD_GENERIC_DT
+	select ARM_AMBA
+	depends on HAVE_PBL_MULTI_IMAGES
+	depends on OFDEVICE
+	bool "Build generic ARM device tree 2nd stage image"
+	help
+	  This enables compilation of a generic image that can be started 2nd
+	  stage from barebox or from qemu. It picks up a device tree passed
+	  in r2 like the Kernel does, so it could be used anywhere where a Kernel
+	  image could be used. The image will be called images/barebox-dt-2nd.img
+
+config BOARD_ARM_GENERIC_DT_AARCH64
+	bool
+	depends on CPU_V8
+	depends on BOARD_ARM_GENERIC_DT
+	default y
+
+config ARM_ASM_UNIFIED
+	bool
+
+config AEABI
+	bool "Use the ARM EABI to compile barebox"
+	depends on !CPU_V8
+	help
+	  This option allows for barebox to be compiled using the latest
+	  ARM ABI (aka EABI).
+
+	  To use this you need GCC version 4.0.0 or later.
+
+config THUMB2_BAREBOX
+	select ARM_ASM_UNIFIED
+	select AEABI
+	depends on !ARCH_TEGRA && !ARCH_AT91
+	depends on CPU_V7 && !CPU_32v4T && !CPU_32v5 && !CPU_32v6
+	bool "Compile barebox in thumb-2 mode (read help)"
+	help
+	  This enables compilation of barebox in thumb-2 mode which generates
+	  ~25% smaller binaries. ARM assembly code needs some fixups to be able
+	  to work correctly in thumb-2 mode. the barebox core should have these
+	  fixups since most assembly code is derived from the Kernel. However,
+	  your board lowlevel init code may break in thumb-2 mode. You have been
+	  warned.
+
+config ARM_BOARD_APPEND_ATAG
+	bool "Let board specific code to add ATAGs to be passed to the kernel"
+	depends on ARM_LINUX && !CPU_V8
+	help
+	  This option is purely to start some vendor provided kernels.
+	  ** DO NOT USE FOR YOUR OWN DESIGNS! **
+
+config ARM_BOARD_PREPEND_ATAG
+	bool "Prepend the board specific ATAGs"
+	depends on ARM_BOARD_APPEND_ATAG
+	help
+	  Choose this option if your kernel crops the passed ATAG list e.g. at
+	  ATAG_MEM, also cropping off the board specific ATAGs. This option
+	  will pass all board specific ATAGs in front of all other ATAGs.
+	  This option is purely to start some vendor provided kernels.
+	  ** DO NOT USE FOR YOUR OWN DESIGNS! **
+
+endmenu
+
+config 64BIT
+	bool "64bit barebox" if "$(ARCH)" != "arm64"
+	default "$(ARCH)" = "arm64"
+	select ARCH_DMA_ADDR_T_64BIT
+	help
+	  Select this option if you want to build a 64-bit barebox.
+
+config 32BIT
+	bool
+	default !64BIT
+	help
+	  Select this option if you want to build a 32-bit barebox.
+
+menu "ARM specific settings"
+
+config ARM_OPTIMZED_STRING_FUNCTIONS
+	bool "use assembler optimized string functions"
+	#
+	# memset() and memcpy() in arm/lib64/mem[set|cpy].S are
+	# written with assumption of enabled MMU and cache. Depending
+	# on the inputs in may fail with Alignement exception if used
+	# without MMU
+	#
+	depends on !CPU_V8 || MMU
+	help
+	  Say yes here to use assembler optimized memcpy / memset functions.
+	  These functions work much faster than the normal versions but
+	  increase your binary size.
+
+config ARM_EXCEPTIONS
+	select ARCH_HAS_DATA_ABORT_MASK
+	bool "enable arm exception handling support"
+	default y
+
+config ARM_UNWIND
+	bool "enable stack unwinding support"
+	depends on AEABI
+	select ARCH_HAS_STACK_DUMP
+	help
+	  This option enables stack unwinding support in barebox
+	  using the information automatically generated by the
+	  compiler. The resulting kernel image is slightly bigger but
+	  the performance is not affected. Currently, this feature
+	  only works with EABI compilers. If unsure say Y.
+
+config ARM_SEMIHOSTING
+	bool "enable ARM semihosting support"
+	depends on !CPU_V8
+	help
+	  This option enables ARM semihosting support in barebox. ARM
+	  semihosting is a communication discipline that allows code
+	  running on target ARM cpu perform system calls and access
+	  the data on the host computer connected to the target via
+	  debugging channel (JTAG, SWD). If unsure say N
+
+config ARM_SMCCC
+	bool
+	help
+	  This option enables barebox to invoke ARM secure monitor calls.
+
+config ARM_SECURE_MONITOR
+	depends on CPU_32v7 || CPU_64v8
+	select ARM_SMCCC
+	bool
+	help
+	  This option enables barebox to service ARM secure monitor calls.
+
+config ARM_PSCI_OF
+	bool
+
+config ARM_PSCI
+	bool "enable Power State Coordination Interface (PSCI) support"
+	depends on CPU_V7
+	select ARM_SECURE_MONITOR
+	select ARM_PSCI_OF
+	help
+	  PSCI is used for controlling secondary CPU cores on some systems. Say
+	  yes here if you want barebox to service PSCI calls on such systems.
+
+config ARM_PSCI_CLIENT
+	bool "Enable barebox PSCI client support"
+	depends on CPU_32v7 || CPU_64v8
+	select ARM_SMCCC
+	select ARM_PSCI_OF
+	help
+	  Say yes here if you want barebox to communicate with a secure monitor
+	  for resetting/powering off the system over PSCI. barebox' PSCI version
+	  information will also be shared with Linux via device tree fixups.
+
+config ARM_PSCI_DEBUG
+	bool "Enable PSCI debugging"
+	depends on ARM_PSCI
+	help
+	  This enables debug output from the PSCI functions during runtime of the
+	  Kernel. This needs board specific help, the board needs to provide a putc
+	  function using psci_set_putc(). This putc function will then be called
+	  during runtime of the Kernel, so it must be able to cope with that. It may
+	  happen for example that the Kernel has turned off some clocks needed in the
+	  putc function.
+	  Only use for debugging.
+
+config ARM_MODULE_PLTS
+	bool "Use PLTs to allow loading modules placed far from barebox image"
+	depends on MODULES
+	select QSORT
+	help
+	  Allocate PLTs when loading modules so that jumps and calls whose
+	  targets are too far away for their relative offsets to be encoded
+	  in the instructions themselves can be bounced via veneers in the
+	  module's PLT. The modules will use slightly more memory, but after
+	  rounding up to page size, the actual memory footprint is usually
+	  the same.
+
+	  Say y if your memory configuration puts the heap to far away from the
+	  barebox image, causing relocation out of range errors
+
+config ARM_ATF
+	bool
+
+endmenu

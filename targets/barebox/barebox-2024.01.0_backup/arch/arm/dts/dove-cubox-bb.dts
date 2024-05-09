@@ -1,0 +1,16 @@
+/*
+ * Barebox specific DT overlay for SolidRun CuBox
+ *   Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+ */
+
+#include "arm/marvell/dove-cubox.dts"
+
+/ {
+	chosen {
+		stdout-path = &uart0;
+	};
+};
+
+&{/leds/led-power} {
+		barebox,default-trigger = "heartbeat";
+};

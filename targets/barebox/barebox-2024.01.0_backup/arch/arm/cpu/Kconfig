@@ -1,0 +1,160 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+comment "Processor Type"
+
+config PHYS_ADDR_T_64BIT
+	bool
+
+config CPU_32
+	bool
+	select HAS_MODULES
+	select HAVE_MOD_ARCH_SPECIFIC
+	select HAS_DMA
+	select HAVE_PBL_IMAGE
+	select ARCH_HAS_ZERO_PAGE
+
+config CPU_64
+	bool
+	select PHYS_ADDR_T_64BIT
+	select HAVE_PBL_IMAGE
+	select HAVE_PBL_MULTI_IMAGES
+	select HAS_DMA
+	select ARCH_WANT_FRAME_POINTERS
+	select ARCH_HAS_ZERO_PAGE
+
+# Select CPU types depending on the architecture selected. This selects
+# which CPUs we support in the kernel image, and the compiler instruction
+# optimiser behaviour.
+
+# ARM1176
+config CPU_ARM1176
+	bool
+	select CPU_V6
+
+# ARM920T
+config CPU_ARM920T
+	bool
+	select CPU_32v4T
+	help
+	  The ARM920T is licensed to be produced by numerous vendors,
+	  and is used in the Maverick EP9312 and the Samsung S3C2410.
+
+	  More information on the Maverick EP9312 at
+	  <http://www.cirrus.com/en/products/ep9312.html>.
+
+	  Say Y if you want support for the ARM920T processor.
+	  Otherwise, say N.
+
+# ARM926T
+config CPU_ARM926T
+	bool
+	select CPU_32v5
+	help
+	  This is a variant of the ARM920. It has slightly different
+	  instruction sequences for cache and TLB operations. Curiously,
+	  there is no documentation on it at the ARM corporate website.
+
+	  Say Y if you want support for the ARM926T processor.
+	  Otherwise, say N.
+
+# ARM946E-S
+config CPU_ARM946E
+	bool
+	select CPU_32v4T
+	help
+	  ARM946E-S is a member of the ARM9E-S family of high-
+	  performance, 32-bit system-on-chip processor solutions.
+	  The TCM and ARMv5TE 32-bit instruction set is supported.
+
+	  Say Y if you want support for the ARM946E-S processor.
+	  Otherwise, say N.
+
+# Feroceon
+config CPU_FEROCEON
+	bool
+	select CPU_32v5
+	help
+	  This is a Marvell implementation of an ARMv5TE compatible
+	  ARM core, used in the Marvell Kirkwood SoC family.
+
+# ARMv6
+config CPU_V6
+	bool
+	select CPU_32v6
+
+# ARMv7
+config CPU_V7
+	bool
+	select CPU_32v7
+
+# ARMv8
+config CPU_V8
+	bool
+	select CPU_64v8
+	select ARM_EXCEPTIONS
+	select GENERIC_FIND_NEXT_BIT
+	select ARCH_HAS_STACK_DUMP
+
+config CPU_XSC3
+        bool
+        select CPU_32v4T
+        help
+          Select code specific to PXA3xx variants
+
+# Xscale PXA25x, PXA27x
+config CPU_XSCALE
+	bool
+	select CPU_32v4T
+
+# Figure out what processor architecture version we should be using.
+# This defines the compiler instruction set which depends on the machine type.
+config CPU_32v4T
+	bool
+	select CPU_32
+
+config CPU_32v5
+	bool
+	select CPU_32
+
+config CPU_32v6
+	bool
+	select CPU_32
+
+config CPU_32v7
+	bool
+	select CPU_32
+
+config CPU_64v8
+	bool
+	select CPU_64
+
+comment "processor features"
+
+config ARCH_SUPPORTS_BIG_ENDIAN
+	bool
+
+config CPU_BIG_ENDIAN
+	bool "Build big-endian kernel"
+	depends on ARCH_SUPPORTS_BIG_ENDIAN
+	help
+	  Say Y if you plan on running a kernel in big-endian mode.
+	  Note that your board must be properly built and your board
+	  port must properly enable any big-endian related features
+	  of your chipset/board/processor.
+
+config BOOT_ENDIANNESS_SWITCH
+	bool "Support switching of Linux kernel endianness"
+	help
+	  Say Y here if you need to switch CPU endianness before running
+	  Linux kernel, e.g. if you want big-endian Barebox to run
+	  little-endian Linux.
+
+	  Currently implemented only by "bootz" command.
+
+config ARCH_HAS_L2X0
+	bool
+
+config CACHE_L2X0
+	bool "Enable L2x0 PrimeCell"
+	depends on MMU && ARCH_HAS_L2X0
+

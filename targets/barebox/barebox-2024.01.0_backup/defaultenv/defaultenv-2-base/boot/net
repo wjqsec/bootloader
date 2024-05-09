@@ -1,0 +1,28 @@
+#!/bin/sh
+
+path="/mnt/tftp"
+
+# global.net.server and global.hostname may be set by DHCP, so trigger it first
+ifup -a1
+
+global.bootm.image="${path}/${global.user}-linux-${global.hostname}"
+
+oftree="${path}/${global.user}-oftree-${global.hostname}"
+if [ -f "${oftree}" ]; then
+	global.bootm.oftree="$oftree"
+fi
+
+host ${global.net.server} nfsserver
+if [ $? != 0 ]; then
+	echo "Cannot resolve \"${global.net.server}\""
+	exit 1
+fi
+
+initramfs="${path}/${global.user}-initramfs-${global.hostname}"
+if [ -f "${initramfs}" ]; then
+	global.bootm.initrd="$initramfs"
+else
+	nfsroot="${nfsserver}:/home/${global.user}/nfsroot/${global.hostname}"
+	ip_route_get -b ${global.net.server} global.linux.bootargs.dyn.ip
+	global.linux.bootargs.dyn.root="root=/dev/nfs nfsroot=$nfsroot,v3,tcp"
+fi

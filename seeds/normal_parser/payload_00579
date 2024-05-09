@@ -1,0 +1,2 @@
+rmmod part_msdos
+rmmod part_gpt

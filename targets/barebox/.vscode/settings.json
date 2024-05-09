@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "initializer_list": "c",
+        "type_traits": "c",
+        "xutility": "c",
+        "algorithm": "c",
+        "malloc.h": "c",
+        "compare": "c",
+        "utility": "c",
+        "xmemory": "c",
+        "xtr1common": "c"
+    }
+}

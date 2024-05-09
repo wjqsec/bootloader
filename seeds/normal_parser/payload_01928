@@ -1,0 +1,6 @@
+. ""
+submenu ';tbmu U' '' {	if  ]; then o;fi}
+submenu  'U' '' {	if  ]; then o;fi}
+suenu  'U' '' {	if]; then o;fi}
+submen 'U' '' {	if  ]; then o;fi}
+bmenu  'U' '' {	if  ]; tn o;fisub

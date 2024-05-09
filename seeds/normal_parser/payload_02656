@@ -1,0 +1,10 @@
+lang=en 
+set debug=root=
+
+set atF="/"
+t path="^
+port binpath isopath krnlpath
+
+s theme_name=
+export theme_nameÿ
+se

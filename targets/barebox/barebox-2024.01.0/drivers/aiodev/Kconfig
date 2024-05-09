@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Misc strange devices
+#
+menuconfig AIODEV
+	bool "Analog I/O drivers"
+
+if AIODEV
+
+config IMX_THERMAL
+	tristate "Temperature sensor driver for Freescale i.MX SoCs"
+	depends on ARCH_IMX6
+	select MFD_SYSCON
+	select NVMEM
+	select IMX_OCOTP
+	help
+         Support for Temperature Monitor (TEMPMON) found on Freescale
+         i.MX SoCs.
+
+config QORIQ_THERMAL
+	tristate "QorIQ Thermal Monitoring Unit"
+	depends on ARCH_IMX8MQ || COMPILE_TEST
+	help
+	  Support for Thermal Monitoring Unit (TMU) found on QorIQ and
+	  i.MX8MQ platforms.
+
+config LM75
+	tristate "LM75 driver"
+	depends on I2C
+	help
+	  Support for LM75 and similar devices
+
+config ST_GYRO
+	tristate "ST L3GD20 SPI gyro driver"
+	depends on SPI
+	help
+	  Support for L3GD20 three-axis angular rate sensor.
+
+config MC13XXX_ADC
+	tristate "MC13XXX ADC driver"
+	depends on MFD_MC13XXX
+	help
+	  Support for MC13783, MC13892, MC34708 ADC
+
+config AM335X_ADC
+	tristate "AM335X ADC driver"
+	depends on ARCH_AM33XX
+	help
+	  Support for ADC on TI AM335X SoCs.  Supports simple one-shot readings
+	  rather than continuous sampling with DMA, etc.  ADC channels should be
+	  configured via device tree, using the kernel bindings.
+
+config STM32_ADC
+	tristate "STM32 ADC driver"
+	depends on ARCH_STM32 || COMPILE_TEST
+	help
+	  Support for ADC on STM32.  Supports simple one-shot readings
+	  rather than continuous sampling with DMA, etc.  ADC channels should be
+	  configured via device tree, using the kernel bindings.
+
+config ROCKCHIP_SARADC
+	tristate "Rockchip SARADC driver"
+	depends on ARCH_RK3568 || COMPILE_TEST
+	depends on OFDEVICE
+	help
+	  Support for Successive Approximation Register (SAR) ADC in Rockchip
+	  SoCs.
+
+config IMX7D_ADC
+	tristate "Freescale IMX7D ADC driver"
+	depends on ARCH_IMX7 || COMPILE_TEST
+	depends on OFDEVICE
+	help
+	  Say yes here to build support for IMX7D ADC.
+
+config VF610_ADC
+	tristate "Freescale vf610 ADC driver"
+	depends on ARCH_IMX6 || COMPILE_TEST
+	help
+	  Say yes here to support for Vybrid board analog-to-digital converter.
+	  Since the IP is used for i.MX6SLX, the driver also support i.MX6SLX.
+
+endif

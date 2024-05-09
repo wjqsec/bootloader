@@ -1,0 +1,51 @@
+/*
+ * Copyright (C) 2014 Eric Bénard - Eukréa Electromatique
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License version 2.
+ */
+
+#include <arm/nxp/imx/imx6dl-riotboard.dts>
+#include "imx6qdl.dtsi"
+
+/ {
+	chosen {
+		stdout-path = &uart2;
+
+		environment {
+			compatible = "barebox,environment";
+			device-path = &environment_usdhc4;
+		};
+	};
+};
+
+&fec {
+	phy-reset-duration = <2>;
+};
+
+&usdhc4 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "barebox";
+		reg = <0x0 0xe0000>;
+	};
+
+	environment_usdhc4: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};
+
+&ocotp {
+	barebox,provide-mac-address = <&fec 0x620>;
+};
+
+&clks {
+	fsl,pmic-stby-poweroff;
+};
+
+&pmic {
+	fsl,pmic-stby-poweroff;
+};

@@ -1,0 +1,4 @@
+lang=en 
+$e
+terminal_output console
+if load

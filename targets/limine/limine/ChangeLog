@@ -1,0 +1,191 @@
+2024-02-15  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.0.5 ***
+
+    Noteworthy changes compared to the previous release, 7.0.4:
+
+    Bug fixes:
+        - Build system related fixes and improvements. This fixes an issue that
+          caused Limine 7.0.4 to fail building on Busybox systems.
+
+2024-02-14  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.0.4 ***
+
+    Noteworthy changes compared to the previous release, 7.0.3:
+
+    Bug fixes:
+        - Minor build system related fixes and improvements.
+
+    Miscellaneous:
+        - Significantly improve reproducibility of builds.
+
+2024-02-08  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.0.3 ***
+
+    Noteworthy changes compared to the previous release, 7.0.2:
+
+    Bug fixes:
+        - multiboot2 protocol: Do not panic if there is a ENTRY_ADDRESS_EFI64
+          tag, but there is a valid alternatve entry point. This further aligns
+          our behaviour with GRUB2.
+
+    Miscellaneous:
+        - Terminal: Significantly improve serial and fallback UEFI console's
+          rendition (especially colour palettes).
+        - Serial: Add a baud rate config setting for Limine's BIOS version.
+
+2024-01-26  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.0.2 ***
+
+    Noteworthy changes compared to the previous release, 7.0.1:
+
+    Bug fixes:
+        - Fix a cosmetic bug in the menu where, when the editor was disabled,
+          the controls showed "ENTER Expand" even for boot entries instead of
+          only for menu directories.
+
+    Miscellaneous:
+        - Exclusively use git for obtaining dependencies in "bootstrap" script.
+
+2024-01-22  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.0.1 ***
+
+    Noteworthy changes compared to the previous release, 7.0.0:
+
+    Bug fixes:
+        - Fix ARM64/aarch64 spinup code to properly support Apple Silicon
+          chips.
+        - Prevent users from building Limine with a GNU Make version older than
+          4.2, as that is not supported, by gracefully erroring out with a
+          useful error message.
+        - Avoid usage of reserved C identifiers in certain cases.
+
+    Miscellaneous:
+        - Drop usage of "libgcc-binaries" for "cc-runtime". This finally makes
+          us able to ship Limine tarballs without included binary blobs, and
+          should improve compatibility with more obscure toolchain set ups.
+
+2024-01-14  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 7.0.0 ***
+
+    Noteworthy changes compared to the previous release, 6.20240107.0:
+
+    Bug fixes:
+        - Minor fix of newline handling when reading user input lines.
+
+    Miscellanous:
+        - Bump major version to 7. Note: There is no breaking change in 7.x
+          compared to 6.x; the major version bump is done due to a change in
+          the versioning scheme used by Limine (move to proper Semantic
+          Versioning).
+        - Fix versions of external dependencies in "bootstrap" script.
+
+2024-01-07  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 6.20240107.0 ***
+
+    Noteworthy changes compared to the previous release, 6.20231227.0:
+
+    New features:
+        - Limine boot protocol: Add support for compressed internal modules.
+
+    Miscellaneous:
+        - Improve error reporting from host "limine" executable.
+        - Track "master" branch of stb_image upstream.
+
+2023-12-27  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 6.20231227.0 ***
+
+    Noteworthy changes compared to the previous release, 6.20231226.0:
+
+    Bug fixes:
+        - Actually regenerate build system with GNU Autoconf 2.72 instead of
+          GNU Autoconf 2.71.
+
+2023-12-26  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 6.20231226.0 ***
+
+    Noteworthy changes compared to the previous release, 6.20231216.0:
+
+    New features:
+        - Ignore trailing whitespace in Limine config file.
+
+    Miscellaneous:
+        - Regenerate build system with GNU Autoconf 2.72.
+        - Minor build system adjustments.
+
+2023-12-16  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 6.20231216.0 ***
+
+    Noteworthy changes compared to the previous release, 6.20231210.0:
+
+    New features:
+        - Added a `--print-datadir` switch to the `limine` program in order
+          to print the directory where Limine files are stored when installed
+          on a host distro.
+
+    Miscellaneous:
+        - General improvements to the `--help` texts for the `limine` program.
+
+2023-12-10  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 6.20231210.0 ***
+
+    This is the first release in the 6.x series.
+
+    Breaking changes compared to the 5.x series:
+
+    - Support for the unmaintained ext2/3/4 filesystems dropped in compliance
+      with the Limine bootloader design philosophy.
+    - Chainloading protocol split into 2 protocols: EFI chainloading and BIOS
+      chainloading.
+
+2023-12-07  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 5.20231207.1 ***
+
+    Noteworthy changes compared to the previous release, 5.20231207.0:
+
+    Bug fixes:
+        - multiboot2/elf: Fix issue where ELF vaddrs were taken into account
+          instead of paddrs when loading executables.
+        - Fix implementation of a function that detects whether a given memory
+          range is physical RAM.
+
+2023-12-07  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 5.20231207.0 ***
+
+    Noteworthy changes compared to the previous release, 5.20231124.0:
+
+    New features:
+        - multiboot2 protocol: Add support for relocatable header tag.
+        - multiboot2 protocol: Add support for console flags header tag.
+        - Limine protocol: Add support for EFI memory map feature.
+
+    Miscellaneous:
+        - Improve error reporting from host "limine" executable.
+        - Do not ignore errors from mtools when building limine-uefi-cd.bin.
+
+2023-11-24  mintsuki  <mintsuki@protonmail.com>
+
+    *** Release 5.20231124.0 ***
+
+    Compared to previous release, 5.20231121.0:
+
+    New features:
+        - Add support for rebooting to UEFI firmware setup.
+
+    Bug fixes:
+        - Fix SMP (multiprocessor) initialisation regression on aarch64.
+
+    Miscellaneous:
+        - Move to new, handwritten ChangeLog from autogenerated one.

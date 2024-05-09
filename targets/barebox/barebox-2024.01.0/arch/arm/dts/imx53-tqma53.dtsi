@@ -1,0 +1,33 @@
+/*
+ * Copyright 2012 Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
+ * Copyright 2012 Steffen Trumtrar <s.trumtrar@pengutronix.de>, Pengutronix
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/ {
+	chosen {
+		environment-emmc {
+			compatible = "barebox,environment";
+			device-path = &esdhc3, "partname:boot1";
+			status = "disabled";
+		};
+	};
+};
+
+&{/memory@70000000} {
+	reg = <0x70000000 0x0>; /* Up to 1GiB */
+};
+
+&esdhc3 { /* EMMC */
+	dsr = <0x100>;
+};
+
+&iim {
+	barebox,provide-mac-address = <&fec 1 9>;
+};

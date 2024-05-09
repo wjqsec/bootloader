@@ -1,0 +1,6 @@
+. "÷"
+submenu  ''i '' -` '' - {
+for le in *-g; do
+le
+  done
+}

@@ -1,0 +1,4 @@
+insmod ext2
+
+set color_normal=cyan/black
+s

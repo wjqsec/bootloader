@@ -1,0 +1,5 @@
+set lang=en mi
+function t{if $@½;then i
+fi
+}
+t t t

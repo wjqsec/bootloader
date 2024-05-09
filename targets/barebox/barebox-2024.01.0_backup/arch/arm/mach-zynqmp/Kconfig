@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+menu "ZynqMP Features"
+	depends on ARCH_ZYNQMP
+
+config MACH_XILINX_ZCU102
+	bool "Xilinx Zynq UltraScale+ MPSoC ZCU102"
+	select ARM_USE_COMPRESSED_DTB
+	help
+	  Say Y here if you are using the Xilinx Zynq UltraScale+ MPSoC ZCU102
+	  evaluation board.
+
+config MACH_XILINX_ZCU104
+	bool "Xilinx Zynq UltraScale+ MPSoC ZCU104"
+	help
+	  Say Y here if you are using the Xilinx Zynq UltraScale+ MPSoC ZCU104
+	  evaluation board.
+
+config MACH_XILINX_ZCU106
+	bool "Xilinx Zynq UltraScale+ MPSoC ZCU106"
+	help
+	  Say Y here if you are using the Xilinx Zynq UltraScale+ MPSoC ZCU106
+	  evaluation board.
+
+endmenu

@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: (GPL-2.0-or-later OR MIT)
+
+/ {
+	aliases {
+		mmc0 = &sdmmc0;
+		mmc1 = &sdmmc1;
+	};
+};
+
+/delete-node/ &{/memory@20000000};
+
+&sdmmc0 {
+	assigned-clock-parents = <&pmc PMC_TYPE_CORE PMC_UTMI>;
+};
+
+&sdmmc1 {
+	assigned-clock-parents = <&pmc PMC_TYPE_CORE PMC_UTMI>;
+};

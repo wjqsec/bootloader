@@ -1,0 +1,108 @@
+/*
+ * Copyright (C) 2017 PHYTEC Messtechnik GmbH,
+ * Author: Daniel Schultz <d.schultz@phytec.de>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/ {
+	aliases {
+		am335x_phytec_mac_state = &am335x_phytec_mac_state;
+		state = &am335x_phytec_boot_state;
+	};
+
+	am335x_phytec_mac_state: am335x_phytec_mac_state {
+		magic = <0x3f45620e>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&backend_state_mac_eeprom>;
+		backend-storage-type = "direct";
+		backend-stridesize = <40>;
+		keep-previous-content;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		mac0 {
+			reg = <0x0 0x6>;
+			type = "mac";
+		};
+		mac1 {
+			reg = <0x6 0x6>;
+			type = "mac";
+		};
+
+	};
+
+	am335x_phytec_boot_state: am335x_phytec_boot_state {
+		magic = <0x883b86a6>;
+		compatible = "barebox,state";
+		backend-type = "raw";
+		backend = <&backend_state_update_eeprom>;
+		backend-storage-type = "direct";
+		backend-stridesize = <54>;
+		keep-previous-content;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		bootstate {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			last_chosen {
+				reg = <0x0 0x4>;
+				type = "uint32";
+			};
+			system0 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x4 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x8 0x4>;
+					type = "uint32";
+					default = <21>;
+				};
+			};
+			system1 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				remaining_attempts {
+					reg = <0x10 0x4>;
+					type = "uint32";
+					default = <3>;
+				};
+				priority {
+					reg = <0x14 0x4>;
+					type = "uint32";
+					default = <20>;
+				};
+			};
+		};
+	};
+};
+
+&eeprom {
+	status = "okay";
+	partitions {
+		compatible = "fixed-partitions";
+		#size-cells = <1>;
+		#address-cells = <1>;
+		backend_state_mac_eeprom: state@0 {
+			reg = <0x000 0x100>;
+			label = "state-eeprom";
+		};
+		backend_state_update_eeprom: state@100 {
+			reg = <0x100 0x150>;
+			label = "update-eeprom";
+		};
+	};
+};

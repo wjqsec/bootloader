@@ -1,0 +1,7 @@
+#include "imx6qdl.dtsi"
+
+/ {
+	aliases {
+		ipu1 = &ipu2;
+	};
+};

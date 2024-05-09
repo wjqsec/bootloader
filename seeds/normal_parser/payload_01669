@@ -1,0 +1,3 @@
+debug=,-disk 
+root=hd0
+[ -s "i"

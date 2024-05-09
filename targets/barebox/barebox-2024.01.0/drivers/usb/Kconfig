@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config USB
+	bool
+
+menuconfig USB_HOST
+	select USB
+	bool "USB Host support"
+
+if USB_HOST
+
+source "drivers/usb/imx/Kconfig"
+
+source "drivers/usb/dwc2/Kconfig"
+
+source "drivers/usb/dwc3/Kconfig"
+
+source "drivers/usb/host/Kconfig"
+
+source "drivers/usb/otg/Kconfig"
+
+source "drivers/usb/storage/Kconfig"
+
+source "drivers/usb/misc/Kconfig"
+
+endif
+
+source "drivers/usb/typec/Kconfig"
+
+source "drivers/usb/gadget/Kconfig"
+
+source "drivers/usb/musb/Kconfig"

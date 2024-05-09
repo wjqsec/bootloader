@@ -1,0 +1,13 @@
+set drive_label=multiboot
+export drive_label
+
+set binpath="/boot/bin"
+set isopath="/boot/iso"
+set krnlpath="/boot/krnl"
+export binpath isopath krnlpath
+
+set theme_name=xion
+export theme_name
+
+set timeout=30
+set default=0

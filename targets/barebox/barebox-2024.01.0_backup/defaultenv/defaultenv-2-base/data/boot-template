@@ -1,0 +1,9 @@
+#!/bin/sh
+
+global.bootm.image=<path to image>
+#global.bootm.oftree=<path to oftree>
+#global.bootm.initrd=<path to initrd>
+
+#bootargs-ip
+
+global.linux.bootargs.dyn.root="root=<rootfs here>"

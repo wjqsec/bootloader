@@ -1,0 +1,95 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config OFTREE
+	select DTC
+	bool
+
+config OFTREE_MEM_GENERIC
+	depends on OFTREE
+	depends on PPC || ARM || EFI_BOOTUP || OPENRISC || SANDBOX || RISCV || KVX
+	def_bool y
+
+config DTC
+	bool
+
+config OF
+	bool
+
+config OFDEVICE
+	select OFTREE
+	select OF
+	select DTC
+	bool "Enable probing of devices from the devicetree"
+
+config FEATURE_CONTROLLER_FIXUP
+	bool "Fix up DT nodes gated by feature controller"
+	depends on FEATURE_CONTROLLER
+	default y
+	help
+	  When specified, barebox feature controller drivers are consulted
+	  prior to probing nodes to detect whether the device may not
+	  be available (e.g. because support is fused out).
+	  This option additionally fixes up the kernel device tree,
+	  so it doesn't attempt probing these devices either.
+	  If unsure, say y.
+
+config OF_ADDRESS_PCI
+	bool
+
+config OF_DMA_DEFAULT_COHERENT
+	# arches should select this if DMA is coherent by default for OF devices
+	bool
+
+config OF_GPIO
+	depends on GPIOLIB
+	depends on OFDEVICE
+	def_bool y
+
+config OF_PCI
+	bool
+	depends on PCI
+	select OF_ADDRESS_PCI
+	help
+	  OpenFirmware PCI bus accessors
+
+config OF_BAREBOX_DRIVERS
+	depends on OFDEVICE
+	depends on ENV_HANDLING
+	bool "Enable barebox specific devicetree configuration drivers"
+	help
+	  barebox supports being configured from devicetree. This enables
+	  support for this feature. This currently allows to configure the
+	  environment path from devicetree and to partition devices. See
+	  Documentation/devicetree/bindings/barebox/ for more information.
+
+config OF_BAREBOX_ENV_IN_FS
+	depends on OF_BAREBOX_DRIVERS
+	bool "Allow environment to come from file"
+	help
+	  Allow the devie tree configuration of the barebox environment path
+	  to specify a file in filesystem, which will be mounted.
+
+config OF_OVERLAY
+	select OFTREE
+	select FIRMWARE
+	bool "Devicetree overlays"
+	help
+	  Overlays allow to patch the devicetree. Unlike Linux, Barebox does
+	  not patch the live devicetree, but applies the overlays as fixup to
+	  the devicetree. Furthermore, overlays cannot be removed after they
+	  have been applied.
+
+config OF_OVERLAY_LIVE
+	depends on OF_OVERLAY
+	bool "Support devicetree overlays on live devicetree"
+	help
+	  This option allows to use devicetree overlays with the live
+	  devicetree. It is not required to apply overlays to any other
+	  devicetree.
+
+	  This builds the build-in devicetree with __symbols__, which
+	  significantly increases the size of the dtb file.
+
+	  Enable this option only if you actually need the live devicetree
+	  while applying in the devicetree overlay. This is usually the case if
+	  applying the overlay has other side effects than changing the
+	  devicetree.

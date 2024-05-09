@@ -1,0 +1,9 @@
+'A'  '' {
+ ' 'c375619' {
+		recordfail
+		load_video
+		gfxmode $linux_gfx_mode
+		insmod gzio
+		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+		insmod part_gpsearch --no-floppy --fs-uuid --set=root 7deefe43-3a38-414b-9f9f-6f54e63ff46e
+		echo	yx+ ...'

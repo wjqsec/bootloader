@@ -1,0 +1,13 @@
+#include <arm/nvidia/tegra124-jetson-tk1.dts>
+#include "tegra124.dtsi"
+
+/ {
+	chosen {
+		stdout-path = &uartd;
+
+		environment {
+			compatible = "barebox,environment";
+			device-path = &{/mmc@700b0600}, "partname:boot1"; /* eMMC */
+		};
+	};
+};

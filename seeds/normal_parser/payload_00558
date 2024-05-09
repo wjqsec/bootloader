@@ -1,0 +1,23 @@
+if [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -[ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [  -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [  -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [  -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [  -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; [ -f ${y}v;then ${y}
+elif sleep --interruptible 0 ; ${y}v;then ${y}
+elif  ${y}v;then ${y}
+elif  ${y}v;then ${y}
+elif  ${y}v;then ${y}
+elif 0 ; then
+i
+fi

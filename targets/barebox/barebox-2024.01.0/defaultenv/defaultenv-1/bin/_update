@@ -1,0 +1,47 @@
+#!/bin/sh
+
+if [ -z "$part" -o -z "$image" ]; then
+	echo "define \$part and \$image"
+	exit 1
+fi
+
+if [ ! -e "$part" ]; then
+	echo "Partition $part does not exist"
+	exit 1
+fi
+
+if [ x$mode = xtftp -o x$mode = xnfs ]; then
+	if [ x$ip = xdhcp -o x$ip = "xdhcp-barebox" ]; then
+		dhcp
+	fi
+
+	ping $eth0.serverip
+	if [ $? -ne 0 ] ; then
+		echo "Server did not reply! Update aborted."
+		exit 1
+	fi
+	load=$mode
+fi
+
+if [ x$mode = xxmodem ]; then
+	loadb -f $image -c
+	if [ $? -ne 0 ] ; then
+		echo "loadb failed or cancelled! Update aborted."
+		exit 1
+	fi
+	load="cp -v"
+fi
+
+unprotect $part
+
+echo
+echo "erasing partition $part"
+echo
+erase $part || exit 1
+
+echo
+echo "flashing $image to $part"
+echo
+$load $image $part || exit 1
+
+protect $part

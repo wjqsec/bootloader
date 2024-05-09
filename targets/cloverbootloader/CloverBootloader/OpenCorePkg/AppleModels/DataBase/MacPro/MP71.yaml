@@ -1,0 +1,117 @@
+BIOSVendor: "Apple Inc."
+BIOSVersion: "2020.41.1.0.0"
+BIOSLegacyVersion: "MP71.88Z.F000.B00.2310052024"
+BIOSReleaseDate: "10/05/2023"
+SystemManufacturer: "Apple Inc."
+SystemProductName: "MacPro7,1"
+SystemVersion: "1.0"
+# Note, this one is used by macserial
+SystemSerialNumber: "F5KZN00HP7QM"
+SystemSKUNumber: ""
+SystemFamily: "MacPro"
+BoardManufacturer: "Apple Inc."
+# This and similar ones can be an array itself, like this:
+# BoardProduct:
+#  "Mac-27AD2F918AE68F61"
+#  "Mac-smthelse"
+BoardProduct: "Mac-27AD2F918AE68F61"
+BoardVersion: "MacPro7,1"
+BoardRevision: 0x9
+BoardAssetTag: ""
+BoardType: 0xA
+BoardLocationInChassis: ""
+ChassisManufacturer: "Apple Inc."
+# Tower
+ChassisType: 0x7
+# Rack
+# ChassisType: 0x17
+ChassisVersion: "Mac-27AD2F918AE68F61"
+ChassisAssetTag: ""
+PlatformFeature: 0x0
+FirmwareFeatures: 0xFDAFF066
+FirmwareFeaturesMask: 0xFFFFFF7F
+ExtendedFirmwareFeatures: 0x00000008FDAFF066
+ExtendedFirmwareFeaturesMask: 0x00000008FFFFFF7F
+MemoryFormFactor: 0x9
+ProcessorType:
+  - 0x0F02
+# FIXME: Correct this one
+ProcessorBusSpeed:
+  - 12345
+SmcGeneration: 3
+SmcPlatform:
+  - 0x6A
+  - 0x31
+  - 0x36
+  - 0x30
+  - 0x00
+  - 0x00
+  - 0x00
+  - 0x00
+OEMStrings: |-
+  Apple ROM Version
+    BIOS ID:      MP71.88Z.F000.B00.2310052024
+    Model:        MP71
+    EFI Version:  2020.41.1.0.0
+    Built by:     root@jgkh6
+    Date:         Thu Oct  5 20:24:08 2023
+    Revision:     2020.41.1 (B&I)
+    ROM Version:  F000_B00
+    Build Type:   Official Build, RELEASE
+    Compiler:     clang-1500.0.37.1
+    UUID:         367EA56F-8D70-3D70-ACEA-05945977A566
+    UUID:         D6DF2B0F-A04F-3821-8755-4A85A34266C2
+Specifications:
+  CPUCodename:
+    - "Cascade Lake"
+  CPU:
+    - "Intel Xeon W-3245M CPU @ 3.20 GHz"
+  GPU:
+    - "Radeon Pro 580X"
+    - "Radeon Pro W5500X"
+    - "Radeon Pro W5700X"
+    - "Radeon Pro Vega II"
+    - "Radeon Pro Vega II Duo"
+    - "Radeon Pro W6600X"
+    - "Radeon Pro W6800X"
+    - "Radeon Pro W6900X"
+    - "Radeon Pro W6800X Duo"
+  RAM:
+    - "32GB DDR4 ECC"
+  SystemReportName:
+    - "Mac Pro (2019)"
+    - "Mac Pro (Rack, 2019)"
+  MarketingName:
+    - "Mac Pro (2019)"
+    - "Mac Pro (Rack, 2019)"
+# Note, first model code is used by macserial
+AppleModelCode:
+# Tower
+  - "P7QM"
+  - "PLXV"
+  - "PLXW"
+  - "PLXX"
+  - "PLXY"
+  - "P7QJ"
+  - "P7QK"
+  - "P7QL"
+  - "P7QN"
+  - "P7QP"
+  - "NYGV"
+  - "K7GF"
+  - "K7GD"
+# Rack
+  - "N5RN"
+# Note, first board code is used by macserial
+AppleBoardCode:
+  - "K3F7"
+# Note, first year is used by macserial
+AppleModelYear:
+  - 2019
+  - 2020
+  - 2021
+  - 2022
+  - 2023
+MinimumOSVersion: "10.15.1"
+MaximumOSVersion: null
+AppleModelId: "J160"

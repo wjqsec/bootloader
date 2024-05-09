@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: GPL-2.0-only
+menu "Firmware Drivers"
+
+config FIRMWARE_ALTERA_SERIAL
+	bool "Altera SPI programming"
+	depends on OFDEVICE
+	depends on GENERIC_GPIO
+	depends on SPI
+	select FIRMWARE
+	help
+	  Programming an Altera FPGA via a few GPIOs for the control lines and
+	  MOSI, MISO and clock from an SPI interface for the data lines
+
+config FIRMWARE_ALTERA_SOCFPGA
+	bool "Altera SoCFPGA fpga loader"
+	depends on ARCH_SOCFPGA
+	select FIRMWARE
+
+config FIRMWARE_ZYNQMP_FPGA
+	bool "Xilinx ZynqMP FPGA loader"
+	depends on ARCH_ZYNQMP
+	select FIRMWARE
+	help
+	  Load a bitstream to the PL of Zynq Ultrascale+
+
+config QEMU_FW_CFG
+	bool "QEMU FW CFG interface"
+	help
+	  This driver exposes the QEMU FW CFG conduit as a single
+	  character device.
+
+	  The selector key can be set via ioctl or device parameter
+	  and read/writes are translated to the MMIO/IO port appropriate
+	  for the platform.
+
+config TI_SCI_PROTOCOL
+	bool "TI System Control Interface (TISCI) Message Protocol"
+	depends on TI_MESSAGE_MANAGER
+	default ARCH_K3
+	help
+	  TI System Control Interface (TISCI) Message Protocol is used to manage
+	  compute systems such as ARM, DSP etc with the system controller in
+	  complex System on Chip(SoC) such as those found on certain keystone
+	  generation SoC from TI.
+
+	  System controller provides various facilities including power
+	  management function support.
+
+	  This protocol library is used by client drivers to use the features
+	  provided by the system controller.
+
+source "drivers/firmware/arm_scmi/Kconfig"
+
+endmenu

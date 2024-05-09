@@ -1,0 +1,7 @@
+TIMEOUT=5
+
+:Arch Linux
+    PROTOCOL=linux
+    KERNEL_PATH=boot:///vmlinuz-linux
+    CMDLINE=root=UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx rw
+    MODULE_PATH=boot:///initramfs-linux.img

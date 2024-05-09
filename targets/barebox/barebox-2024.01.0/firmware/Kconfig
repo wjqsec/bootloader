@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "Firmware files"
+
+config EXTRA_FIRMWARE_DIR
+	string "Firmware blobs root directory"
+	default "firmware"
+
+config MISSING_FIRMWARE_ERROR
+	bool "Fail the build when required firmware is missing"
+	default y
+	help
+	  In-tree Defconfigs that enable multiple boards with different firmware
+	  binary requirements would say y here, so you don't need unrelated firmware
+	  for the build to succeed.
+
+	  Defconfigs custom-tailored to products would say n here as all boards
+	  being built should be functional and have their firmware available.
+
+	  If in doubt, say Y and refer to the documentation on where to acquire the
+	  needed firmware.
+
+config FIRMWARE_IMX_LPDDR4_PMU_TRAIN
+	bool
+
+config FIRMWARE_IMX_DDR4_PMU_TRAIN
+	bool
+
+config FIRMWARE_IMX8MM_ATF
+	bool
+
+config FIRMWARE_IMX8MN_ATF
+	bool
+
+config FIRMWARE_IMX8MP_ATF
+	bool
+
+config FIRMWARE_IMX8MQ_ATF
+	bool
+
+config FIRMWARE_IMX93_ATF
+	bool
+
+config FIRMWARE_IMX8MM_OPTEE
+	bool "install OP-TEE on i.MX8MM boards"
+	depends on FIRMWARE_IMX8MM_ATF && PBL_OPTEE
+
+config FIRMWARE_IMX8MN_OPTEE
+	bool "install OP-TEE on i.MX8MN boards"
+	depends on FIRMWARE_IMX8MN_ATF && PBL_OPTEE
+
+config FIRMWARE_IMX8MP_OPTEE
+	bool "install OP-TEE on i.MX8MP boards"
+	depends on FIRMWARE_IMX8MP_ATF && PBL_OPTEE
+
+config FIRMWARE_CCBV2_OPTEE
+	bool
+	depends on MACH_WEBASTO_CCBV2 && PBL_OPTEE
+	default y
+
+endmenu

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+PATH=/env/bin
+export PATH
+
+global hostname
+
+. /env/config
+if [ -e /dev/nor0 -a -n "$nor_parts" ]; then
+	addpart /dev/nor0 $nor_parts
+fi
+
+if [ -e /dev/disk0 -a -n "$disk_parts" ]; then
+	addpart /dev/disk0 $disk_parts
+fi
+
+if [ -e /dev/nand0 -a -n "$nand_parts" ]; then
+	addpart /dev/nand0 $nand_parts
+fi
+
+if [ -f /env/bin/init_board ]; then
+	. /env/bin/init_board
+fi
+
+echo -e "\e[?25h"
+
+if [ -n $autoboot_timeout ]; then
+	echo -n "Hit any key to stop autoboot: "
+	timeout -a $autoboot_timeout
+	if [ $? != 0 ]; then
+		exit
+	fi
+
+	boot
+fi

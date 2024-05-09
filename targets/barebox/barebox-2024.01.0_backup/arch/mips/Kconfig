@@ -1,0 +1,388 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config MIPS
+	bool
+	select GENERIC_LIB_ASHLDI3
+	select GENERIC_LIB_ASHRDI3
+	select GENERIC_LIB_LSHRDI3
+	select HAS_KALLSYMS
+	select HAVE_CONFIGURABLE_TEXT_BASE
+	select HAVE_PBL_MULTI_IMAGES
+	select HAS_DMA
+	select ARCH_HAS_DATA_ABORT_MASK
+	select ARCH_HAS_SJLJ
+	select ELF
+	default y
+
+config SYS_SUPPORTS_BIG_ENDIAN
+	bool
+
+config SYS_SUPPORTS_LITTLE_ENDIAN
+	bool
+
+config CSRC_R4K_LIB
+	bool
+
+config GENERIC_LINKER_SCRIPT
+	bool
+	default y
+
+config PHYS_ADDR_T_64BIT
+	bool
+
+config ARCH_TEXT_BASE
+	hex
+	default 0xa0800000
+
+menu "Machine selection"
+
+config MIPS_RELOCATION_TABLE_SIZE
+	hex "Relocation table size"
+	range 0x100 0x10000
+	default "0x8000"
+	help
+	  A table of relocation data will be appended to the Barebox binary
+	  and parsed in relocate_code() to fix up all offsets in the relocated
+	  Barebox.
+
+	  This option allows the amount of space reserved for the table to be
+	  adjusted in a range from 256 up to 64k. The default is 32k and should
+	  be ok in most cases. Reduce this value to shrink the size of U-Boot
+	  binary.
+
+	  The build will fail and a valid size suggested if this is too small.
+
+	  If unsure, leave at the default value.
+
+config BUILTIN_DTB
+	bool "link a DTB into the barebox image"
+	depends on OFTREE
+
+config BUILTIN_DTB_NAME
+	string "DTB to build into the barebox image"
+	depends on BUILTIN_DTB
+
+choice
+	prompt "System type"
+	default MACH_MIPS_MALTA
+
+config MACH_MIPS_MALTA
+	bool "MIPS Malta"
+	select CSRC_R4K_LIB
+	select DRIVER_SERIAL_NS16550
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS64_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_CPU_MIPS64_R2
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_64BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select HAS_DEBUG_LL
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CLKDEV_LOOKUP
+	select GPIOLIB
+	select HW_HAS_PCI
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+
+config MACH_MIPS_AR231X
+	bool "Atheros ar231x-based boards"
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select CSRC_R4K_LIB
+	select DRIVER_SERIAL_NS16550
+	select HAS_DEBUG_LL
+	select HAVE_IMAGE_COMPRESSION
+
+config MACH_MIPS_ATH79
+	bool "Atheros AR71XX/AR724X/AR913X/AR933X based boards"
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select CSRC_R4K_LIB
+	select HAS_DEBUG_LL
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	select CLKDEV_LOOKUP
+	select OFTREE
+	select GPIOLIB
+
+config MACH_MIPS_BCM47XX
+	bool "Broadcom BCM47xx-based boards"
+	select CSRC_R4K_LIB
+	select DRIVER_SERIAL_NS16550
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select HAS_DEBUG_LL
+	select HAVE_IMAGE_COMPRESSION
+	select HAVE_PBL_IMAGE
+	select HAS_NMON
+
+config MACH_MIPS_LOONGSON
+	bool "Loongson-based boards"
+
+config MACH_MIPS_XBURST
+	bool "Ingenic XBurst-based boards"
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select DRIVER_SERIAL_NS16550
+	select HAS_DEBUG_LL
+	select HAVE_PBL_IMAGE
+	select HAVE_IMAGE_COMPRESSION
+	select HAS_NMON
+	select GPIOLIB
+endchoice
+
+source "arch/mips/mach-malta/Kconfig"
+source "arch/mips/mach-ar231x/Kconfig"
+source "arch/mips/mach-ath79/Kconfig"
+source "arch/mips/mach-bcm47xx/Kconfig"
+source "arch/mips/mach-loongson/Kconfig"
+source "arch/mips/mach-xburst/Kconfig"
+
+endmenu
+
+#
+# Endianess selection. Sufficiently obscure so many users don't know what to
+# answer,so we try hard to limit the available choices. Also the use of a
+# choice statement should be more obvious to the user.
+#
+
+choice
+	prompt "Endianess selection"
+	help
+	  Some MIPS machines can be configured for either little or big endian
+	  byte order. These modes require different barebox images.
+	  In general there is one preferred byteorder for a
+	  particular system but some systems are just as commonly used in the
+	  one or the other endianness.
+
+config CPU_BIG_ENDIAN
+	bool "Big endian"
+	depends on SYS_SUPPORTS_BIG_ENDIAN
+
+config CPU_LITTLE_ENDIAN
+	bool "Little endian"
+	depends on SYS_SUPPORTS_LITTLE_ENDIAN
+
+endchoice
+
+menu "CPU selection"
+
+choice
+	prompt "CPU type"
+	default CPU_MIPS32_R2
+
+config CPU_LOONGSON1B
+	bool "Loongson 1B"
+	depends on SYS_HAS_CPU_LOONGSON1B
+	select CPU_GS232
+	select CLKDEV_LOOKUP
+	select COMMON_CLK
+	select COMMON_CLK_OF_PROVIDER
+	help
+	  The Loongson 1B is a 32-bit SoC, which implements the MIPS32
+	  release 2 instruction set.
+
+config CPU_MIPS32_R1
+	bool "MIPS32 Release 1"
+	depends on SYS_HAS_CPU_MIPS32_R1
+	select CPU_SUPPORTS_32BIT_KERNEL
+	help
+	  Choose this option to build a barebox for release 1 or later of the
+	  MIPS32 architecture. Most modern embedded systems with a 32-bit
+	  MIPS processor are based on a MIPS32 processor. If you know the
+	  specific type of processor in your system, choose those that one
+	  otherwise CPU_MIPS32_R1 is a safe bet for any MIPS32 system.
+	  Release 2 of the MIPS32 architecture is available since several
+	  years so chances are you even have a MIPS32 Release 2 processor
+	  in which case you should choose CPU_MIPS32_R2 instead for better
+	  performance.
+
+config CPU_MIPS32_R2
+	bool "MIPS32 Release 2"
+	depends on SYS_HAS_CPU_MIPS32_R2
+	select CPU_SUPPORTS_32BIT_KERNEL
+	help
+	  Choose this option to build a barebox for release 2 or later of the
+	  MIPS32 architecture. Most modern embedded systems with a 32-bit
+	  MIPS processor are based on a MIPS32 processor. If you know the
+	  specific type of processor in your system, choose those that one
+	  otherwise CPU_MIPS32_R1 is a safe bet for any MIPS32 system.
+
+config CPU_MIPS64_R1
+	bool "MIPS64 Release 1"
+	depends on SYS_HAS_CPU_MIPS64_R1
+	select CPU_SUPPORTS_32BIT_KERNEL
+	select CPU_SUPPORTS_64BIT_KERNEL
+	help
+	  Choose this option to build a barebox for release 1 or later of the
+	  MIPS64 architecture. Many modern embedded systems with a 64-bit
+	  MIPS processor are based on a MIPS64 processor. If you know the
+	  specific type of processor in your system, choose those that one
+	  otherwise CPU_MIPS64_R1 is a safe bet for any MIPS64 system.
+	  Release 2 of the MIPS64 architecture is available since several
+	  years so chances are you even have a MIPS64 Release 2 processor
+	  in which case you should choose CPU_MIPS64_R2 instead for better
+	  performance.
+
+config CPU_MIPS64_R2
+	bool "MIPS64 Release 2"
+	depends on SYS_HAS_CPU_MIPS64_R2
+	select CPU_SUPPORTS_32BIT_KERNEL
+	select CPU_SUPPORTS_64BIT_KERNEL
+	help
+	  Choose this option to build a barebox for release 2 or later of the
+	  MIPS64 architecture. Many modern embedded systems with a 64-bit
+	  MIPS processor are based on a MIPS64 processor. If you know the
+	  specific type of processor in your system, choose those that one
+	  otherwise CPU_MIPS64_R1 is a safe bet for any MIPS64 system.
+
+endchoice
+
+config CPU_GS232
+	bool
+	select CPU_MIPS32
+	select CPU_MIPSR2
+	select CPU_SUPPORTS_32BIT_KERNEL
+
+config SYS_HAS_CPU_LOONGSON1B
+	bool
+
+config SYS_HAS_CPU_MIPS32_R1
+	bool
+
+config SYS_HAS_CPU_MIPS32_R2
+	bool
+
+config SYS_HAS_CPU_MIPS64_R1
+	bool
+
+config SYS_HAS_CPU_MIPS64_R2
+	bool
+
+#
+# These two indicate any level of the MIPS32 and MIPS64 architecture
+#
+config CPU_MIPS32
+	bool
+	default y if CPU_MIPS32_R1 || CPU_MIPS32_R2
+
+config CPU_MIPS64
+	bool
+	default y if CPU_MIPS64_R1 || CPU_MIPS64_R2
+
+#
+# These two indicate the revision of the architecture, either Release 1 or Release 2
+#
+config CPU_MIPSR1
+	bool
+	default y if CPU_MIPS32_R1 || CPU_MIPS64_R1
+
+config CPU_MIPSR2
+	bool
+	default y if CPU_MIPS32_R2 || CPU_MIPS64_R2
+
+config SYS_SUPPORTS_32BIT_KERNEL
+	bool
+config SYS_SUPPORTS_64BIT_KERNEL
+	bool
+config CPU_SUPPORTS_32BIT_KERNEL
+	bool
+config CPU_SUPPORTS_64BIT_KERNEL
+	bool
+
+endmenu
+
+choice
+	prompt "Barebox code model"
+	help
+	  You should only select this option if you have a workload that
+	  actually benefits from 64-bit processing or if your machine has
+	  large memory. You will only be presented a single option in this
+	  menu if your system does not support both 32-bit and 64-bit modes.
+
+config 32BIT
+	bool "32-bit barebox"
+	depends on CPU_SUPPORTS_32BIT_KERNEL && SYS_SUPPORTS_32BIT_KERNEL
+	help
+	  Select this option if you want to build a 32-bit barebox.
+
+config 64BIT
+	bool "64-bit barebox"
+	depends on CPU_SUPPORTS_64BIT_KERNEL && SYS_SUPPORTS_64BIT_KERNEL
+	select ARCH_DMA_ADDR_T_64BIT
+	select PHYS_ADDR_T_64BIT
+	help
+	  Select this option if you want to build a 64-bit barebox.
+
+endchoice
+
+menu "MIPS specific settings"
+
+config CMD_MIPS_CPUINFO
+	bool "cpuinfo command"
+	default y
+	help
+	  Say yes here to get a cpuinfo command to show some
+	  information about the cpu model.
+
+config HAS_NMON
+	bool
+
+config NMON
+	bool "nmon"
+	depends on HAS_NMON
+	depends on DEBUG_LL
+	help
+	  Say yes here to add the nmon to pbl.
+	  nmon -- nano-monitor program for the MIPS processors.
+	  It can operate with NO working RAM, using only
+	  the processor registers.
+
+config NMON_USER_START
+	bool "'press any key to start nmon' dialog"
+	depends on NMON
+	help
+	  Say yes here to get the 'press any key to start nmon'
+	  dialog on start.
+
+config NMON_1S_DELAY
+	prompt "number of delay loops for 1s time interval"
+	depends on NMON_USER_START
+	hex
+	default 0x400000
+	help
+	nmon uses a very simple delay loop for time measurement.
+	The delay is CPU-dependent or even board-dependent.
+	The NMON_1S_DELAY parameter specify delay loop count
+	for near 1 second time interval.
+
+config NMON_USER_START_DELAY
+	prompt "'press any key to start nmon' dialog delay"
+	depends on NMON_USER_START
+	hex
+	default 3
+	help
+	  Select the delay interval for nmon 'press any key to start nmon' dialog.
+
+config NMON_HELP
+	bool "nmon help message"
+	depends on NMON
+	help
+	  Say yes here to get the nmon commands message on
+	  every nmon start.
+
+config MIPS_OPTIMIZED_STRING_FUNCTIONS
+	bool "use assembler optimized string functions"
+	default y
+	help
+	  Say yes here to use assembler optimized memcpy / memset functions.
+	  These functions work much faster than the normal versions but
+	  increase your binary size.
+
+endmenu

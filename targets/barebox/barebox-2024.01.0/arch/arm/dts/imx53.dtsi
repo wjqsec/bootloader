@@ -1,0 +1,7 @@
+/ {
+	aliases {
+		pwm0 = &pwm1;
+		pwm1 = &pwm2;
+		ipu0 = &ipu;
+	};
+};

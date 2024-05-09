@@ -1,0 +1,2 @@
+insmod ext2
+search -s 2 -s 4

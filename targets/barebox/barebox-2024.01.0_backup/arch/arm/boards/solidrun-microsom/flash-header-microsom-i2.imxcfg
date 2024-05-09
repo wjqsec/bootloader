@@ -1,0 +1,11 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
+
+loadaddr 0x10000000
+soc imx6
+ivtofs 0x400
+
+#include <mach/imx/imx6-ddr-regs.h>
+#include <mach/imx/imx6dl-ddr-regs.h>
+
+#include "800mhz-64b.imxcfg"
+#include "800mhz-4x128mx16.imxcfg"

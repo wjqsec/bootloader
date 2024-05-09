@@ -1,0 +1,38 @@
+#include <arm/arm/vexpress-v2p-ca15_a7.dts>
+
+/ {
+	barebox_environment {
+		compatible = "barebox,environment";
+		device-path = &barebox_env;
+	};
+
+	chosen {
+		stdout-path = &v2m_serial0;
+	};
+};
+
+&nor_flash {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		partition@0 {
+			label = "barebox";
+			reg = <0x0 0x80000>;
+		};
+
+		barebox_env: partition@80000 {
+			label = "barebox-environment";
+			reg = <0x80000 0x80000>;
+		};
+	};
+};
+
+&{/leds} {
+	status = "disabled";
+};
+
+&{/bus@8000000/motherboard-bus@8000000/iofpga-bus@300000000/compact-flash@1a0000/} {
+	status = "disabled";
+};

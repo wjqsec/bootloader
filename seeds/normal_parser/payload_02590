@@ -1,0 +1,4 @@
+set lang=en 
+$e
+if loadfont;then t
+fi

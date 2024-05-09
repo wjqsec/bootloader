@@ -1,0 +1,267 @@
+/*
+ * Copyright (C) 2016-2017 Zodiac Inflight Innovations
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 license, at your option. Note that this dual
+ * licensing only applies to this file, and not this project as a
+ * whole.
+ *
+ *  a) This file is free software; you can redistribute it and/or
+ *     modify it under the terms of the GNU General Public License
+ *     version 2 as published by the Free Software Foundation.
+ *
+ *     This file is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ * Or, alternatively,
+ *
+ *  b) Permission is hereby granted, free of charge, to any person
+ *     obtaining a copy of this software and associated documentation
+ *     files (the "Software"), to deal in the Software without
+ *     restriction, including without limitation the rights to use,
+ *     copy, modify, merge, publish, distribute, sublicense, and/or
+ *     sell copies of the Software, and to permit persons to whom the
+ *     Software is furnished to do so, subject to the following
+ *     conditions:
+ *
+ *     The above copyright notice and this permission notice shall be
+ *     included in all copies or substantial portions of the Software.
+ *
+ *     THE SOFTWARE IS PROVIDED , WITHOUT WARRANTY OF ANY KIND,
+ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ *     OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+#include <arm/nxp/imx/imx6qdl-zii-rdu2.dtsi>
+
+/ {
+	chosen {
+		environment {
+			compatible = "barebox,environment";
+			device-path = &env_nor;
+		};
+
+		ubootenv {
+			compatible = "barebox,uboot-environment";
+			device-path-0 = &uboot_env_0;
+			device-path-1 = &uboot_env_1;
+		};
+	};
+
+	device-info {
+		nvmem-cells = <&lru_part_number>;
+		nvmem-cell-names = "lru-part-number";
+	};
+
+	aliases {
+		ethernet0 = &fec;
+		ethernet1 = &i210;
+		/*
+		 * NVMEM device corresponding to EEPROM attached to
+                 * the switch shared DT node with it, so we use that
+                 * fact to create a desirable naming
+		 */
+		switch-eeprom = &switch;
+	};
+
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		/* Address will be determined by the bootloader */
+		ramoops@2fe00000 {
+			compatible = "ramoops";
+			reg = <0x2fe00000 0x200000>;
+			ecc-size = <16>;
+			record-size = <0x20000>;
+			console-size = <0x20000>;
+			ftrace-size = <0x20000>;
+			pmsg-size = <0x20000>;
+		};
+	};
+
+	panel {
+		compatible = "simple-panel";
+		/* Timings for all supported panels, the correct one is enabled
+		 * after the board data has been retrieved from the environment
+		 * controller
+		*/
+
+		display-timings {
+			innolux-g121i1-l01 {
+				compatible = "innolux,g121i1-l01";
+
+				hback-porch = <79>;
+				hfront-porch = <80>;
+				hactive = <1280>;
+				hsync-len = <1>;
+				vback-porch = <11>;
+				vfront-porch = <11>;
+				vactive = <800>;
+				vsync-len = <1>;
+				clock-frequency = <71000000>;
+			};
+			nec-nl12880bc20-05 {
+				compatible = "nec,nl12880bc20-05";
+
+				hback-porch = <100>;
+				hfront-porch = <30>;
+				hactive = <1280>;
+				hsync-len = <30>;
+				vback-porch = <11>;
+				vfront-porch = <5>;
+				vactive = <800>;
+				vsync-len = <7>;
+				clock-frequency = <71000000>;
+			};
+			auo-g133han01 {
+				compatible = "auo,g133han01";
+
+				hback-porch = <88>;
+				hfront-porch = <58>;
+				hactive = <1920>;
+				hsync-len = <42>;
+				vback-porch = <14>;
+				vfront-porch = <8>;
+				vactive = <1080>;
+				vsync-len = <14>;
+				clock-frequency = <141200000>;
+			};
+			auo-g185han01 {
+				compatible = "auo,g185han01";
+
+				hback-porch = <44>;
+				hfront-porch = <60>;
+				hactive = <1920>;
+				hsync-len = <24>;
+				vback-porch = <5>;
+				vfront-porch = <10>;
+				vactive = <1080>;
+				vsync-len = <5>;
+				clock-frequency = <144000000>;
+			};
+			nlt-nl192108ac18-02d {
+				compatible = "nlt,nl192108ac18-02d";
+
+				hback-porch = <120>;
+				hfront-porch = <100>;
+				hactive = <1920>;
+				hsync-len = <60>;
+				vback-porch = <10>;
+				vfront-porch = <30>;
+				vactive = <1080>;
+				vsync-len = <5>;
+				clock-frequency = <148350000>;
+			};
+			auo-p320hvn03 {
+				compatible = "auo,p320hvn03";
+
+				hback-porch = <50>;
+				hfront-porch = <50>;
+				hactive = <1920>;
+				hsync-len = <40>;
+				vback-porch = <17>;
+				vfront-porch = <17>;
+				vactive = <1080>;
+				vsync-len = <11>;
+				clock-frequency = <148500000>;
+			};
+		};
+	};
+};
+
+&{uart4/mcu/watchdog} {
+	nvmem-cells = <&boot_source>;
+	nvmem-cell-names = "boot-source";
+};
+
+&{uart4/mcu/eeprom@a4} {
+	lru_part_number: lru-part-number@21 {
+		reg = <0x21 15>;
+		read-only;
+	};
+
+	boot_source: boot-source@83 {
+		reg = <0x83 1>;
+	};
+
+	mac_address_0: mac-address@180 {
+		reg = <0x180 6>;
+	};
+
+	mac_address_1: mac-address@190 {
+		reg = <0x190 6>;
+	};
+};
+
+&ecspi1 {
+	nor_flash: flash@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		partition@0 {
+			label = "barebox";
+			reg = <0x0 0xc0000>;
+		};
+
+		env_nor: partition@c0000 {
+			label = "barebox-environment";
+			reg = <0xc0000 0x40000>;
+		};
+	};
+};
+
+&fec {
+	nvmem-cells = <&mac_address_0>;
+	nvmem-cell-names = "mac-address";
+};
+
+&{i2c1/edp-bridge@68} {
+	pinctrl-0 = <&pinctrl_tc358767>, <&pinctrl_disp0>;
+};
+
+&{i2c2/temp-sense@48} {
+	barebox,sensor-name = "Temp Sensor 1";
+};
+
+&{ldb/lvds-channel@0} {
+	fsl,data-width = <24>;
+};
+
+&i210 {
+	nvmem-cells = <&mac_address_1>;
+	nvmem-cell-names = "mac-address";
+};
+
+&usbotg {
+	dr_mode = "otg";
+};
+
+&usdhc4 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		/*
+		 * Layout info is taken from /etc/fw_env.config
+		 */
+		uboot_env_0: partition@c0000 {
+			label = "uboot-environment-0";
+			reg = <0xc0000 0x4000>;
+		};
+
+		uboot_env_1: partition@cc800 {
+			label = "uboot-environment-1";
+			reg = <0xcc800 0x4000>;
+		};
+	};
+};

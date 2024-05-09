@@ -1,0 +1,6 @@
+insmod ext2
+
+set root=(h)
+set root=()
+set root=()
+set root=()

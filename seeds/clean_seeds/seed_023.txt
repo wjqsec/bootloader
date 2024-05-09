@@ -1,0 +1,10 @@
+menuntry "Boot frm first HD" --class reboot {
+    insmod chain
+    search--no-floppy --s-uuid --set=root 0B3C-606C
+    chainloaer ($root)/EFI/Boot/BOOTX64.EFI
+
+insmod regexp
+submen "Lve ISOs ->" --class gnu-linux {
+    for configile in /boot/grugrub.d/*-lve.cfg; do
+        source $cnfigfile
+   don

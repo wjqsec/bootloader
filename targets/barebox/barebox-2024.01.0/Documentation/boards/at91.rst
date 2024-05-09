@@ -1,0 +1,66 @@
+Microchip (Atmel) AT91
+======================
+
+The Microchip (former Atmel) AT91 architecure has very good support within
+barebox.
+Most boards today have their description in their board files, but
+boards are slowly migrating to use DT.
+Likewise most boards are not yet migrated to multi image support, but
+this is also ongoing.
+
+The boot process of the AT91 CPU's is a two step process.
+The first step is named the bootstrap and at91bootstrap
+is often used (https://github.com/linux4sam/at91bootstrap).
+barebox supports bootstrapping some at91 boards as documented
+in the following.
+
+The bootstrap program are loaded by a boot program and can be loaded
+from DataFlash, NAND Flash, SD Card or via USB.
+The bootstrap program do the low-level configuration of the
+processor and then load and execute barebox.
+
+AT91 boards
+-----------
+Newer boards can be built with the ``at91_multi_defconfig``:
+
+.. code-block:: sh
+
+  make ARCH=arm at91_multi_defconfig
+
+The resulting images will be placed under ``images/``:
+
+::
+
+  barebox-at91sam9x5ek.img
+  barebox-at91sam9263ek.img
+  barebox-microchip-ksz9477-evb.img
+  barebox-microchip-ksz9477-evb-xload-mmc.img
+  barebox-microchip-sama5d3-eds.img
+  barebox-microchip-sama5d3-eds-xload-mmc.img
+  barebox-sama5d3-xplained.img
+  barebox-sama5d3-xplained-xload-mmc.img
+  barebox-sama5d27-som1-ek.img
+  barebox-sama5d27-som1-ek-xload-mmc.img
+  barebox-groboards-sama5d27-giantboard.img
+  barebox-groboards-sama5d27-giantboard-xload-mmc.img
+  barebox-skov-arm9cpu.img
+
+Older supported boards have yet to be migrated to multi-image and device tree.
+The majority of these have a short entry here.
+For each board defconfig file(s) are noted but barebox may include additional
+defconfig files and may also include boards not included in the following.
+
+.. toctree::
+  :glob:
+  :maxdepth: 1
+
+  at91/*
+
+TODO
+----
+This is a list of AT91 specific TODO items, listed in no particular order.
+
+* Update remaining boards to DT
+* Update remaing boards to support multi image boot
+* Introduce defaultenv2 for all boards
+* Add pwm driver (required to support backlight)

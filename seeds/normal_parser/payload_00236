@@ -1,0 +1,34 @@
+function s{if "";then
+""
+fi
+}
+function L{if "";then if "";then if "";then if "";then
+""
+fi
+fi
+fi;fi
+}
+function r{if "";then if "";then s;fi;fi
+}
+function s{if "";then
+""
+fi
+}
+function f{if "";then if "";then if "";then if "";then
+""
+fi
+fi
+fi;fi
+}
+function r{if "";then if "";then s;fi;fi
+}
+function s{if "";then
+""
+fi
+}
+function f{if "";then if "";then if "";then if "";then
+""
+fi
+fi
+fi;fi
+}

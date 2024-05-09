@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config USB_EHCI
+	bool "EHCI driver"
+	depends on HAS_DMA
+
+config USB_EHCI_OMAP
+	depends on ARCH_OMAP3
+	depends on USB_TWL4030
+	bool "OMAP EHCI driver"
+
+config USB_EHCI_ATMEL
+	depends on ARCH_AT91
+	depends on USB_EHCI
+	select USB_OHCI_AT91
+	bool "Atmel EHCI driver"
+
+config USB_OHCI
+	bool "OHCI driver"
+	depends on !MMU && HAS_DMA
+
+config USB_OHCI_AT91
+	depends on ARCH_AT91
+	bool "AT91 OHCI driver"
+
+config USB_XHCI
+	bool "xHCI driver"
+	depends on HAS_DMA
+	help
+	  The eXtensible Host Controller Interface (xHCI) is standard for
+	  USB 3.0 "SuperSpeed" host controller hardware. xHCI specification
+	  defines support for all USB device speeds from USB 3.0 down to
+	  USB 1.1 without the need for companion controllers.
+
+	  This driver currently only supports virtual USB 2.0 ports, if you
+	  plan to use USB 3.0 devices, use a USB 2.0 cable in between.

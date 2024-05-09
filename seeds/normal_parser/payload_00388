@@ -1,0 +1,3 @@
+rmmod gfxterm
+rmmod font
+rmmod ls  "}"

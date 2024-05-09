@@ -1,0 +1,119 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright (C) 2019 Zodiac Inflight Innovations
+ */
+
+#include "imx8mq.dtsi"
+#include "imx8mq-ddrc.dtsi"
+
+/ {
+	chosen {
+		environment-emmc {
+			compatible = "barebox,environment";
+			device-path = &env_sd1;
+			status = "disabled";
+		};
+		environment-sd {
+			compatible = "barebox,environment";
+			device-path = &env_sd2;
+			status = "disabled";
+		};
+	};
+
+	device-info {
+		nvmem-cells = <&lru_part_number>;
+		nvmem-cell-names = "lru-part-number";
+	};
+
+	aliases {
+		ethernet0 = &fec1;
+		ethernet1 = &i210;
+		/*
+		 * NVMEM device corresponding to EEPROM attached to
+		 * the switch shared DT node with it, so we use that
+		 * fact to create a desirable naming
+		 */
+		switch-eeprom = &switch;
+	};
+};
+
+&fec1 {
+	nvmem-cells = <&mac_address_0>;
+	nvmem-cell-names = "mac-address";
+};
+
+&ocotp {
+	barebox,provide-mac-address = <&fec1 0x640>;
+};
+
+&pcie1 {
+	host@0 {
+		reg = <0 0 0 0 0>;
+
+		#address-cells = <3>;
+		#size-cells = <2>;
+
+		i210: i210@0 {
+			reg = <0 0 0 0 0>;
+		};
+	};
+};
+
+&i210 {
+	nvmem-cells = <&mac_address_1>;
+	nvmem-cell-names = "mac-address";
+};
+
+&{uart2/mcu/watchdog} {
+	nvmem-cells = <&boot_source>;
+	nvmem-cell-names = "boot-source";
+};
+
+&{uart2/mcu/eeprom@a4} {
+	lru_part_number: lru-part-number@21 {
+		reg = <0x21 15>;
+		read-only;
+	};
+
+	boot_source: boot-source@83 {
+		reg = <0x83 1>;
+	};
+
+	mac_address_0: mac-address@180 {
+		reg = <0x180 6>;
+	};
+
+	mac_address_1: mac-address@190 {
+		reg = <0x190 6>;
+	};
+};
+
+&usdhc1 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "barebox";
+		reg = <0x0 0xe0000>;
+	};
+
+	env_sd1: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};
+
+&usdhc2 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partition@0 {
+		label = "barebox";
+		reg = <0x0 0xe0000>;
+	};
+
+	env_sd2: partition@e0000 {
+		label = "barebox-environment";
+		reg = <0xe0000 0x20000>;
+	};
+};

@@ -1,0 +1,3 @@
+{ }! [[ ]] { }
+case do done elif else esac fi for function
+if in menuentry select then time until while
