@@ -1,6 +1,6 @@
-kafl fuzz --purge --image ./images/barebox.img --bios /usr/share/qemu/OVMF.fd \
+kafl fuzz --purge --image $1 --bios /usr/share/qemu/OVMF.fd \
 	-p 1 \
-	--seed-dir $1 \
+	--seed-dir $2 \
 	--payload-size 65536 \
 	--grimoire -D --radamsa --redqueen --redqueen-hammer \
 	--memory 512 \

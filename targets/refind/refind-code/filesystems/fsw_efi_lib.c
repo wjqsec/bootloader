@@ -118,7 +118,7 @@ VOID fsw_efi_strcpy(CHAR16 *Dest, struct fsw_string *src)
     if ((src->type == FSW_STRING_TYPE_EMPTY) | (src->size == 0)) {
         Dest[0] = 0;
     } else if (src->type == FSW_STRING_TYPE_UTF16) {
-        CopyMem(Dest, src->data, src->size);
+        refit_call3_wrapper(gBS->CopyMem, Dest, src->data, src->size);
         Dest[src->len] = 0;
     } else {
         // TODO: coerce, recurse

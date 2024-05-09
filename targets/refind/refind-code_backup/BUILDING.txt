@@ -251,11 +251,8 @@ override it on the command line, as in:
 
 make REFIND_SBAT_CSV=foo.csv all
 
-Incorporating the .sbat section requires a version of objcopy that supports
-certain features that are fairly modern. I don't know the precise version
-where this support was added, but I believe it was added around 2019. If you
-don't care about SBAT support and want to compile rEFInd with an earlier
-toolchain, you can set the OMIT_SBAT variable to 1, as in:
+If you don't care about SBAT support and compiling rEFInd fails when adding
+the SBAT section, you can set the OMIT_SBAT variable to 1, as in:
 
 make OMIT_SBAT=1
 
@@ -401,6 +398,24 @@ references to "lib" to "lib32" or "lib64" on some systems. Recall that you
 need at least GNU-EFI version 3.0u to build rEFInd, and some older or
 behind-the-times distributions might provide out-of-date versions of this
 package.
+
+If you're building for ARM64 using GNU-EFI, be aware that required
+compilation options changed starting with GNU-EFI 3.0.17. As of rEFInd
+0.14.2, rEFInd's own make options are set up for the older versions of
+GNU-EFI. If you're using GNU-EFI 3.0.17 or later, you can EITHER:
+
+* Edit Make.common: Change the line that reads "GNUEFI_ARM64_TARGET_SUPPORT
+  ?= n" so that it reads "GNUEFI_ARM64_TARGET_SUPPORT ?= y" (change "n" to
+  "y"); or....
+
+* Set the GNUEFI_ARM64_TARGET_SUPPORT variable to "y" on your "make" command
+  line, as in typing "GNUEFI_ARM64_TARGET_SUPPORT=y make" rather than simply
+  "make".
+
+Note that the GNUEFI_ARM64_TARGET_SUPPORT variable has no effect when
+building X64/AMD64/x86-64 or IA32/x86 targets. It also has no effect when
+building with the TianoCore EDK2. Setting this variable is required ONLY
+when building ARM64 binaries using GNU-EFI 3.0.17 or later.
 
 If you're using TianoCore's EDK2, as noted earlier, you may need to adjust
 the TIANOBASE or EDKBASE variable in Makefile.

@@ -218,7 +218,7 @@ GPT_ENTRY * FindPartWithGuid(EFI_GUID *Guid) {
         while ((i < GptData->Header->entry_count) && (!Found)) {
             if (GuidsAreEqual((EFI_GUID*) &(GptData->Entries[i].partition_guid), Guid)) {
                 Found = AllocateZeroPool(sizeof(GPT_ENTRY));
-                CopyMem(Found, &GptData->Entries[i], sizeof(GPT_ENTRY));
+                MyCopyMem(Found, &GptData->Entries[i], sizeof(GPT_ENTRY));
             } else {
                 i++;
             } // if/else

@@ -39,6 +39,7 @@
 #define _FSW_EFI_H_
 
 #include "fsw_core.h"
+#include "../include/refit_call_wrapper.h"
 
 #ifdef __MAKEWITH_GNUEFI
 #define CompareGuid(a, b) CompareGuid(a, b)==0

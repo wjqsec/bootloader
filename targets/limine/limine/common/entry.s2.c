@@ -831,34 +831,34 @@ noreturn void entry(uint8_t boot_drive, int boot_from) {
     
     fuzz_start = 1;
 
-    disk_create_index();
-    struct volume *drive = volume_get_by_coord(false, 1, 1);
-    if (drive)
-    {
+    // disk_create_index();
+    // struct volume *drive = volume_get_by_coord(false, 1, 1);
+    // if (drive)
+    // {
         
-        struct file_handle *f = fopen(drive,"/a.txt");
-        if(f)
-        {
-            kAFL_hypercall(HYPERCALL_KAFL_PRINTF, "kAFL fuzzer initialized.");
-            uint8_t buf[6];
-            fread(f, buf,
-                0,
-                6);
-            fclose(f);
-            print("data %x %x\n",buf[0],buf[1]);
-        }
-        f = fopen(drive,"/a.txt.ln");
-        if(f)
-        {
-            uint8_t buf[6];
-            fread(f, buf,
-                0,
-                6);
-            fclose(f);
-            print("data %x %x\n",buf[0],buf[1]);
-        }
+    //     struct file_handle *f = fopen(drive,"/a.txt");
+    //     if(f)
+    //     {
+    //         // kAFL_hypercall(HYPERCALL_KAFL_PRINTF, "kAFL fuzzer initialized.");
+    //         uint8_t buf[6];
+    //         fread(f, buf,
+    //             0,
+    //             6);
+    //         fclose(f);
+    //         print("data %x %x\n",buf[0],buf[1]);
+    //     }
+    //     f = fopen(drive,"/a.txt.ln");
+    //     if(f)
+    //     {
+    //         uint8_t buf[6];
+    //         fread(f, buf,
+    //             0,
+    //             6);
+    //         fclose(f);
+    //         print("data %x %x\n",buf[0],buf[1]);
+    //     }
         
-    }
+    // }
     
     
 //    config file harness
@@ -870,9 +870,9 @@ noreturn void entry(uint8_t boot_drive, int boot_from) {
 //    config_get_tuple(0, 0, "MODULE_PATH", "MODULE_STRING");
     
    // pic harness
-    // int x, y, bpp;
+    int x, y, bpp;
 
-    // stbi_load_from_memory(payload_buffer->data, payload_buffer->size, &x, &y, &bpp, 4);
+    stbi_load_from_memory(payload_buffer->data, payload_buffer->size, &x, &y, &bpp, 4);
     
 
     kAFL_hypercall (HYPERCALL_KAFL_RELEASE, 0);

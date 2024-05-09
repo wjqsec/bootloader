@@ -126,7 +126,7 @@ EG_IMAGE * egCopyImage(IN EG_IMAGE *Image)
     if (NewImage == NULL)
         return NULL;
 
-    CopyMem(NewImage->PixelData, Image->PixelData, Image->Width * Image->Height * sizeof(EG_PIXEL));
+    MyCopyMem(NewImage->PixelData, Image->PixelData, Image->Width * Image->Height * sizeof(EG_PIXEL));
     return NewImage;
 }
 

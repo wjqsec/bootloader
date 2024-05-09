@@ -55,8 +55,6 @@
 
 #include "../libeg/libeg.h"
 
-#define REFIT_DEBUG (0)
-
 // Tag classifications; used in various ways.
 #define TAG_ABOUT            (1)
 #define TAG_REBOOT           (2)

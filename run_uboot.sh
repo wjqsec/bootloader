@@ -1,7 +1,7 @@
-kafl fuzz --purge --bios ./targets/uboot/u-boot/u-boot.rom\
-	-p 1\
+kafl fuzz --purge --bios $1\
 	--image ./images/uboot-img \
-	--seed-dir $1 \
+	-p 1\
+	--seed-dir $2 \
 	--payload-size 65536 \
 	--grimoire -D --radamsa --redqueen --redqueen-hammer \
 	--memory 512 \

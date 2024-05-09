@@ -114,16 +114,22 @@ def set_refind_first(boot_entries, boot_order, label):
     show_multiple_warning = True
     for entry in boot_order:
         i += 1
-        if label.lower() in boot_entries[entry].lower():
-            if found_first_refind:
-                if show_multiple_warning:
-                    print("Found multiple {} entries! The earliest in the boot order will be made".format(label))
-                    print("the default, but this may not be what you want. Manually checking with")
-                    print("efibootmgr is advisable!\n")
-                    show_multiple_warning = False
-            else:
-                found_first_refind = entry
-                first_refind_number = i
+        try:
+            if label.lower() in boot_entries[entry].lower():
+                if found_first_refind:
+                    if show_multiple_warning:
+                        print("Found multiple {} entries! The earliest in the "
+                              "boot order will be made".format(label))
+                        print("the default, but this may not be what you want."
+                              " Manually checking with")
+                        print("efibootmgr is advisable!\n")
+                        show_multiple_warning = False
+                else:
+                    found_first_refind = entry
+                    first_refind_number = i
+        except KeyError:
+            print("Warning: BootOrder value {} is invalid!".format(entry))
+            boot_order.remove(entry)
     if first_refind_number == -1:
         if not add_unordered_entry(boot_entries, boot_order, label):
             print("{} was not found in the boot options list!".format(label))

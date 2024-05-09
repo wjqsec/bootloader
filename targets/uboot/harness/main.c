@@ -147,78 +147,78 @@ void main_loop(void)
 	
 	fuzz_start = 1;
 
-	// struct udevice *dev;
-	// uclass_first_device_err(UCLASS_IDE, &dev);
+	struct udevice *dev;
+	uclass_first_device_err(UCLASS_IDE, &dev);
 	
-	// struct disk_partition info;
-	// struct blk_desc *dev_desc = NULL;
-	// int part = blk_get_device_part_str("ide","0:1", &dev_desc, &info, 1);
+	struct disk_partition info;
+	struct blk_desc *dev_desc = NULL;
+	int part = blk_get_device_part_str("ide","0:1", &dev_desc, &info, 1);
 
-	// fs_set_blk_dev("ide","0:1", 0);
-	// fs_ls("/"); 
+	fs_set_blk_dev("ide","0:1", 0);
+	fs_ls("/"); 
 
-	// fs_set_blk_dev("ide","0:1", 0);	
-	// int exist = fs_exists("/a.txt");
-	// if(exist)
-	// {
-	// 	kAFL_hypercall(HYPERCALL_KAFL_PRINTF, "kAFL fuzzer initialized.");
-	// 	printf("/a.txt exist\n");
-	// }
+	fs_set_blk_dev("ide","0:1", 0);	
+	int exist = fs_exists("/a.txt");
+	if(exist)
+	{
+		// kAFL_hypercall(HYPERCALL_KAFL_PRINTF, "kAFL fuzzer initialized.");
+		printf("/a.txt exist\n");
+	}
 
-	// fs_set_blk_dev("ide","0:1", 0);
-	// char buf[10];
-	// buf[0] = 0;
-	// buf[1] = 0;
-	// buf[2] = 0;
-	// buf[3] = 0;
-	// loff_t actread = 0;
-	// fs_read("/a.txt", (ulong)buf, 0, 5, &actread);
-	// printf("fd actread %lld %x %x %x\n",actread,buf[0],buf[1],buf[2]);
+	fs_set_blk_dev("ide","0:1", 0);
+	char buf[10];
+	buf[0] = 0;
+	buf[1] = 0;
+	buf[2] = 0;
+	buf[3] = 0;
+	loff_t actread = 0;
+	fs_read("/a.txt", (ulong)buf, 0, 5, &actread);
+	printf("fd actread %lld %x %x %x\n",actread,buf[0],buf[1],buf[2]);
 
-	// fs_set_blk_dev("ide","0:1", 0);
-	// fs_read("/a.txt.ln", (ulong)buf, 0, 5, &actread);
-	// printf("fd actread %lld %x %x %x\n",actread,buf[0],buf[1],buf[2]);
+	fs_set_blk_dev("ide","0:1", 0);
+	fs_read("/a.txt.ln", (ulong)buf, 0, 5, &actread);
+	printf("fd actread %lld %x %x %x\n",actread,buf[0],buf[1],buf[2]);
 
-	// fs_set_blk_dev("ide","0:1", 0);
-	// fs_unlink("/a.txt.ln");
+	fs_set_blk_dev("ide","0:1", 0);
+	fs_unlink("/a.txt.ln");
 
-	// fs_set_blk_dev("ide","0:1", 0);
-	// struct fs_dir_stream *dir = fs_opendir("/");
-	// if (dir)
-	// {
-	// 	fs_set_blk_dev("ide","0:1", 0);
-	// 	struct fs_dirent * dirent = fs_readdir(dir);
-	// 	fs_set_blk_dev("ide","0:1", 0);
-	// 	fs_closedir(dir);
-	// }
+	fs_set_blk_dev("ide","0:1", 0);
+	struct fs_dir_stream *dir = fs_opendir("/");
+	if (dir)
+	{
+		fs_set_blk_dev("ide","0:1", 0);
+		struct fs_dirent * dirent = fs_readdir(dir);
+		fs_set_blk_dev("ide","0:1", 0);
+		fs_closedir(dir);
+	}
 
 	// // harness for jffs2 ubifs yaffs cannot link symbol
 	// // harness for zfs (seed not work)
-	// zfs_set_blk_dev(dev_desc, &info);
-	// int vdev;
-	// zfs_ls(&vdev, "/", 0);
-	// // harness for reiserfs
-	// int dev_ = dev_desc->devnum;
-	// if (part > 0)
-	// {
-	// 	reiserfs_set_blk_dev(dev_desc, &info);
-	// 	if (reiserfs_mount(info.size)) 
-	// 	{
-	// 		printf ("** Bad Reiserfs partition or disk - %s %d:%d **  %d\n", "ide", dev_, part,info.size);
-	// 		reiserfs_ls ("/");
-	// 		char buf[5];
-	// 		int fd = reiserfs_open ("/a.txt");
-	// 		if(fd) 
-	// 		{
-	// 			reiserfs_read (buf, 5);
-	// 		}
-	// 		fd = reiserfs_open ("/a.txt.ln");
-	// 		if(fd) 
-	// 		{
-	// 			reiserfs_read (buf, 5);
-	// 		}
-	// 	}
-	// }
+	zfs_set_blk_dev(dev_desc, &info);
+	int vdev;
+	zfs_ls(&vdev, "/", 0);
+	// harness for reiserfs
+	int dev_ = dev_desc->devnum;
+	if (part > 0)
+	{
+		reiserfs_set_blk_dev(dev_desc, &info);
+		if (reiserfs_mount(info.size)) 
+		{
+			printf ("** Bad Reiserfs partition or disk - %s %d:%d **  %d\n", "ide", dev_, part,info.size);
+			reiserfs_ls ("/");
+			char buf[5];
+			int fd = reiserfs_open ("/a.txt");
+			if(fd) 
+			{
+				reiserfs_read (buf, 5);
+			}
+			fd = reiserfs_open ("/a.txt.ln");
+			if(fd) 
+			{
+				reiserfs_read (buf, 5);
+			}
+		}
+	}
 	
 	
 	

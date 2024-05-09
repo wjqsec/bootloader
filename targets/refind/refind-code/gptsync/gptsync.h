@@ -33,12 +33,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/* Changes copyright (c) 2013 Roderick W. Smith */
-
-//#define VERSION L"0.9.1"
+/* Changes copyright (c) 2013-2024 Roderick W. Smith */
 
 #ifndef __GPTSYNC_H
 #define __GPTSYNC_H
+
+#include "../include/refit_call_wrapper.h"
 
 //
 // config
@@ -62,7 +62,7 @@
 #include "../include/tiano_includes.h"
 #endif
 
-#define copy_guid(destguid, srcguid) (CopyMem(destguid, srcguid, 16))
+#define copy_guid(destguid, srcguid) (refit_call3_wrapper(gBS->CopyMem, destguid, srcguid, 16))
 #define guids_are_equal(guid1, guid2) (CompareMem(guid1, guid2, 16) == 0)
 
 typedef CHAR16 CHARN;
@@ -83,16 +83,7 @@ typedef CHAR16 CHARN;
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <fcntl.h>
-
-/*
-typedef int                 INTN;
-typedef unsigned int        UINTN;
-typedef unsigned char       UINT8;
-typedef unsigned short      UINT16;
-typedef unsigned long       UINT32;
-typedef unsigned long long  UINT64;
-typedef void                VOID;
-*/
+#include "../include/refit_call_wrapper.h"
 
 typedef int                 BOOLEAN;
 #ifndef FALSE
@@ -110,7 +101,7 @@ void Print(wchar_t *format, ...);
 
 // FUTURE: use STR(),  #define Print printf
 
-#define copy_guid(destguid, srcguid) (CopyMem(destguid, srcguid, 16))
+#define copy_guid(destguid, srcguid) (refit_call3_wrapper(gBS->CopyMem, destguid, srcguid, 16))
 #define guids_are_equal(guid1, guid2) (memcmp(guid1, guid2, 16) == 0)
 
 #define EFI_UNSUPPORTED 1

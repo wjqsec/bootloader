@@ -16,7 +16,7 @@
 <p class="subhead">by Roderick W. Smith, <a
 href="mailto:rodsmith@rodsbooks.com">rodsmith@rodsbooks.com</a></p>
 
-<p>Last Web page update: 3/24/2024</p>
+<p>Last Web page update: April 6, 2024</p>
 
 <p>This Web page is provided free of charge and with no annoying outside ads; however, I did take time to prepare it, and Web hosting does cost money. If you find this Web page useful, please consider making a small donation to help keep this site up and running. Thanks!</p>
 
@@ -125,6 +125,55 @@ href="mailto:rodsmith@rodsbooks.com">rodsmith@rodsbooks.com</a></p>
 <p>The following summarizes changes in rEFInd's public releases:</p>
 
 <ul>
+
+<li><b>0.14.2 (April 6, 2024)</b>&mdash;This version features several bug fixes and new features:
+
+<ul>
+<li>New features in this version are:
+    <ul>
+
+    <li>Added the <tt>also_scan_tools</tt> token to <tt>refind.conf</tt>, enabling tools to be scanned in arbitrary directories.</li>
+
+    <li>The Info/About screen now reports whether rEFInd was booted via Shim or directly, on the <tt>Platform</tt> line. Note that <tt>via Shim</tt> may be specified even on a non-Secure-Boot installation, if Shim launched rEFInd.</li>
+
+</ul></li>
+<li>Bug fixes in this version are:
+    <ul>
+
+    <li>Fixed two RPM and Debian packaging bugs related to Secure Boot:
+        <ul>
+        <li>The post-install script would sometimes fail to detect that Secure Boot was enabled, thus creating a non-bootable installation.</li>
+        <li>The post-install script assumed that all Secure Boot installations used Shim or PreLoader, thus failing to correctly install without Shim on systems that used custom db keys.</li>
+	</ul>
+	These bugs have both been corrected.
+    </li>
+
+    <li>Removed <tt>EFI\tools\memtest86</tt>, <tt>EFI\tools\memtest</tt>, <tt>EFI\memtest86</tt>, and <tt>EFI\memtest</tt> from the directories to be scanned for tools. This was done for performance reasons. If scanning one of these locations is necessary, you can add it to the <tt>also_scan_tools</tt> line in <tt>refind.conf</tt>.</li>
+
+    <li>Fixed a trivial typo in a message in <tt>refind-sb-healthcheck</tt>.</li>
+
+    <li>Fixed a bug in the logging of the <tt>LoadedSize</tt> and <tt>SignaturePos</tt> variables in the <tt>IsValidLoader()</tt> function on IA32/x86.</li>
+
+    <li>Fixed a bug that prevented Apple-specific "fat" EFI binaries (those with both 32- and 64-bit binaries in one file) from appearing in rEFInd's menu.</li>
+
+    <li>Worked around a change in compilation options required to build ARM64/AARCH64 binaries with GNU-EFI 3.0.17 and later. The default build process still works for older versions of GNU-EFI; but with 3.0.17 and later, the <tt>GNUEFI_ARM64_TARGET_SUPPORT</tt> must be set to <tt>y</tt>, either on the command line or in <tt>Make.common</tt> See the <tt>BUILDING.txt</tt> file for details. This issue does <i>not</i> affect X64/AMD64/x86-64 or IA32/x86 builds with GNU-EFI, or any builds with the TianoCore EDK2 toolkit.</li>
+
+    <li>Worked around two problems that caused rEFInd binaries built with GNU-EFI 3.0.18 to fail to launch or to crash right after loading.</li>
+
+</ul></li>
+<li>Additional miscellaneous changes are:
+    <ul>
+
+    <li>Removed code in the RPM and Debian packaging post-install scripts that removed an existing rEFInd efibootmgr entry. This code is obviated by code added to <tt>refind-install</tt> some time ago.</li>
+
+    <li>Updated the Debian packaging to require <tt>debhelper</tt> 11 or greater rather than 9 or greater, since the latter is now deprecated.</li>
+
+    <li>Restructured the code to detect most disk-based tools. The result is simpler code, and may slightly alter what tools are found, likely increasing the selection on systems with multiple disks or when tool binaries are stored in distribution directories.</li>
+
+    <li>Changed the make files to reduce the binary size of GNU-EFI builds and to enable older versions of the GCC toolchain to create the SBAT section.</li>
+
+</ul></li>
+</ul>
 
 <li><b>0.14.1 (3/24/2024)</b>&mdash;This version features several bug fixes and new features:
 
@@ -1358,7 +1407,7 @@ href="mailto:rodsmith@rodsbooks.com">rodsmith@rodsbooks.com</a></p>
 
 <hr />
 
-<p>copyright &copy; 2012&ndash;2023 by Roderick W. Smith</p>
+<p>copyright &copy; 2012&ndash;2024 by Roderick W. Smith</p>
 
 <p>This document is licensed under the terms of the <a href="FDL-1.3.txt">GNU Free Documentation License (FDL), version 1.3.</a></p>
 

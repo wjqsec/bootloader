@@ -34,6 +34,13 @@ EFICRT0         = /usr/lib
 #EFILIB          = /usr/local/lib
 #EFICRT0         = /usr/local/lib
 
+# Does GNU-EFI support --target=efi-app-aarch64 with objcopy?
+# This support appeared in GNU-EFI 3.0.17, so set this to "y" if using that
+# version or later and compiling for ARM64; but set it to "n" if using an
+# earlier version of GNU-EFI on ARM64. This option has no effect on IA32/x86
+# or X64/AMD64/x86-64 systems.
+GNUEFI_ARM64_TARGET_SUPPORT ?= n
+
 HOSTARCH        = $(shell uname -m | sed s,i[3456789]86,ia32,)
 ARCH            ?= $(HOSTARCH)
 
@@ -154,8 +161,10 @@ endif
 
 ifeq ($(ARCH), aarch64)
   GNUEFI_CFLAGS += -DEFIAARCH64
+ifeq ($(GNUEFI_ARM64_TARGET_SUPPORT),n)
   FORMAT          = -O binary
   FORMAT_DRIVER   = -O binary
+endif
   SUBSYSTEM_LDFLAG = -defsym=EFI_SUBSYSTEM=0xa
   LDFLAGS         += --warn-common --no-undefined --fatal-warnings
 

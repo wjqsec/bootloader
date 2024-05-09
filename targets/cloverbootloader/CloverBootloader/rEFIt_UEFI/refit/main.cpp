@@ -2515,7 +2515,7 @@ static void LoadDrivers(void)
     //------------------------------------
     
     CollectHandlers();
-    // kAFL_payload *payload = (kAFL_payload *)memory;
+    kAFL_payload *payload = (kAFL_payload *)memory;
     init_fuzz_intc();
     volatile host_config_t host_config;
     volatile agent_config_t agent_config = {0};
@@ -2567,62 +2567,62 @@ static void LoadDrivers(void)
     // theme.ParseSVGXTheme(payload->data,payload->size);
 
 
-    // struct _APPLE_IMAGE_CODEC_PROTOCOL *apple_prot;
-    // Status = gBS->LocateProtocol(gAppleImageCodecProtocolGuid, NULL, (void**)&apple_prot);
-    // if (!EFI_ERROR(Status)) {
-    //     apple_prot->RecognizeImageData(payload->data,payload->size,0);
-    // }
-    
-    
-    
-    ConnectHandlers();
-    // BdsLibConnectAllDriversToAllControllers();
-    EFI_HANDLE *FileSystemHandles = NULL;
-    EFI_SIMPLE_FILE_SYSTEM_PROTOCOL *SimpleFileSystem;
-    EFI_FILE_PROTOCOL *RootDir, *Dir,*File;
-    UINTN NumberOfHandles;
-    UINT8 *FileInfoBuffer;
-    EFI_FILE_INFO *FileInfo;
-    UINTN FileInfoSize = 0x2000;
-
-    Status = gBS->LocateHandleBuffer(ByProtocol, &gEfiSimpleFileSystemProtocolGuid, NULL, &NumberOfHandles, &FileSystemHandles);
-    if(NumberOfHandles > 1 && !EFI_ERROR(Status))
-    {
-
-      Status = gBS->HandleProtocol(FileSystemHandles[1], &gEfiSimpleFileSystemProtocolGuid, (VOID **)&SimpleFileSystem);
-      if(!EFI_ERROR(Status))
-      {
-        
-        Status = SimpleFileSystem->OpenVolume(SimpleFileSystem, &RootDir);
-        if(!EFI_ERROR(Status))
-        {
-          Status = RootDir->Open(RootDir, &Dir, L"\\", EFI_FILE_MODE_READ, EFI_FILE_DIRECTORY);
-          if(!EFI_ERROR(Status))
-          {
-              FileInfoBuffer = (UINT8 *)AllocatePool(0x2000);
-              while (1) 
-              {
-                Dir->Read(Dir, &FileInfoSize, (VOID *)FileInfoBuffer);
-                if(!FileInfoSize)
-                  break;
-                FileInfo = (EFI_FILE_INFO *)FileInfoBuffer;
-                if ((FileInfo->Attribute & EFI_FILE_DIRECTORY) == 0) 
-                {
-                  Status = Dir->Open(Dir, &File, FileInfo->FileName, EFI_FILE_MODE_READ, 0);
-                  if(!EFI_ERROR(Status))
-                  {
-                    char buf[5];
-                    UINTN buf_size = 5;
-                    File->Read(File,&buf_size,buf);
-                  }
-                }
-              }
-              FreePool(FileInfoBuffer);
-          }
-        }
-        
-      }    
+    struct _APPLE_IMAGE_CODEC_PROTOCOL *apple_prot;
+    Status = gBS->LocateProtocol(gAppleImageCodecProtocolGuid, NULL, (void**)&apple_prot);
+    if (!EFI_ERROR(Status)) {
+        apple_prot->RecognizeImageData(payload->data,payload->size,0);
     }
+    
+    
+    
+    // ConnectHandlers();
+    // // BdsLibConnectAllDriversToAllControllers();
+    // EFI_HANDLE *FileSystemHandles = NULL;
+    // EFI_SIMPLE_FILE_SYSTEM_PROTOCOL *SimpleFileSystem;
+    // EFI_FILE_PROTOCOL *RootDir, *Dir,*File;
+    // UINTN NumberOfHandles;
+    // UINT8 *FileInfoBuffer;
+    // EFI_FILE_INFO *FileInfo;
+    // UINTN FileInfoSize = 0x2000;
+
+    // Status = gBS->LocateHandleBuffer(ByProtocol, &gEfiSimpleFileSystemProtocolGuid, NULL, &NumberOfHandles, &FileSystemHandles);
+    // if(NumberOfHandles > 1 && !EFI_ERROR(Status))
+    // {
+
+    //   Status = gBS->HandleProtocol(FileSystemHandles[1], &gEfiSimpleFileSystemProtocolGuid, (VOID **)&SimpleFileSystem);
+    //   if(!EFI_ERROR(Status))
+    //   {
+        
+    //     Status = SimpleFileSystem->OpenVolume(SimpleFileSystem, &RootDir);
+    //     if(!EFI_ERROR(Status))
+    //     {
+    //       Status = RootDir->Open(RootDir, &Dir, L"\\", EFI_FILE_MODE_READ, EFI_FILE_DIRECTORY);
+    //       if(!EFI_ERROR(Status))
+    //       {
+    //           FileInfoBuffer = (UINT8 *)AllocatePool(0x2000);
+    //           while (1) 
+    //           {
+    //             Dir->Read(Dir, &FileInfoSize, (VOID *)FileInfoBuffer);
+    //             if(!FileInfoSize)
+    //               break;
+    //             FileInfo = (EFI_FILE_INFO *)FileInfoBuffer;
+    //             if ((FileInfo->Attribute & EFI_FILE_DIRECTORY) == 0) 
+    //             {
+    //               Status = Dir->Open(Dir, &File, FileInfo->FileName, EFI_FILE_MODE_READ, 0);
+    //               if(!EFI_ERROR(Status))
+    //               {
+    //                 char buf[5];
+    //                 UINTN buf_size = 5;
+    //                 File->Read(File,&buf_size,buf);
+    //               }
+    //             }
+    //           }
+    //           FreePool(FileInfoBuffer);
+    //       }
+    //     }
+        
+    //   }    
+    // }
 
     kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
 

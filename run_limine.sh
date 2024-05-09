@@ -1,6 +1,6 @@
-kafl fuzz --purge --image ./images/limine_mbr  \
+kafl fuzz --purge --image $1  \
 	-p 1 \
-	--seed-dir $1 \
+	--seed-dir $2 \
 	--payload-size 65536 \
 	--grimoire -D --radamsa --redqueen --redqueen-hammer \
 	--memory 512 \

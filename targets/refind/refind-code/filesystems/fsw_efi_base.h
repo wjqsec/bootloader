@@ -47,6 +47,8 @@
 #include <efilib.h>
 #endif
 
+#include "../include/refit_call_wrapper.h"
+
 #define FSW_LITTLE_ENDIAN (1)
 
 
@@ -70,7 +72,11 @@ typedef UINT64  fsw_u64;
 // memory functions
 
 #define fsw_memzero(dest,size) ZeroMem(dest,size)
+#ifdef __MAKEWITH_GNUEFI
+#define fsw_memcpy(dest,src,size) refit_call3_wrapper(gBS->CopyMem, dest,src,size)
+#else
 #define fsw_memcpy(dest,src,size) CopyMem(dest,src,size)
+#endif
 #define fsw_memeq(p1,p2,size) (CompareMem(p1,p2,size) == 0)
 
 // message printing

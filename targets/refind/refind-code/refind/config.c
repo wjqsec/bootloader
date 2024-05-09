@@ -81,9 +81,6 @@
 #define GetTime ST->RuntimeServices->GetTime
 #define LAST_MINUTE 1439 /* Last minute of a day */
 
-// extern REFIT_MENU_ENTRY MenuEntryReturn;
-//static REFIT_MENU_ENTRY MenuEntryReturn   = { L"Return to Main Menu", TAG_RETURN, 0, 0, 0, NULL, NULL, NULL };
-
 //
 // read a file into a buffer
 //

@@ -45,10 +45,10 @@ all: $(BUILDME)
 $(AR_TARGET): $(OBJS)
 	$(AR) -cr $(AR_TARGET).lib $(OBJS)
 
-$(DLL_TARGET)_$(FILENAME_CODE).dll: $(OBJS) ../libeg/libeg.lib ../EfiLib/EfiLib.lib ../mok/mok.lib
+$(DLL_TARGET)_$(FILENAME_CODE).dll: $(OBJS) ../libeg/libeg.lib ../EfiLib/EfiLib.lib ../mok/mok.lib ../gzip/gzip.lib
 	$(LD) -o $(DLL_TARGET)_$(FILENAME_CODE).dll $(TIANO_LDFLAGS) \
 		  --start-group $(ALL_EFILIBS) $(OBJS) ../libeg/libeg.lib \
-		  ../EfiLib/EfiLib.lib ../mok/mok.lib --end-group
+		  ../EfiLib/EfiLib.lib ../mok/mok.lib ../gzip/gzip.lib --end-group
 
 $(BUILDME): $(DLL_TARGET)_$(FILENAME_CODE).dll
 	$(OBJCOPY) --strip-unneeded -R .eh_frame $(DLL_TARGET)_$(FILENAME_CODE).dll

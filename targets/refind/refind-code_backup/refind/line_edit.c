@@ -87,7 +87,7 @@ BOOLEAN line_edit(CHAR16 *line_in, CHAR16 **line_out, UINTN x_max) {
         i = len - first;
         if (i >= x_max-2)
             i = x_max-2;
-        CopyMem(print, line + first, i * sizeof(CHAR16));
+        MyCopyMem(print, line + first, i * sizeof(CHAR16));
         print[i++] = ' ';
         print[i] = '\0';
 

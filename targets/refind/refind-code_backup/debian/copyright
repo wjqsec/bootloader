@@ -377,6 +377,12 @@ Files: icons/os_endeavouros.png
 Copyright: 2019 EndeavourOS Team
 License: GPL-3+
 
+Files: icons/os_aos.png
+Copyright: 2017
+License: public-domain
+ Claimed as public domain by source
+ (https://www.virtualbox.org/ticket/17271)
+
 Files: icons/os_haiku.png
 Copyright: 2010-2023 Haiku, inc
 License: Expat

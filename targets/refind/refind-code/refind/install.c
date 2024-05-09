@@ -182,7 +182,7 @@ static EFI_STATUS RenameFile(IN EFI_FILE_PROTOCOL *BaseDir, CHAR16 *OldName, CHA
         NewInfoSize = sizeof(EFI_FILE_INFO) + StrSize(NewName);
         NewInfo = (EFI_FILE_INFO *) AllocateZeroPool(NewInfoSize);
         if (NewInfo != NULL) {
-            CopyMem(NewInfo, Buffer, sizeof(EFI_FILE_INFO));
+            MyCopyMem(NewInfo, Buffer, sizeof(EFI_FILE_INFO));
             NewInfo->FileName[0] = 0;
             StrCat(NewInfo->FileName, NewName);
             // Note: The below call is where Tow-Boot can error out.
@@ -607,7 +607,7 @@ static EFI_STATUS ConstructBootEntry(EFI_HANDLE *TargetVolume,
         Working += sizeof (UINT16);
         StrCpy((CHAR16 *)Working, Label);
         Working += StrSize(Label);
-        CopyMem(Working, DevicePath, DevPathSize);
+        MyCopyMem(Working, DevicePath, DevPathSize);
         // If support for arguments is required in the future, uncomment
         // the below two lines and adjust Size computation above appropriately.
         // Working += DevPathSize;
@@ -747,7 +747,7 @@ BOOT_ENTRY_LIST * FindBootOrderEntries(VOID) {
                 L->BootEntry.Size = (UINT16) Contents[2];
                 L->BootEntry.Label = StrDuplicate((CHAR16*) &(Contents[3]));
                 L->BootEntry.DevPath = AllocatePool(L->BootEntry.Size);
-                CopyMem(L->BootEntry.DevPath,
+                MyCopyMem(L->BootEntry.DevPath,
                         (EFI_DEVICE_PATH*) &Contents[3 + StrSize(L->BootEntry.Label)/2],
                         L->BootEntry.Size);
                 L->NextBootEntry = NULL;

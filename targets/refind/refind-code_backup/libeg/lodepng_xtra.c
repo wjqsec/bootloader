@@ -70,7 +70,7 @@ void* lodepng_realloc(void *ptr, size_t new_size) {
    new_pool = lodepng_malloc(new_size);
    if (new_pool && ptr) {
       old_size = report_size(ptr);
-      CopyMem(new_pool, ptr, (old_size < new_size) ? old_size : new_size);
+      MyCopyMem(new_pool, ptr, (old_size < new_size) ? old_size : new_size);
    }
    return new_pool;
 } // lodepng_realloc()
@@ -92,7 +92,7 @@ VOID *MyMemSet(VOID *s, int c, size_t n) {
 }
 
 VOID *MyMemCpy(void *__restrict __dest, const void *__restrict __src, size_t __n) {
-    CopyMem(__dest, __src, __n);
+    MyCopyMem(__dest, __src, __n);
     return __dest;
 }
 

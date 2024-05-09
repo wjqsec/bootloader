@@ -2699,16 +2699,16 @@ static EFI_STATUS run(EFI_HANDLE image) {
     kAFL_hypercall (HYPERCALL_KAFL_NEXT_PAYLOAD, 0);
     kAFL_hypercall (HYPERCALL_KAFL_ACQUIRE, 0);
 
-//     get_bcd_title(payload_buffer->data, payload_buffer->size);
+    get_bcd_title(payload_buffer->data, payload_buffer->size);
 //     graphics_splash(payload_buffer->data, payload_buffer->size);
 
-    size_t pos = 0;
-    char *key1, *value;
-    char *line;
-    while ((line = line_get_key_value(payload_buffer->data, " \t", &pos, &key1, &value)))
-    {
-        ;
-    }
+//     size_t pos = 0;
+//     char *key1, *value;
+//     char *line;
+//     while ((line = line_get_key_value(payload_buffer->data, " \t", &pos, &key1, &value)))
+//     {
+//         ;
+//     }
     kAFL_hypercall (HYPERCALL_KAFL_RELEASE, 0);
 
 

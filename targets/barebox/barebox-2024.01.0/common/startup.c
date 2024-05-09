@@ -434,48 +434,45 @@ void __noreturn start_barebox(void)
     fuzz_start = 1;
 	
 
-	efi_bio_driver_register();
-	
+	// efi_bio_driver_register();
 
-	
-	char buf[5];
-    int ret = mount("/dev/disk0.0", NULL, "/fuzzfs", NULL);
-	if (!ret)
-	{
+	// char buf[5];
+    // int ret = mount("/dev/disk0.0", NULL, "/fuzzfs", NULL);
+	// if (!ret)
+	// {
 		
 		
-		int fd = open("/fuzzfs/a.txt.ln",O_RDWR);
-		if(!fd)
-		{
-			fd = open("/fuzzfs/a.txt",O_RDWR);
-		}
-		if (fd)
-		{
-			kAFL_hypercall(HYPERCALL_KAFL_PRINTF, "kAFL fuzzer initialized.");
-			pread(fd, buf, 5, 3);
-			pwrite(fd, buf, 5, 1);
-			close(fd);
-		}
-		unlink("/fuzzfs/a.txt.ln");
-		mkdir ("/fuzzfs/b", 0755);
-		fd = creat("/fuzzfs/b/b.txt", 0);
-		if (fd)
-		{
-			pwrite(fd, buf, 5, 0);
-			pread(fd, buf, 5, 0);  //read from write only mode
-			close(fd);
-		}
-		DIR *dir;
-		struct dirent *d;
-		dir = opendir("/fuzzfs");
-		while ((d = readdir(dir))) 
-		{
-			;
-		}
-		closedir(dir);
-		rmdir ("/fuzzfs/b");
-		unlink("/fuzzfs/a.txt");
-	}
+	// 	int fd = open("/fuzzfs/a.txt.ln",O_RDWR);
+	// 	if(!fd)
+	// 	{
+	// 		fd = open("/fuzzfs/a.txt",O_RDWR);
+	// 	}
+	// 	if (fd)
+	// 	{
+	// 		pread(fd, buf, 5, 3);
+	// 		pwrite(fd, buf, 5, 1);
+	// 		close(fd);
+	// 	}
+	// 	unlink("/fuzzfs/a.txt.ln");
+	// 	mkdir ("/fuzzfs/b", 0755);
+	// 	fd = creat("/fuzzfs/b/b.txt", 0);
+	// 	if (fd)
+	// 	{
+	// 		pwrite(fd, buf, 5, 0);
+	// 		pread(fd, buf, 5, 0);  //read from write only mode
+	// 		close(fd);
+	// 	}
+	// 	DIR *dir;
+	// 	struct dirent *d;
+	// 	dir = opendir("/fuzzfs");
+	// 	while ((d = readdir(dir))) 
+	// 	{
+	// 		;
+	// 	}
+	// 	closedir(dir);
+	// 	rmdir ("/fuzzfs/b");
+	// 	unlink("/fuzzfs/a.txt");
+	// }
 
 	// // base64decode
 	// char *buf = memalign(0x1000,0x1000);
@@ -508,28 +505,28 @@ void __noreturn start_barebox(void)
 
     
 	
-	// eth_log(edev);
-	// IPaddr_t ip;
-	// IPaddr_t netmask;
-	// IPaddr_t gateway;
-	// IPaddr_t nameserver;
-	// string_to_ip("192.168.1.10", &ip);
-	// string_to_ip("255.255.255.0", &netmask);
-	// string_to_ip("192.168.1.3", &gateway);
-	// string_to_ip("134.96.225.88", &nameserver);
+
+	IPaddr_t ip;
+	IPaddr_t netmask;
+	IPaddr_t gateway;
+	IPaddr_t nameserver;
+	string_to_ip("192.168.1.10", &ip);
+	string_to_ip("255.255.255.0", &netmask);
+	string_to_ip("192.168.1.3", &gateway);
+	string_to_ip("134.96.225.88", &nameserver);
 
 
-	// net_set_ip(edev, ip);
-	// net_set_netmask(edev, netmask);
-	// net_set_gateway(gateway);
-	// net_set_nameserver(nameserver);
+	net_set_ip(edev, ip);
+	net_set_netmask(edev, netmask);
+	net_set_gateway(gateway);
+	net_set_nameserver(nameserver);
 
 	// IPaddr_t target;
 	// resolv("internal.wjqwjq.com", &target);
 
 	// fuzz_nfs();
 	// fuzz_sntp();
-	// fuzz_ping();
+	fuzz_ping();
 
 	kAFL_hypercall (HYPERCALL_KAFL_RELEASE, 0);
 	while(1)

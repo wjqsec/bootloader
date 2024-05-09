@@ -1,6 +1,6 @@
-kafl fuzz --purge --image ./images/easyboot.img --bios /usr/share/qemu/OVMF.fd  --qemu-extra ""\
+kafl fuzz --purge --image $1 --bios /usr/share/qemu/OVMF.fd  --qemu-extra ""\
 	-p 1 \
-	--seed-dir $1 \
+	--seed-dir $2 \
 	--payload-size 65536 \
 	--grimoire -D --radamsa --redqueen --redqueen-hammer \
 	--memory 512 \

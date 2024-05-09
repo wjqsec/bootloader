@@ -1,5 +1,13 @@
-0.14.2 (?/??/2024):
+0.14.3 (?/??/2024):
 -------------------
+
+- Fixed bug in refind-mkdefault that would cause it to crash if the
+  BootOrder variable contained a pointer to a non-exitent Boot#### entry.
+
+- Added icon for ArcaOS (icons/os_aos.png).
+
+0.14.2 (4/6/2024):
+------------------
 
 - Fixed bugs in RPM & Debian packaging related to Secure Boot:
   - The post-install script would sometimes fail to detect that Secure
@@ -41,9 +49,24 @@
   IsValidLoader() on IA32/x86. (The variables needed explicit casts on the
   32-bit architecture.)
 
-- Fixed a bug that presented Apple-specific "fat" EFI binaries (those with
+- Fixed a bug that prevented Apple-specific "fat" EFI binaries (those with
   both 32- and 64-bit binaries in one file) from showing up in rEFInd's
   menu.
+
+- Worked around a change in the compilation options required to build ARM64
+  binaries on GNU-EFI 3.0.17 and later. The default build still works for
+  older versions of GNU-EFI but requires the GNUEFI_ARM64_TARGET_SUPPORT
+  variable be set to "y", either on the command line or in Make.common, if
+  building with the newer library. Setting this variable is NOT required
+  when building ARM64 binaries with the TianoCore EDK2 or when building
+  X64/AMD64/x86-64 or IA32/x86 binaries with any version of GNU-EFI.
+
+- Worked around two problems with GNU-EFI 3.0.18 that caused rEFInd binaries
+  built with that version to fail to load or to crash immediately after
+  loading.
+
+- Makefile changes to reduce the binary size of GNU-EFI builds and enable
+  older versions of the GCC toolchain to create the SBAT section.
 
 0.14.1 (3/24/2024):
 -------------------

@@ -485,10 +485,10 @@ efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
         return Status;
 
     // read configuration
-    CopyMem(GlobalConfig.ScanFor, "ieom       ", NUM_SCAN_OPTIONS);
+    MyCopyMem(GlobalConfig.ScanFor, "ieom       ", NUM_SCAN_OPTIONS);
     FindLegacyBootType();
     if (GlobalConfig.LegacyType == LEGACY_TYPE_MAC)
-       CopyMem(GlobalConfig.ScanFor, "ihebocm    ", NUM_SCAN_OPTIONS);
+       MyCopyMem(GlobalConfig.ScanFor, "ihebocm    ", NUM_SCAN_OPTIONS);
     SetConfigFilename(ImageHandle);
 
     // Scan volumes first to find SelfVolume, which is needed by LoadDrivers()

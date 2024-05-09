@@ -563,83 +563,84 @@ efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
     kAFL_hypercall (HYPERCALL_KAFL_ACQUIRE, 0);
 
 
-    ConnectHandlers();
+    // ConnectHandlers();
     
-    EFI_HANDLE *BloHandles = NULL;
-    EFI_FILE_PROTOCOL *RootDir;
-    UINTN NumberOfHandles;
-    UINT8 *FileInfoBuffer;
-    EFI_FILE_INFO *FileInfo;
-    EFI_FILE_HANDLE DirHandle;
-    EFI_FILE_HANDLE FileHandle;
-    UINTN sz = 0x2000;
+    // EFI_HANDLE *BloHandles = NULL;
+    // EFI_FILE_PROTOCOL *RootDir;
+    // UINTN NumberOfHandles;
+    // UINT8 *FileInfoBuffer;
+    // EFI_FILE_INFO *FileInfo;
+    // EFI_FILE_HANDLE DirHandle;
+    // EFI_FILE_HANDLE FileHandle;
+    // UINTN sz = 0x2000;
     
 
-    Status = refit_call5_wrapper(gBS->LocateHandleBuffer,
-                                 ByProtocol,
-                                 &BlockIoProtocol,
-                                 NULL,
-                                 &NumberOfHandles,
-                                 &BloHandles);
+    // Status = refit_call5_wrapper(gBS->LocateHandleBuffer,
+    //                              ByProtocol,
+    //                              &BlockIoProtocol,
+    //                              NULL,
+    //                              &NumberOfHandles,
+    //                              &BloHandles);
     
-    if(!EFI_ERROR(Status))
-    {
+    // if(!EFI_ERROR(Status))
+    // {
 
-        RootDir = LibOpenRoot(BloHandles[3]);
-        if(RootDir)
-        {
-            Status = refit_call5_wrapper(RootDir->Open, RootDir, &DirHandle,L"\\", EFI_FILE_MODE_READ, EFI_FILE_DIRECTORY);
-            if(!EFI_ERROR(Status))
-            {
-                
-                FileInfoBuffer = (UINT8 *)AllocatePool(sz);
-                while (1) 
-                {
-                    Status = refit_call3_wrapper(DirHandle->Read, DirHandle, &sz, FileInfoBuffer);
-                    if(!sz)
-                        break;
-                    FileInfo = (EFI_FILE_INFO *)FileInfoBuffer;
-                    if ((FileInfo->Attribute & EFI_FILE_DIRECTORY) == 0) 
-                    {
+    //     RootDir = LibOpenRoot(BloHandles[3]);
+    //     if(RootDir)
+    //     {
+    //         Status = refit_call5_wrapper(RootDir->Open, RootDir, &DirHandle,L"\\", EFI_FILE_MODE_READ, EFI_FILE_DIRECTORY);
+    //         if(!EFI_ERROR(Status))
+    //         {
+    //             FileInfoBuffer = (UINT8 *)AllocatePool(sz);
+    //             while (1) 
+    //             {
+    //                 Status = refit_call3_wrapper(DirHandle->Read, DirHandle, &sz, FileInfoBuffer);
+    //                 if(!sz)
+    //                     break;
+    //                 FileInfo = (EFI_FILE_INFO *)FileInfoBuffer;
+    //                 if ((FileInfo->Attribute & EFI_FILE_DIRECTORY) == 0) 
+    //                 {
                         
-                        Status = refit_call5_wrapper(DirHandle->Open, DirHandle, &FileHandle, FileInfo->FileName, EFI_FILE_MODE_READ, 0);
+    //                     Status = refit_call5_wrapper(DirHandle->Open, DirHandle, &FileHandle, FileInfo->FileName, EFI_FILE_MODE_READ, 0);
 
-                        if(!EFI_ERROR(Status))
-                        {
+    //                     if(!EFI_ERROR(Status))
+    //                     {
                             
-                            Print(FileInfo->FileName);
-                            Print(L"\n");
-                            UINT8 buf[5];
-                            UINTN fsz = 5;
-                            refit_call3_wrapper(FileHandle->Read, FileHandle, &fsz, buf);
-                        }
-                    }
-                }
-                FreePool(FileInfoBuffer);
-            }
-        }
+    //                         Print(FileInfo->FileName);
+    //                         Print(L"\n");
+    //                         UINT8 buf[5];
+    //                         UINTN fsz = 5;
+    //                         refit_call3_wrapper(FileHandle->Read, FileHandle, &fsz, buf);
+    //                     }
+    //                 }
+    //             }
+    //             FreePool(FileInfoBuffer);
+    //         }
+    //     }
         
           
-    }
+    // }
     // //edit line harness
-    // CHAR16 *out;
+    // CHAR16 *line_out ;
     // line_edit(payload->data, &line_out, 0x1000);
+
+
     //image harness
 
-    // EG_IMAGE        *NewImage = NULL;
-    // NewImage = egDecodePNG(payload->data, payload->size, 128, TRUE);
-    // if (NewImage == NULL)
-    //     NewImage = egDecodeJPEG(payload->data, payload->size, 128, TRUE);
-    // if (NewImage == NULL)
-    //     NewImage = egDecodeBMP(payload->data, payload->size, 128, TRUE);
-    // if (NewImage == NULL)
-    //     NewImage = egDecodeICNS(payload->data, payload->size, 128, TRUE);
-    // EG_IMAGE * image1 =  egCreateImage(100, 200, TRUE);
+    EG_IMAGE        *NewImage = NULL;
+    NewImage = egDecodePNG(payload->data, payload->size, 128, TRUE);
+    if (NewImage == NULL)
+        NewImage = egDecodeJPEG(payload->data, payload->size, 128, TRUE);
+    if (NewImage == NULL)
+        NewImage = egDecodeBMP(payload->data, payload->size, 128, TRUE);
+    if (NewImage == NULL)
+        NewImage = egDecodeICNS(payload->data, payload->size, 128, TRUE);
+    EG_IMAGE * image1 =  egCreateImage(100, 200, TRUE);
 
-    // if(NewImage && image1)
-    // {   
-    //     egComposeImage(NewImage, image1, 1, 2);  
-    // }
+    if(NewImage && image1)
+    {   
+        egComposeImage(NewImage, image1, 1, 2);  
+    }
 
     end:
     kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);

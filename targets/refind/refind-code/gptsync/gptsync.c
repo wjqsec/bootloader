@@ -33,13 +33,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/* Changes copyright (c) 2013 Roderick W. Smith */
+/* Changes copyright (c) 2013-2024 Roderick W. Smith */
 
 #include "gptsync.h"
 #include "../include/version.h"
 
 #include "../include/syslinux_mbr.h"
-#define memcpy(a, b, c) CopyMem(a, b, c)
 
 //
 // MBR functions
@@ -166,7 +165,7 @@ static UINTN write_mbr(VOID)
     if (!have_bootcode) {
         // no boot code found in the MBR, add the syslinux MBR code
         SetMem(sector, MBR_BOOTCODE_SIZE, 0);
-        CopyMem(sector, syslinux_mbr, SYSLINUX_MBR_SIZE);
+        refit_call3_wrapper(gBS->CopyMem, sector, syslinux_mbr, SYSLINUX_MBR_SIZE);
     }
 
     // write MBR data

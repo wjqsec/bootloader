@@ -55,7 +55,6 @@
 #define gMyEfiSimpleFileSystemProtocolGuid gEfiSimpleFileSystemProtocolGuid
 #endif
 
-#include "../include/refit_call_wrapper.h"
 #include "../include/version.h"
 
 #define DEBUG_LEVEL 0
@@ -76,7 +75,7 @@ EFI_GUID gMyEfiFileSystemVolumeLabelInfoIdGuid = EFI_FILE_SYSTEM_VOLUME_LABEL_IN
 /** Helper macro for stringification. */
 #define FSW_EFI_STRINGIFY(x) #x
 /** Expands to the EFI driver name given the file system type name. */
-#define FSW_EFI_DRIVER_NAME(t) L"rEFInd 0.14.1 " FSW_EFI_STRINGIFY(t) L" File System Driver"
+#define FSW_EFI_DRIVER_NAME(t) L"rEFInd 0.14.2 " FSW_EFI_STRINGIFY(t) L" File System Driver"
 
 // function prototypes
 
@@ -575,7 +574,9 @@ fsw_status_t EFIAPI fsw_efi_read_block(struct fsw_volume *vol, fsw_u64 phys_bno,
    } // if (ReadCache < 0)
 
    if (Caches[ReadCache].Cache != NULL && Caches[ReadCache].CacheValid == TRUE && vol->phys_blocksize > 0) {
-      CopyMem(buffer, &Caches[ReadCache].Cache[StartRead - Caches[ReadCache].CacheStart], vol->phys_blocksize);
+      refit_call3_wrapper(gBS->CopyMem, buffer,
+                          &Caches[ReadCache].Cache[StartRead - Caches[ReadCache].CacheStart],
+                          vol->phys_blocksize);
    } else {
       ReadOneBlock = TRUE;
    }
