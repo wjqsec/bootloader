@@ -1,0 +1,8 @@
+dependencies:
+  - role: default_vars_only
+  - role: capstone
+    tags:
+      - capstone
+  - role: libxdc
+    tags:
+      - libxdc

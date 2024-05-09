@@ -1,0 +1,20 @@
+dependencies:
+  - role: kernel
+    tags:
+      - kernel
+  - role: qemu
+    tags:
+      - qemu
+  - role: radamsa
+    tags:
+      - radamsa
+  - role: ghidra
+    tags:
+      - ghidra
+  - role: examples
+    tags:
+      - examples
+  - role: nyx_packer
+    tags:
+      - nyx_packer
+    when: install_nyx_packer

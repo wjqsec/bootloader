@@ -1,0 +1,19 @@
+---
+- name: Ensure minimal deps are available
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  become: true
+  with_items:
+    - git
+    - build-essential
+
+- name: Clone repo
+  ansible.builtin.git:
+    repo: "{{ capstone_url }}"
+    dest: "{{ capstone_root }}"
+    version: "{{ capstone_revision | default('master') }}"
+    depth: "{{ git_clone_depth | default(omit) }}"
+    force: "{{ force_clone }}"
+  tags:
+    - clone

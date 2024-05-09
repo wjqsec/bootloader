@@ -1,0 +1,25 @@
+- name: Install radamsa dependencies
+  ansible.builtin.package:
+    name: "{{ item }}"
+  become: true
+  with_items:
+    - wget
+    - curl
+
+- name: Clone repo
+  ansible.builtin.git:
+    repo: "{{ radamsa_url }}"
+    dest: "{{ radamsa_root }}"
+    version: "{{ radamsa_revision | default(omit) }}"
+    depth: "{{ git_clone_depth | default(omit) }}"
+    force: "{{ force_clone }}"
+  tags:
+    - clone
+
+- name: Build radamsa
+  community.general.make:
+    chdir: "{{ radamsa_root }}"
+    params:
+      --jobs: "{{ ansible_processor_nproc }}"
+  tags:
+    - build

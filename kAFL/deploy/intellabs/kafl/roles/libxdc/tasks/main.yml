@@ -1,0 +1,9 @@
+- name: Clone repo
+  ansible.builtin.git:
+    repo: "{{ libxdc_url }}"
+    dest: "{{ libxdc_root }}"
+    version: "{{ libxdc_revision | default(omit) }}"
+    depth: "{{ git_clone_depth | default(omit) }}"
+    force: "{{ force_clone }}"
+  tags:
+    - clone

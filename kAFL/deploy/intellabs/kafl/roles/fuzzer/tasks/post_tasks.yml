@@ -1,0 +1,29 @@
+- name: Ensure kvm group exists
+  ansible.builtin.group:
+    name: kvm
+    state: present
+  become: true
+
+- name: Ensure current user is in kvm group
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: kvm
+    append: true
+  become: true
+
+- name: Ensure /dev/kvm has right permissions
+  ansible.builtin.file:
+    path: /dev/kvm
+    owner: root
+    group: kvm
+    mode: '0660'
+  become: true
+  tags:
+    - kvm_device
+  when: not ansible_check_mode
+
+- name: Create env.sh file
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ kafl_install_root }}/env.sh"
+    mode: 0644
