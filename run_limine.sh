@@ -1,5 +1,5 @@
-kafl fuzz  \
-	--image $1
+kafl fuzz --resume  \
+	--image $1 \
         --workdir $2 \
         --seed-dir $3 \
         -p $4 \

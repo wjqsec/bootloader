@@ -1,5 +1,5 @@
-kafl fuzz --bios /usr/share/qemu/OVMF.fd\
-	--image $1
+kafl fuzz --bios /usr/share/qemu/OVMF.fd --resume \
+	--image $1 \
         --workdir $2 \
         --seed-dir $3 \
         -p $4 \
