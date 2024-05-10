@@ -1,7 +1,8 @@
-kafl fuzz --purge --bios $1\
-	--image ./images/uboot-img \
-	-p 1\
-	--seed-dir $2 \
+kafl fuzz --image ./images/uboot-img \
+	--bios $1 \
+        --workdir $2 \
+        --seed-dir $3 \
+        -p $4 \
 	--payload-size 65536 \
 	--grimoire -D --radamsa --redqueen --redqueen-hammer \
 	--memory 512 \

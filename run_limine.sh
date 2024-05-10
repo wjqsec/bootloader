@@ -1,6 +1,8 @@
-kafl fuzz --purge --image $1  \
-	-p 1 \
-	--seed-dir $2 \
+kafl fuzz  \
+	--image $1
+        --workdir $2 \
+        --seed-dir $3 \
+        -p $4 \
 	--payload-size 65536 \
 	--grimoire -D --radamsa --redqueen --redqueen-hammer \
 	--memory 512 \
