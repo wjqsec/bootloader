@@ -1,4 +1,4 @@
-kafl fuzz --resume  \
+kafl fuzz --purge  \
 	--image $1 \
         --workdir $2 \
         --seed-dir $3 \

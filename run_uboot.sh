@@ -1,4 +1,4 @@
-kafl fuzz --image ./images/uboot-img --resume \
+kafl fuzz --image ./images/uboot-img --purge \
 	--bios $1 \
         --workdir $2 \
         --seed-dir $3 \
