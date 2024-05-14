@@ -365,7 +365,7 @@ static struct menu_entry *create_menu_tree(struct menu_entry *parent,
 
 
 static struct macro *macros = NULL;
-bool editor_enabled;
+extern bool editor_enabled;
 static int init_config(size_t config_size) {
     
     config_b2sum += sizeof(CONFIG_B2SUM_SIGNATURE) - 1;

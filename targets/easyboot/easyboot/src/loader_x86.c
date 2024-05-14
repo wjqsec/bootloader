@@ -2762,7 +2762,7 @@ efi_status_t _start (efi_handle_t image, efi_system_table_t *systab)
     kAFL_hypercall(HYPERCALL_KAFL_USER_SUBMIT_MODE, KAFL_MODE_64);
 
 
-    kAFL_hypercall(HYPERCALL_KAFL_GET_HOST_CONFIG, (uint32_t)&host_config);
+    kAFL_hypercall(HYPERCALL_KAFL_GET_HOST_CONFIG, (uint64_t)&host_config);
     if (host_config.host_magic != NYX_HOST_MAGIC || host_config.host_version != NYX_HOST_VERSION) 
     {
         habort("magic error\n");
@@ -2776,7 +2776,7 @@ efi_status_t _start (efi_handle_t image, efi_system_table_t *systab)
     agent_config.coverage_bitmap_size = host_config.bitmap_size;
 
     payload_buffer = alloc(host_config.payload_buffer_size / 4096 + 1);
-    kAFL_hypercall (HYPERCALL_KAFL_SET_AGENT_CONFIG, (uint32_t)&agent_config);
+    kAFL_hypercall (HYPERCALL_KAFL_SET_AGENT_CONFIG, (uint64_t)&agent_config);
 
     uint64_t buffer_kernel[3] = {0};
 
@@ -2784,8 +2784,8 @@ efi_status_t _start (efi_handle_t image, efi_system_table_t *systab)
     buffer_kernel[0] = 0x7000;
     buffer_kernel[1] = 0x20000000;
     buffer_kernel[2] = 0;
-    kAFL_hypercall(HYPERCALL_KAFL_RANGE_SUBMIT, (uint32_t)buffer_kernel);
-    kAFL_hypercall (HYPERCALL_KAFL_GET_PAYLOAD, (uint32_t)payload_buffer);
+    kAFL_hypercall(HYPERCALL_KAFL_RANGE_SUBMIT, (uint64_t)buffer_kernel);
+    kAFL_hypercall (HYPERCALL_KAFL_GET_PAYLOAD, (uint64_t)payload_buffer);
     
     kAFL_hypercall (HYPERCALL_KAFL_NEXT_PAYLOAD, 0);
     kAFL_hypercall (HYPERCALL_KAFL_ACQUIRE, 0);

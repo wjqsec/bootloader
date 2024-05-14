@@ -31,7 +31,7 @@ all: $(TARGET) misc/plgld $(PLGS)
 # -fno-plt -fdirect-access-external-data because plugins should use direct addresses to simplify plgld
 # -Wno-long-long because UEFI uses Win32 API where long is 32-bit, so we must use non-ANSI C standard long long for 64-bit, don't complain
 CFLAGS=-ffreestanding -fno-strict-aliasing -fno-stack-protector -fno-stack-check -fshort-wchar -fno-asynchronous-unwind-tables -fno-plt \
-  -mpie-copy-relocations -nostdlib -Wall -Wextra -Werror -Wno-long-long
+  -mpie-copy-relocations -nostdlib -Wall -Wextra -Wno-long-long
 
 misc/plgld: misc/plgld.c
 	$(CC) -ansi -Wall -Wextra -Wno-format-extra-args -Wno-format $(COPT) $< -o $@
